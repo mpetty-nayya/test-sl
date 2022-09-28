@@ -1,0 +1,13 @@
+title: EmployerRetrieveResponse
+x-stoplight:
+  id: iit1d7gvu4usl
+examples:
+  - id:
+      value: string
+    name: string
+allOf:
+  - $ref: ./base/EntityType.yaml
+  - type: object
+    properties:
+      taxId:
+        $ref: ./base/IdentifierType.yaml

@@ -1,0 +1,16 @@
+title: EmployerCreateParams
+x-stoplight:
+  id: 2ope53bmwsihp
+type: object
+properties:
+  employerOrganization:
+    allOf:
+      - $ref: ./base/EntityType.yaml
+      - type: object
+        properties:
+          taxId:
+            $ref: ./base/IdentifierType.yaml
+examples:
+  - id:
+      value: string
+    name: string

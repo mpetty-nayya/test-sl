@@ -1,0 +1,20 @@
+title: ApiError403Response
+x-stoplight:
+  id: kkbillj154t41
+type: object
+examples:
+  - status: 403
+    message: Not Authorized
+    errors: {}
+properties:
+  status:
+    type: number
+    minimum: 403
+    maximum: 403
+  message:
+    type: string
+  errors:
+    type: object
+required:
+  - status
+  - message

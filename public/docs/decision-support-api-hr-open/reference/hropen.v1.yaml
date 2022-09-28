@@ -1,0 +1,160 @@
+openapi: 3.1.0
+x-stoplight:
+  id: iwgwivirp0a05
+info:
+  title: Decision Support API (HR-Open)
+  license:
+    name: Unknown
+    url: 'https://nayya.com'
+  version: '1.0'
+  x-logo:
+    url: /docs/nayya-blue.png
+    backgroundColor: '#FFFFFF'
+    altText: Nayya
+  description: |-
+    # Intro
+    asdf
+  contact:
+    email: api@nayya.com
+    url: 'https://nayya.com'
+    name: Nayya Team
+  termsOfService: 'https://nayya.com'
+  summary: Decission Support in Hr Open
+servers:
+  - url: 'https://staging.app.nayya.com/hropen'
+    description: Development
+  - url: 'https://app.nayya.com/hropen'
+    description: Production
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token
+paths:
+  /employers:
+    post:
+      summary: Add an employer
+      tags:
+        - Employers
+      operationId: post-employer
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: ../models/EmployerCreateResponse.yaml
+              examples:
+                '201':
+                  value:
+                    id:
+                      value: string
+                    name: string
+                    taxId:
+                      value: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ApiError401Response.yaml
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ApiError403Response.yaml
+      description: Add an employer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/EmployerCreateParams.yaml
+            examples:
+              example-1:
+                value:
+                  id:
+                    value: string
+                  name: string
+  '/employers/{employer_id}':
+    get:
+      summary: Retrieve an employer
+      tags:
+        - Employers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: ../models/EmployerRetrieveResponse.yaml
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ApiError401Response.yaml
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ApiError403Response.yaml
+      operationId: get-employer
+      description: Retrieve an employer.
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        in: path
+        required: true
+        description: External employer id
+  '/employers/{employer_id}/employees/{employee_id}':
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        in: path
+        required: true
+        description: External employer id
+      - schema:
+          type: string
+        name: employee_id
+        in: path
+        required: true
+        description: External employee id
+    delete:
+      summary: Remove an employee
+      tags:
+        - Employees
+      operationId: delete-employers-employer_id-employees-employee_id
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ApiError401Response.yaml
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ApiError403Response.yaml
+      description: Remove an employee and all PII.
+tags:
+  - name: Employees
+    description: Entity for an employee
+  - name: Employers
+    description: Entity that employees people
+security:
+  - bearerAuth: []

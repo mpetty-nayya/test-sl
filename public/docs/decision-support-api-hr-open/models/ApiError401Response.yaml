@@ -1,0 +1,20 @@
+title: ApiError401Response
+x-stoplight:
+  id: mujhm92xydm3x
+type: object
+examples:
+  - status: 401
+    message: Not Authenticated
+    errors: {}
+properties:
+  status:
+    type: number
+    minimum: 401
+    maximum: 401
+  message:
+    type: string
+  errors:
+    type: object
+required:
+  - status
+  - message

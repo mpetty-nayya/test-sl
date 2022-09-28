@@ -1,0 +1,12 @@
+title: IdentityType
+x-stoplight:
+  id: h55gfh6ql05c0
+type: object
+properties:
+  value:
+    type: string
+    description: The identitifier
+required:
+  - value
+examples:
+  - value: string

@@ -1,0 +1,13 @@
+title: EmployerCreateResponse
+x-stoplight:
+  id: obofsagyawn5a
+examples:
+  - id:
+      value: string
+    name: string
+allOf:
+  - $ref: ./base/EntityType.yaml
+  - type: object
+    properties:
+      taxId:
+        $ref: ./base/IdentifierType.yaml
