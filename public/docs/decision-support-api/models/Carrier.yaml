@@ -1,0 +1,15 @@
+title: Carrier
+x-stoplight:
+  id: o02spoa0yfy1e
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: Carrier ID assigned by Nayya
+  name:
+    type: string
+    description: Name of the carrier
+required:
+  - id
+  - name

@@ -1,0 +1,4261 @@
+openapi: 3.1.0
+x-stoplight:
+  id: c6c14ibszbmrx
+info:
+  title: Nayya Decision Support API
+  version: '1.0'
+  x-logo:
+    url: /docs/nayya-blue.png
+    backgroundColor: '#FFFFFF'
+    altText: Nayya
+  description: |-
+    # Intro
+
+    **Welcome to Nayya!**
+
+    This documentation will guide you through how to embed Nayya’s decision support into your platform. Nayya’s decision support helps employees select the right benefits and plans and gives them the personalized, data-driven, guidance they need to make the best decisions.
+
+    How does it work? Nayya takes the employee through a brief and dynamic 12-15 question journey to understand their unique lifestyle, financial profile, and family profile, while merging in data about that consumer and relevant risk and utilization data behind the scenes. This helps us guide employees on the plans they need, educate them on benefits that might be relevant to them, and provide coverage amount recommendations to best protect them.
+
+
+    # Authentication
+    Nayya uses API keys to authenticate requests. You can view and manage your API keys in the administration console.
+
+    Your API keys give anyone who has them access to read or manipulate your data, so be sure to **keep them safe!** Do not expose your secret API keys in areas accessible to the public such as source control, client-side code, etc.
+
+    Authentication to the API is performed via bearer auth. Simply include a header like so: `"Authorization: your_api_key"` and your request will get authenticated and authorized correctly.
+
+    All API requests must be made over [https](http://en.wikipedia.org/wiki/HTTP_Secure). Any calls made without authentication or made over http will fail.
+
+    ### Rolling a Key
+    If you have a key that needs to be rolled because of a security breach or because of your security protocols, you may do so from the administration console.
+
+    Log into Nayya, and navigate to your API keys. You should see the option to "Roll Key," which will generate a new key for you to use. Once you submit the new key, any new requests made with the old key will fail, so **be sure to update your application with the new key before submitting.**
+
+    # Getting Started
+
+    Nayya fits into your existing user flow to empower a seamless user experience. See the diagram below to see an overview.
+
+    <img src="/docs/overview.png" />
+
+    As you can see, your platform hands off to Nayya for decision support with the expected outcome being a set of plans bookmarked by the employee. Your platform can then retrieve those plans to create a great user experience and enable employees to make the best elections for themselves and their families.
+
+    Integrating in this way with Nayya is really quite simple, and we'll go through each step in detail.
+
+    You'll perform three main steps:
+    1. Mapping your system's entities to ours
+    2. Writing requests to configure employers and employees in Nayya
+    3. Embed our user experience into yours
+
+    **That's it!**
+    Let's look at this in more detail.
+
+    # Step One: Mapping Entities
+    Nayya's entities are relatively basic and match up well with most benefit admin platforms.
+
+    Every `POST` request will include a response with the id or id's of the entities that you have created. Make sure that you store these ID's; they are required to further interact with this API.
+
+    This is typically done by storing the Nayya ID in your data store alongside your own internal ID that makes the entity unique. For example, you might have a table called `companies` that includes an `id` column. If that table maps to an Employer in the Nayya API, then you'll need to add a new column to your `companies` table called something like `nayya_external_id`. This is where you'll store the resulting ID of the creation request to the Nayya API.
+
+    Here is the list of entities that you'll need to plan for:
+    - **Employer** (name, address, etc.)
+    - **Plan** (name, type, rates, deductible, other metadata, etc.)
+    - **Eligibility Group** (name)
+      - This entity is used to map a plan to an employee.
+      - Some examples of a group might be "Part-time", "Full-time", or other ways that an employer might want to group benefits for a select group of people.
+    - **Open Enrollment** (start, end)
+    - **Employee** (name, email, dob, last_four_ssn, etc.)
+
+    The keys in your system that represent these entities should be prepared to be matched with keys from Nayya so that you can interact with the created entities once they are live.
+
+    So how do you provide this data? On to Step Two!
+
+    # Step Two: Configuration
+    The creation and maintenance of this configuration data is expected and required to make Nayya’s decision support accurate and effective. Once we provide API credentials, your data will be a blank slate, ready for you to begin.
+
+    Let's walk through how to set up all the entities that were mapped in **Step One**.
+
+    ### Employers
+    Employers are the hub of all other relations that you'll be configuring.
+
+    First, set up an employer using the **Add Employer** action:
+    ```
+    // Add Employer
+
+    POST /api/employers
+
+    { "name": "Employer Name", "address": "employer address", ... }
+    ```
+    This will return a `201` with the Nayya ID for that employer, which will be in the form of a randomly-generated string.
+
+    **Make sure you store this ID!** You will need it in order to access almost all of the endpoints available to you in this API.
+
+    ### Eligibility Groups
+    Next up are Eligibility Groups. These groups map an employee to a set of plans.
+
+    A plan belongs to one or more eligibility groups and an employee belongs to a single eligibility group. An employee is eligible for any plan that belongs to the same eligibility.
+
+    Simply perform the **Add Eligibility Group** action, and you are in business:
+
+    ```
+    // Add Eligibility Group
+
+    POST /api/employers/{employer_id}/eligibility-groups
+
+    {"name": "Part Time"}
+    ```
+
+    Since Plans belong to Eligibility Groups, you will need to create the Eligibility Groups first before creating Plans. This call will return a `201` and an ID for the Eligibility Group that you will need when creating a Plan for the group.
+
+    ### Plans
+    Now that you have Eligibility Groups configured, let's make some plans and tie them together.  This is done at the time of creating the Plan by passing in a set of one or more Eligibility Group IDs when adding a new plan.
+
+    ```
+    // Add Plan
+
+    POST /api/employers/{employer_id}/plans
+
+    {"name": "Major Medical Gold Plan", "medical_metadata": {...}, ... }
+    ```
+    Just like all of our `POST` endpoints, this will return a `201` with an ID that you should save to reference in your system for future requests and mapping of users to their choices.
+
+    And that's that! We can now enter employees into the system and get them ready to make some great decisions.
+
+    **NOTE**
+    Adding new plans requires more data than the other entities in our system, and the documentation should be read carefully to make sure that all of the required data is supplied and will display correctly in the Nayya user experience.
+
+    ### Employees
+    We now arrive at employees.
+
+    Employees can be added in bulk, since you likely want to dump a large amount of them to us up front, though the endpoint does handle adding one at a time, if that is your preference.
+
+    ```
+    // Add One or More Employees
+
+    POST /api/employer/{employer_id}/employees
+
+    [{"first_name": "Gloria", ...}, {"first_name": "Antoine", ...}]
+    ```
+
+    ID's for all added employees are returned in a `201` request so that you can map them to users in your system.
+
+    ### Open Enrollments
+    This is the last piece of configuration we need to allow employees to access the Nayya experience.
+
+    Open enrollments have start and end dates that determine when users can access the decision support tool.
+
+    If no open enrollment is live for an employee, they will be directed to our main menu and told that decision support is not available outside of open enrollments.
+
+    Setting one up is quite easy, much like the other entities:
+
+    ```
+    // Add an Open Enrollment
+
+    POST /api/employers/{employer_id}/open-enrollments
+
+    {"from": "2021-01-01", "to": "2021-02-02", "published": true}
+    ```
+
+    Configuration is now done! Let's finalize the integration by embedding the Nayya experience in your web app in **Step Three.**
+
+    # Step Three - Embed Nayya App
+    For a seamless user flow, Nayya can be embedded in an iframe directly in your web app.
+
+    Before starting, ensure that you have received both an API key as well as your Nayya User key. You will need them both for the embedding process.
+
+    You can achieve this in five steps:
+    ### 1. Locate Transition Point
+
+    First, locate the transition point in your user flow where it makes sense to go through Nayya decision support.
+
+    This should be before the employee is directed to select any plans that they'd like to participate in.
+
+    ### 2. Add the iframe to your application.
+
+    It will look something like this:
+
+    ```
+    <iframe
+      src="https://app.nayya.com/choose/embed?token=<your token>"
+      title="Nayya"
+      width="1200px"
+      height="900px">
+    </iframe>
+    ```
+
+    ### 3. Choose a secret for signing
+
+    Nayya accepts a JWT token signed with RS256 encoding as authentication. You will need to create a private/public key combination, providing Nayya with the public key so that we can verify you as the signer.
+
+    Log into the developer console to create or update your Embedded Public Key.
+
+    ### 4. Encode and Add JWT to URL
+
+    Add a signed JWT with authorization information and a exit URL as a `GET` param to the URL above.
+
+    There's a <a href="http://jwt.io/" target="_blank">lot of good information</a> out there on creating and managing JWT's, if you need help getting started working with them. The below example is merely psueodocode, but should give you an idea of the payload required when creating and signing.
+
+    ```
+    // pseudocode
+
+    payload = {
+      "iss": "Your Platform",
+      "exit_url": "https://your.desired.redirect",
+      "usid": "3aoprgpahg2-auohpga4-78ef-2oi9-fc5w",
+      "empe": "auohpga4-78ef-2oi9-fc5w-3aoprgpahg2",
+      "exp": 1613682529,
+      "iat": 1516239022
+    }
+    token = signToken(issueInfo, payload)
+    ```
+
+    You'll need to append this token as a parameter to the URL you provide the iframe, so it will end up looking like this:
+
+    ```
+    <iframesrc="https://app.nayya.com/choose/embed?token=eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJUZXN0IElzc3VlciIsImVtcGUiOiI4NWNiODI2ZS01N2ViLTQ3ZGMtYTA4OC04YjUxZDM4OWJhMzYiLCJ1c2lkIjoiODAyMTRlNGUtOGIyZS00YTk4LTljMDEtNDQ3MTNkOGQ1YTM0IiwiZXhpdF91cmwiOiJodHRwczovL3N0YWdpbmcubmF5eWEuY29tLyIsImV4cCI6MTcwMjg1NzIwOCwiaWF0IjoxNjAyODUzNjA4fQ.Ccomi8oVU1Kao0S25SghA-hs_qxA9_e8IU499G52AgRLVW9tu-XPCQn_jVFYJ8Z80CPG65X8vePgcIXE5bJwiHif9gQJ3lNERcfrRMyPNGdXeZC9irNr3LkNaZafK9qlTNiPK1pBplCbGMsXJTteRzi_of86SA1xbOXXzcG0Zuwr_MUvZgXlJP2iLmqNvJxG66W3L4xPCxs0C1ayqfCZOOzf5l_9B-PeTxUKdcI8HcBY7_okNHuTHBPigDGDiFAKwZEIZVkQepM6_jzLmzvuhBw0Gz7OedBiO2Ro8q1wMDpSvP0aj6PyfjN6GCRNhehfXrmmyhObW4ZehHb8efjVcQ"
+      title="Nayya"
+      width="1200px"
+      height="900px">
+    </iframe>
+    ```
+
+    ### 5. Fetch Employee-Bookmarked Plans from Nayya
+
+    Pull the user's plan choices from Nayya at: `GET /api/employees/{employee_id}/choices`
+
+    We'd recommend that the exit_url you provide in the JWT should be a route that will synchronously request employee choices from Nayya, cache them in your system, then optionally bust the iframe and redirect the user to the appropriate page to finalize their decisions in your system.
+
+    This has worked really well in our experience!
+
+    **And that's it!**
+
+    You are now integrated with Nayya, and employees everywhere will thank you.
+
+    Below you will find the technical specs for working with the Nayya API. If you'd like a `.yaml` file composed of the docs in OpenAPI 3.0 format, you can download by clicking the button at the top of this page.
+  contact:
+    name: Nayya Team
+    url: 'https://nayya.com'
+    email: api@nayya.com
+  termsOfService: 'https://nayya.com'
+servers:
+  - url: 'http://localhost:3000'
+    description: Development
+  - url: 'https://nayya.com'
+    description: Production
+paths:
+  /api/employers:
+    post:
+      summary: Add a new Employer
+      operationId: post-employers
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        description:
+                          type: string
+                        name:
+                          type: string
+                        address:
+                          type: string
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        zip:
+                          type: string
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: 3438yht-hg9ht39-h23uh9th-uewhtoo
+                        name: Example Employer
+                        address: 123 1st St
+                        city: New York
+                        state: NY
+                        zip: '35758'
+                        ben_admin_button: Acme Benefit Administration Platform
+                        ben_admin_link: 'https://example.com/acme_benefits'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: ''
+              properties:
+                name:
+                  type: string
+                  description: Name of the employer
+                address:
+                  type: string
+                  description: Street address of employer
+                city:
+                  type: string
+                  description: City portion of the employers address
+                state:
+                  type: string
+                  description: State portion of the employers address (two-character state code)
+                zip:
+                  type: string
+                  description: Zip code portion of the employers address (5 digits is fine)
+                ein:
+                  type: string
+                  description: Employer's tax identification number
+                website:
+                  type: string
+                  description: Website of the employer where you would want to direct employees of the company.
+                ben_admin_button:
+                  type: string
+                  description: Button text that should be displayed when sending users to the benefit administration system at the end of the Nayya decision support experience.
+                ben_admin_link:
+                  type: string
+                  description: URL to which Nayya should redirect users back into a benefit administration system at the end of the Nayya decision support experience.
+              required:
+                - name
+            examples:
+              All Data:
+                value:
+                  name: 'Rumpleton Candies, LLC'
+                  address: 123 Candy Cane Ln
+                  city: Atlanta
+                  state: GA
+                  zip: '30301'
+                  ein: 32-4561111
+                  website: 'https://example.com'
+                  ben_admin_button: Acme Benefit Administration Platform
+                  ben_admin_link: 'https://example.com/acme_benefits'
+              Minimum Dataset:
+                value:
+                  name: string
+        description: 'The more information provided, the better, but only the name is required.'
+      description: Employers represent a business or entity that has employees and is offering an enrollment period for benefits.
+      tags:
+        - Employers
+    parameters: []
+    get:
+      summary: List all Employers
+      operationId: get-api-employers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 'Unique id that represents this employer. Any time you want to refer to this employer at a later date, use this ID.'
+                        name:
+                          type: string
+                        address:
+                          type: string
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        zip:
+                          type: string
+                        ben_admin_button:
+                          type: string
+                          description: Button text that should be displayed when sending users to the benefit administration system at the end of the Nayya decision support experience.
+                        ben_admin_link:
+                          type: string
+                          description: URL to which Nayya should redirect users back into a benefit administration system at the end of the Nayya decision support experience.
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                      total_pages:
+                        type: integer
+                      total_count:
+                        type: integer
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: 12b345kh-kjb2435-2352kbho0-325bkjwb
+                        name: Fish and Flips
+                        address: 100 1st St
+                        city: Los Angeles
+                        state: CA
+                        zip: '90001'
+                        ben_admin_button: Acme Benefit Administration Platform
+                        ben_admin_link: 'https://example.com/acme_benefits'
+                    meta:
+                      current_page: 1
+                      total_pages: 1
+                      total_count: 1
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+      description: Retrieve the list of all employers related to your account.
+      tags:
+        - Employers
+  '/api/employers/{employer_id}':
+    patch:
+      summary: Modify an Employer
+      operationId: patch-employers
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      description: |-
+        Update data associated with an employer.
+
+        All attributes are optional; only those attributes provided will be modified.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the employer
+                  minLength: 2
+                address:
+                  type: string
+                  description: Street address of employer
+                city:
+                  type: string
+                  description: City portion of the employers address
+                state:
+                  type: string
+                  description: State portion of the employers address (two-character state code)
+                zip:
+                  type: string
+                  description: Zip code portion of the employers address (5 digits is fine)
+                ein:
+                  type: string
+                  description: Employer's tax identification number
+                website:
+                  type: string
+                  description: Website of the employer where you would want to direct employees of the company.
+                ben_admin_button:
+                  type: string
+                  description: Button text that should be displayed when sending users to the benefit administration system at the end of the Nayya decision support experience.
+                ben_admin_link:
+                  type: string
+                  description: URL to which Nayya should redirect users back into a benefit administration system at the end of the Nayya decision support experience.
+            examples:
+              Full Dataset:
+                value:
+                  name: 'Rumpleton Candies, LLC'
+                  address: 123 Candy Cane Ln
+                  city: Atlanta
+                  state: GA
+                  zip: '30301'
+                  ein: 32-4561111
+                  website: 'https://example.com'
+              Partial Dataset:
+                value:
+                  name: Fancy Company
+                  state: AZ
+        description: |-
+          All attributes optional.
+
+          Note that `name` is a required attribute for an Employer, see *Add a New Employer*, and it cannot be set to null or empty.
+      tags:
+        - Employers
+      parameters:
+        - schema:
+            type: string
+          name: employer_id
+          description: The unique ID from Nayya which represents an employer.
+          in: path
+          required: true
+  '/api/employers/{employer_id}/employees':
+    post:
+      summary: Add a new Employee
+      operationId: post-employees
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 'Unique id that represents this employee. Any time you want to refer to this employee at a later date, use this ID.'
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        email:
+                          type: string
+                        eligibility_group:
+                          type: string
+                          description: 'Unique id that represents the eligibility group which the employee was associated to. Any time you want to refer to this group at a later date, use this ID. '
+              examples:
+                Success - Three Employees:
+                  value:
+                    data:
+                      - id: 3438yht-hg9ht39-h23uh9th-uewhtoo
+                        first_name: Zahim
+                        last_name: Franklin
+                        email: someone@example.com
+                      - id: hg9ht39-h23uh9th-uewhtoo-3438yht
+                        first_name: Green
+                        last_name: Grables
+                        email: someone_else@example.com
+                      - id: uewhtoo-3438yht-hg9ht39-uewhtoo
+                        first_name: Little
+                        last_name: Garafalo
+                        email: someones_grandma@example.com
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      description: |-
+        Create and add employees to an employer. Employees represent an employee that will potentially be going through benefits enrollment.
+
+        If multiple employees are created at once, there is no partial success of the request. Either the request succeeds and all employees are created, or the request fails and no employees are created.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      first_name:
+                        type: string
+                        description: Employee's first name.
+                      last_name:
+                        type: string
+                        description: Employee's last name.
+                      address:
+                        type: string
+                        description: Street address portion of employee's address
+                      city:
+                        type: string
+                        description: City portion of employee's address
+                      state:
+                        type: string
+                        description: State portion of employee's address
+                      zip:
+                        type: string
+                        description: Zip code portion of employee's address
+                      gender:
+                        type: string
+                        description: 'Gender of the employee, if specified'
+                      date_of_birth:
+                        type: string
+                        description: Employee's date of birth in the format `YYYY-MM-DD`.
+                      phone:
+                        type: string
+                        description: |
+                          Phone number of employee.
+                      ssn_last_four:
+                        type: string
+                        maxLength: 4
+                        minLength: 4
+                        description: Last four digits of employee's social security number.
+                      locale:
+                        type: string
+                        maxLength: 2
+                        default: en
+                        description: 'Locale of the employee, used to choose which language to display in Nayya user experiences. Current options are: `en` and `es`. Defaulted to `en` if not provided.'
+                        minLength: 2
+                      email:
+                        type: string
+                        description: Email address of the employee being created.
+                      eligibility_group_id:
+                        type: string
+                        description: |-
+                          Optional attribute to tie an employee to an eligibility group at the time of creation. This is useful when doing a batch import where you already have this data at hand and don't want to make a separate request to make the relationship.
+
+                          Note that the id is the Nayya ID for this group, not the original id from your system.
+                      income_amount_cents:
+                        type: integer
+                        description: Income amount in cents. (Note&#58; must be provided with 'income_type'.)
+                      income_type:
+                        type: string
+                        enum:
+                          - salary
+                          - hourly
+                        description: (Note&#58; must be provided with 'income_amount_cents'.)
+                      title:
+                        type: string
+                      department:
+                        type: string
+                      manager_id:
+                        type: string
+                      employment_type:
+                        type: string
+                        description: Either `employee` or `contractor`
+                      employment_subtype:
+                        type: string
+                        description: 'Either `full_time`, `part_time`, `intern`, `temp`, `seasonal`, or `individual_contractor`'
+                      start_date:
+                        type: string
+                        description: 'String form of date, formatted as `YYYY-MM-DD`.'
+                      end_date:
+                        type: string
+                        description: 'String form of date, formatted as `YYYY-MM-DD`.'
+                      workplace_address:
+                        type: string
+                      workplace_address_unit:
+                        type: string
+                      workplace_city:
+                        type: string
+                      workplace_state:
+                        type: string
+                      workplace_country:
+                        type: string
+                      workplace_postal_code:
+                        type: string
+                      work_email:
+                        type: string
+                      payroll_id:
+                        type: string
+                    required:
+                      - first_name
+                      - last_name
+                      - email
+            examples:
+              Full Dataset:
+                value:
+                  data:
+                    - first_name: Samuel
+                      last_name: Jackson
+                      address: Bad St
+                      city: Los Angeles
+                      state: CA
+                      zip: '90001'
+                      gender: male
+                      date_of_birth: '1950-01-01'
+                      phone: 987-654-3211
+                      ssn_last_four: '9876'
+                      locale: en
+                      email: sam.l.jackson@example.com
+                      eligibility_group_id: 51da125b-dc13-4331-9a3d-7e11896ec656
+                      title: Engineer 2
+                      department: Engineering
+                      manager_id: '7'
+                      employment_type: employee
+                      employment_subtype: full_time
+                      start_date: '2001-01-01'
+                      end_date: '2011-01-01'
+                      income_amount_cents: 5000000
+                      income_type: salary
+                    - first_name: Beatrix
+                      last_name: Kiddo
+                      address: The St
+                      city: Los Angeles
+                      state: CA
+                      zip: '90002'
+                      gender: female
+                      date_of_birth: '1970-01-01'
+                      phone: 123-455-6789
+                      ssn_last_four: '1234'
+                      locale: es
+                      email: beatrix.kiddo@example.com
+                      title: Customer Representative
+                      department: Client Relations
+                      manager_id: '24'
+                      employment_type: employee
+                      employment_subtype: full_time
+                      start_date: '2010-09-05'
+                      end_date: '2011-01-01'
+                      income_amount_cents: 5000000
+                      income_type: salary
+              Partial Dataset:
+                value:
+                  data:
+                    - first_name: Samuel
+                      last_name: Jackson
+                      ssn_last_four: '9876'
+                      locale: en
+                      email: sam.l.jackson@example.com
+                    - first_name: Beatrix
+                      last_name: Kiddo
+                      email: beatrix.kiddo@example.com
+        description: ''
+      tags:
+        - Employees
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        description: The unique ID from Nayya which represents an employer.
+        in: path
+        required: true
+    get:
+      summary: List all Employees
+      operationId: get-api-employers-employer_id-employees
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 'Unique id that represents this employee. Any time you want to refer to this employee at a later date, use this ID.'
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        email:
+                          type: string
+                        eligibility_group_id:
+                          type: string
+                          description: 'Unique id that represents the eligibility group which the employee was associated to. Any time you want to refer to this group at a later date, use this ID.'
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                      total_pages:
+                        type: integer
+                      total_count:
+                        type: integer
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: gshe050y8-agw0hg-wugh0wh-uh0whgh0
+                        first_name: Misses
+                        last_name: Friendly
+                        email: misses@friendly.example
+                        eligibility_group_id: goi304t0-0g3j-paj924yj-0ig4h
+                      - id: 9pahgep95-aheprg-onbpen3-p98hap9b
+                        first_name: Mister
+                        last_name: Goodfellow
+                        email: mister@goodfellow.example
+                        eligibility_group_id: pq3g8hq3-o245-42t8ihgrw-hg40h
+                    meta:
+                      current_page: 1
+                      total_pages: 3
+                      total_count: 220
+      description: Retrieve a list of all employees for a specific employer.
+      tags:
+        - Employees
+  '/api/employers/{employer_id}/employees/{employee_id}':
+    patch:
+      summary: Modify an Employee
+      operationId: patch-employees
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      tags:
+        - Employees
+      description: 'Update an employee''s details. '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                gender:
+                  type: string
+                date_of_birth:
+                  description: 'In the format: `YYYY-MM-DD`'
+                  type: string
+                phone:
+                  type: string
+                address:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                zip:
+                  type: string
+                ssn_last_four:
+                  type: string
+                  minLength: 4
+                  maxLength: 4
+                locale:
+                  type: string
+                  minLength: 2
+                  maxLength: 2
+                email:
+                  type: string
+                income_amount_cents:
+                  type: integer
+                  description: Income amount in cents. (Note&#58; must be provided with 'income_type'.)
+                income_type:
+                  type: string
+                  enum:
+                    - salary
+                    - hourly
+                  description: (Note&#58; must be provided with 'income_amount_cents'.)
+                workplace_address:
+                  type: string
+                workplace_address_unit:
+                  type: string
+                workplace_city:
+                  type: string
+                workplace_state:
+                  type: string
+                workplace_country:
+                  type: string
+                workplace_postal_code:
+                  type: string
+                work_email:
+                  type: string
+                payroll_id:
+                  type: string
+        description: All attributes are optional. Only those provided will be updated.
+    delete:
+      summary: Remove an Employee
+      operationId: delete-employees
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      tags:
+        - Employees
+      description: Remove an employee. The employee will no longer have access to Nayya once this action is executed.
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        description: The unique ID from Nayya which represents an employer.
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: employee_id
+        description: The unique ID of the employee from Nayya.
+        in: path
+        required: true
+  '/api/employers/{employer_id}/eligibility-groups':
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        description: The unique ID from Nayya which represents an employer.
+        in: path
+        required: true
+    post:
+      summary: Add a new Eligibility Grouping
+      operationId: post-eligibility-groupss
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 'Unique id that represents this eligibility group. Any time you want to refer to this eligibility group at a later date, use this ID.'
+                        name:
+                          type: string
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: 80214e4e-8b2e-4a98-9c01-44713d8d5a34
+                        name: Floor Sellers
+                      - id: 44713d8d5a34-8b2e-4a98-9c01-80214e4e
+                        name: Ceiling Buyers
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      description: 'Create an eligibility group. Eligibility groups are used to authorize plans for employees. In order for an employee to have access to a plan when going through the decision support system, they must be associated with an eligibility group associated with that plan.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+              required:
+                - data
+            examples:
+              example-1:
+                value:
+                  data:
+                    - name: Wait Staff
+      tags:
+        - Eligibility Groups
+    get:
+      summary: List all Eligibility Groups
+      operationId: get-api-employers-employer_id-eligibility-groups
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 'Unique id that represents this eligibility group. Any time you want to refer to this eligibility group at a later date, use this ID.'
+                        name:
+                          type: string
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                      total_pages:
+                        type: integer
+                      total_count:
+                        type: integer
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: 3498gqa-ago43tt-24t2oihgo-97tohgo
+                        name: Part-time
+                      - id: ago43tt-24t2oihgo-97tohgo-3498gqa
+                        name: Full-time
+                    meta:
+                      current_page: 1
+                      total_pages: 1
+                      total_count: 1
+      description: Retrive the full list of eligibility groups for an employer.
+      tags:
+        - Eligibility Groups
+  '/api/employers/{employer_id}/eligibility-groups/{group_id}':
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        description: The unique ID from Nayya which represents an employer.
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: group_id
+        description: The unique ID from Nayya which represents an eligibility group.
+        in: path
+        required: true
+    patch:
+      summary: Modify an Eligibility Group
+      operationId: patch-eligibility-groups-id
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      description: Update data related to an eligibility grouping.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+        description: All attributes are optional. Only provided attributes will be updated.
+      tags:
+        - Eligibility Groups
+    delete:
+      summary: Remove an Eligibility Group
+      operationId: delete-eligibility-groups-id
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      tags:
+        - Eligibility Groups
+      description: |-
+        Remove an eligbility grouping.
+
+        Note that the removing of a grouping will deauthorize an employee from the associated plans and may affect Nayya's ability to find the best plans available for an employee.
+  '/api/eligibility-groups/{group_id}/employees/{employee_id}':
+    parameters:
+      - schema:
+          type: string
+        name: group_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: employee_id
+        in: path
+        required: true
+  '/api/employers/{employer_id}/plans':
+    post:
+      summary: Add New Plans
+      operationId: post-plans
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 'Unique id that represents this plan. Any time you want to refer to this plan at a later date, use this ID.'
+                        name:
+                          type: string
+                        carrier_id:
+                          type: string
+                        plan_type:
+                          type: string
+                        plan_details_url:
+                          type: string
+                        has_hsa:
+                          type: boolean
+                        has_hra:
+                          type: boolean
+                        has_fsa:
+                          type: boolean
+                        has_limited_fsa:
+                          type: boolean
+                        has_aco:
+                          type: boolean
+                        network_id:
+                          type: string
+                        aco_network_id:
+                          type: string
+                        metadata:
+                          type: object
+                          properties:
+                            metadata_key:
+                              description: Key value varies based on supplied data.
+                              type: string
+                        rates:
+                          type: object
+                          description: Will only include those rates you passed in.
+                          properties:
+                            e_only:
+                              type: number
+                            e_1child:
+                              type: number
+                            e_2child:
+                              type: number
+                            e_3child:
+                              type: number
+                            e_spouse:
+                              type: number
+                            e_spouse_1child:
+                              type: number
+                            e_spouse_2child:
+                              type: number
+                            e_spouse_3child:
+                              type: number
+                        eligibility_groups:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              eligibility_group_id:
+                                type: string
+                                description: Unique id from Nayya that represents an eligibility_group.
+                        begins_on:
+                          type: string
+                        ends_on:
+                          type: string
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: ap3thp34t-34aadfh-3444-ba4-7712gdf23g3
+                        name: A Plan
+                        carrier_id: u424jb2224bt-89uodfd-6575-gha5-938yut42yh
+                        plan_type: Medical
+                        plan_details_url: 'https://example.com'
+                        has_hsa: true
+                        has_hra: false
+                        has_fsa: true
+                        has_limited_fsa: false
+                        has_aco: false
+                        network_id: '124854'
+                        aco_network_id: '124855'
+                        metadata:
+                          emergency_room: '100% for first visit, 80% after'
+                        calculation_type: grouped
+                        rate-parameters:
+                          $ref: '#/components/schemas/RateParameters'
+                        rates:
+                          e_only: 23
+                          e_1child: 200
+                          e_2child: 250
+                          e_3child: 300
+                          e_spouse: 45
+                          e_spouse_child1: 0
+                          e_spouse_child2: 0
+                          e_spouse_child3: 0
+                        eligibility_groups:
+                          - eligibility_group_id: eligid22d5661-b6a3-4f37-bf8d-666d62b0b495
+                          - eligibility_group_id: 49a0c4e3-9abd-4892-84c8-c1d48cc29f3c
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      description: |-
+        Create a new plan.
+
+        **Note:** In order for this plan to be available as an option for employees, it must be attached to an Eligibility Group, and any employees that are authorized to purchase should be attached to that group in turn. By including one or more Eligibility Group IDs as part of this request they will be attached at Plan create.
+
+        ### Handling Plan Types
+        Nayya has a finite, static set of plan types that are supported, and each of them has a different set of required data in order to make the experience great for our users.
+
+        For each type, there is a metadata attribute with required fields. For example: requests to create plans of type `medical` should be sent with a `medical_metadata` attribute. Plans of type `accident_insurance` should include the `accident_insurance_metadata` attribute.
+
+        We suggest that you map each supported type to a request parameter that is optionally included with the request.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the plan that will be visible to employees.
+                carrier_id:
+                  type: string
+                  description: Unique identifier for the carrier for this plan. The options for this field can be fetched using the carriers GET route listed in this documentation.
+                plan_type:
+                  type: string
+                  description: |-
+                    Type of plan. Must be one of the following:
+                    `medical`
+                    `dental`
+                    `life_insurance`
+                    `critical_illness`
+                    `accident_insurance`
+                    `vision`
+                    `short_term_disability`
+                    `long_term_disability`
+                    `pet_insurance`
+                    `hospital_indemnity`
+                plan_details_url:
+                  type: string
+                  description: URL to a plan overview where an employee can see coverage details.
+                has_hsa:
+                  type: boolean
+                  description: True if this plan has an HSA
+                has_hra:
+                  type: boolean
+                  description: True if this plan has an HRA
+                has_fsa:
+                  type: boolean
+                  description: True if this plan has an FSA
+                has_limited_fsa:
+                  type: boolean
+                  description: True if this plan has an Limited FSA
+                has_aco:
+                  type: boolean
+                  description: Indicates whether this plan has an ACO network
+                notes:
+                  type: string
+                  description: Notes useful to admins
+                network_id:
+                  type: string
+                  description: An identifier for the network related to this plan.
+                aco_network_id:
+                  type: string
+                  description: ID of the ACO network associated with thisi plan. Can be used to optimize results for employees.
+                medical_metadata:
+                  type: object
+                  properties:
+                    deductible:
+                      type: integer
+                      description: required
+                    family_deductible:
+                      type: integer
+                      description: required
+                    out_of_pocket_max:
+                      type: integer
+                      description: required
+                    family_out_of_pocket_max:
+                      type: integer
+                      description: required
+                    office_visit:
+                      type: string
+                    specialist:
+                      type: string
+                    inpatient:
+                      type: string
+                    outpatient:
+                      type: string
+                    emergency_room:
+                      type: string
+                    has_fsa:
+                      type: boolean
+                dental_metadata:
+                  type: object
+                  properties:
+                    deductible:
+                      type: integer
+                      description: required
+                    preventative:
+                      type: string
+                    basic:
+                      type: string
+                    major:
+                      type: string
+                    orthodontics:
+                      type: string
+                    annual_benefit_maximum:
+                      type: integer
+                vision_metadata:
+                  type: object
+                  properties:
+                    annual_eye_exam:
+                      type: string
+                      description: required
+                    contact_lens:
+                      type: string
+                    single_vision_lenses:
+                      type: string
+                    bifocal_lenses:
+                      type: string
+                    trifocal_lenses:
+                      type: string
+                    polycarbonate:
+                      type: string
+                    progressive:
+                      type: string
+                    frame_allowance:
+                      type: string
+                    elective_contact_lenses:
+                      type: string
+                    laser_vision_correction:
+                      type: string
+                life_metadata:
+                  type: object
+                  properties:
+                    subtype:
+                      type: string
+                      description: 'required and one of [''term'', ''whole'', ''universal'', ''employer_paid'']'
+                    min_employee_age:
+                      type: integer
+                      description: minimum age in years at which employee is eligible for benefit
+                    max_employee_age:
+                      type: integer
+                      description: maximum age in years at which employee is eligible for benefit
+                    min_benefit:
+                      type: integer
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].'
+                    max_benefit:
+                      type: integer
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].'
+                    increment:
+                      type: integer
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].  The increment by which the benefit amounts increase.'
+                    guaranteed_issue:
+                      type: integer
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].'
+                    max_benefit_scalar:
+                      type: string
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal'']. The multiple of employee salary that can be purchased as a benefit amount.  One of [''1'', ''1.5'', ''2'', ''3'', ''4'', ''5'', ''6'', ''7'', ''8'', ''9'', ''10'', ''N/A'', ''other'']'
+                    term:
+                      type: integer
+                      description: the term of the policy in years
+                    spouse:
+                      type: string
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].  Indicates whether a spousal benefit is available. One of [''spouse_yes'', ''spouse_no'']'
+                    min_spouse_age:
+                      type: integer
+                      description: minimum age in years at which spouse is eligible for benefit
+                    max_spouse_age:
+                      type: integer
+                      description: maximum age in years at which employee is eligible for benefit
+                    min_spouse_benefit:
+                      type: integer
+                      description: required if spouse == 'spouse_yes'
+                    max_spouse_benefit:
+                      type: integer
+                      description: required if spouse == 'spouse_yes'
+                    spouse_increment:
+                      type: integer
+                      description: required if spouse == 'spouse_yes'.  The increment by which the spouse benefit amounts increase.
+                    spouse_guaranteed_issue:
+                      type: integer
+                      description: required if spouse == 'spouse_yes'
+                    max_percent_spouse_benefit:
+                      type: string
+                      description: 'required if spouse == ''spouse_yes''.  Indicates percentage of employee benefit selection spouse is eligible for.  One of [''50'', ''60'', ''70'', ''80'', ''90'', ''100'', ''N/A'', ''other'']'
+                    child:
+                      type: string
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].  Indicates whether a child benefit is available. One of [''child_yes'', ''child_no'']'
+                    infant:
+                      type: string
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''] and child == ''child_yes''.  Indicates whether infant benefit is available in addition to child benefit. One of [''infant_yes'', ''infant_no'']'
+                    min_infant_age:
+                      type: integer
+                      description: minimum age in days at which infant is eligible for benefit
+                    max_infant_age:
+                      type: integer
+                      description: maximum age in months at which infant is eligible for benefit
+                    min_infant_benefit:
+                      type: integer
+                      description: required if infant == 'infant_yes'
+                    max_infant_benefit:
+                      type: integer
+                      description: required if infant == 'infant_yes'
+                    infant_increment:
+                      type: integer
+                      description: required if infant == 'infant_yes'. The increment by which the infant benefit amounts increase.
+                    min_child_age:
+                      type: integer
+                      description: minimum age in months at which child is eligible for benefit
+                    max_child_age:
+                      type: integer
+                      description: maximum age in years at which child is eligible for benefit
+                    min_child_benefit:
+                      type: integer
+                      description: required if child == 'child_yes'
+                    max_child_benefit:
+                      type: integer
+                      description: required if child == 'child_yes'
+                    child_increment:
+                      type: integer
+                      description: required if child == 'child_yes'. The increment by which the child benefit amounts increase.
+                    benefit:
+                      type: integer
+                      description: 'required if subtype == ''employer_paid''.  The benefit amount provided to the employee at no cost to them.  If this benefit is available, rates should be submitted with calculation_type == ''individual'' and rates object should contain key ''e_only'' with value 0.0.'
+                    benefit_scalar:
+                      type: string
+                      description: 'required if subtype == ''employer_paid''. The multiple of employee salary that is offered as an employer paid benefit amount.  One of [''1'', ''1.5'', ''2'', ''3'', ''4'', ''5'', ''6'', ''7'', ''8'', ''9'', ''10'', ''N/A'', ''other''].'
+                    spouse_benefit:
+                      type: integer
+                      description: 'optionally include if subtype == ''employer_paid''. The value of spousal benefit offered at no cost to the employee.  If this benefit is available, rates should be submitted with calculation_type == ''individual'' and rates object should contain key ''spouse'' with value 0.0.'
+                    partner_benefit:
+                      type: integer
+                      description: 'optionally include if subtype == ''employer_paid''. The value of partner benefit offered at no cost to the employee.  If this benefit is available, rates should be submitted with calculation_type == ''individual'' and rates object should contain key ''partner'' with value 0.0.'
+                    child_benefit:
+                      type: integer
+                      description: 'optionally include if subtype == ''employer_paid''. The value of child benefit offered at no cost to the employee.  If this benefit is available, rates should be submitted with calculation_type == ''individual'' and rates object should contain key ''children'' with value 0.0.'
+                    details:
+                      type: string
+                      description: additional details about the plan
+                    percent_reduction_1:
+                      type: integer
+                      description: required if reduction_age_1 is populated.  The percent that the benefit reduces by at reduction_age_1.
+                    reduction_age_1:
+                      type: integer
+                      description: required if percent_reduction_1 is populated.  The age at which percent_reduction_1 occurs.
+                    percent_reduction_2:
+                      type: integer
+                      description: required if reduction_age_2 is populated.  The percent that the benefit reduces by at reduction_age_2.
+                    reduction_age_2:
+                      type: integer
+                      description: required if percent_reduction_2 is populated.  The age at which percent_reduction_2 occurs.
+                    percent_reduction_3:
+                      type: integer
+                      description: required if reduction_age_3 is populated.  The percent that the benefit reduces by at reduction_age_3.
+                    reduction_age_3:
+                      type: integer
+                      description: required if percent_reduction_3 is populated.  The age at which percent_reduction_3 occurs.
+                    percent_reduction_4:
+                      type: integer
+                      description: required if reduction_age_4 is populated.  The percent that the benefit reduces by at reduction_age_4.
+                    reduction_age_4:
+                      type: integer
+                      description: required if percent_reduction_4 is populated.  The age at which percent_reduction_4 occurs.
+                    multi_select:
+                      type: boolean
+                      description: 'flag to indicate that this plan may be selected in combination with other plans of this plan type. Do not apply to free plans that you wish to be auto-selected for the employee. Example: enabling multi_select for a whole life plan and a term life plan will enable both plans to be selected at the same time instead of the default behavior of one or none being selected.'
+                pet_metadata:
+                  type: object
+                  properties:
+                    annual_deductible:
+                      type: integer
+                      description: required
+                    maximum_annual_benefit:
+                      type: integer
+                    accident:
+                      type: boolean
+                    injuries:
+                      type: boolean
+                    common_illnesses:
+                      type: boolean
+                    chronic_illnesses:
+                      type: boolean
+                    hereditary_conditions:
+                      type: boolean
+                    surgeries_and_hospitalizations:
+                      type: boolean
+                    scans:
+                      type: boolean
+                    rx:
+                      type: boolean
+                    wellness:
+                      type: boolean
+                    vaccinations:
+                      type: boolean
+                    spay:
+                      type: boolean
+                    flea_and_ticks:
+                      type: boolean
+                    heartworm:
+                      type: boolean
+                    blood_tests:
+                      type: boolean
+                hospital_indemnity_metadata:
+                  type: object
+                  properties:
+                    admission:
+                      type: integer
+                      description: required
+                    confinement:
+                      type: string
+                    screening:
+                      type: string
+                    preexisting_limitation:
+                      type: string
+                    portabiligy:
+                      type: string
+                    age_limits:
+                      type: string
+                short_term_disability_metadata:
+                  type: object
+                  properties:
+                    benefit_summary:
+                      type: string
+                      description: required
+                    benefits_begin:
+                      type: string
+                    duration:
+                      type: string
+                    return_to_work:
+                      type: string
+                    minimum_weekly_benefit:
+                      type: string
+                    worksite_modification:
+                      type: string
+                long_term_disability_metadata:
+                  type: object
+                  properties:
+                    benefit_summary:
+                      type: string
+                      description: required
+                    benefits_begin:
+                      type: string
+                    duration:
+                      type: string
+                    guarantee_issue:
+                      type: string
+                    evidence_insurability:
+                      type: string
+                    definition_of_disability:
+                      type: string
+                    return_to_work:
+                      type: string
+                    minimum_weekly_benefit:
+                      type: string
+                    worksite_modification:
+                      type: string
+                critical_illness_metadata:
+                  type: object
+                  properties:
+                    benefit_amount:
+                      type: integer
+                      description: required
+                    covers_cancer:
+                      type: boolean
+                      description: required
+                    heart_attack:
+                      type: string
+                    cancer:
+                      type: string
+                    permanent_damage_due_to_stroke:
+                      type: string
+                    end_stage_renal_failure:
+                      type: string
+                    major_organ_failure:
+                      type: string
+                accident_metadata:
+                  type: object
+                  properties:
+                    benefit_amount:
+                      type: integer
+                      description: required
+                    catastrophic_loss:
+                      type: integer
+                    common_disaster:
+                      type: integer
+                    common_carrier:
+                      type: string
+                    urgent_care_doctor_visit:
+                      type: string
+                    diagnostic_x_ray:
+                      type: string
+                    diagnostic_ct_cat_mri_eeg:
+                      type: string
+                    emergency_room:
+                      type: string
+                    follow_up_visits:
+                      type: string
+                    physical_therapy:
+                      type: string
+                    ambulance:
+                      type: string
+                    air_ambulance:
+                      type: string
+                    hospital_admission:
+                      type: string
+                    hospital_icu_admission:
+                      type: string
+                    hospital_confinement:
+                      type: string
+                    hospital_icu_confinement:
+                      type: string
+                    rehabilitation_confinement:
+                      type: string
+                    prescribed_appliance:
+                      type: string
+                    dental_crown_or_extraction:
+                      type: string
+                    eye_surgery_or_object_removal:
+                      type: string
+                    prescribed_prosthetic:
+                      type: string
+                    concussion:
+                      type: string
+                calculation_type:
+                  $ref: '#/components/schemas/CalculationType'
+                rate_parameters:
+                  $ref: '#/components/schemas/RateParameters'
+                rates:
+                  oneOf:
+                    - $ref: '#/components/schemas/Insured-AgeRange'
+                    - $ref: '#/components/schemas/InsuredGroup'
+                    - $ref: '#/components/schemas/InsuredGroup-AgeRange'
+                    - $ref: '#/components/schemas/InsuredGroup-AgeRange-BenefitAmount'
+                    - $ref: '#/components/schemas/InsuredGroup-BenefitAmount'
+                  description: 'An array of rates for this plan, mapping each tier to the rate. (e.g. [{"Employee Only": "$175.00"},...]'
+                eligibility_groups:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      eligibility_group_id:
+                        type: string
+                        description: Unique id from Nayya that represents an eligibility_group.
+              required:
+                - name
+                - carrier_id
+                - plan_type
+                - eligibility_groups
+            examples:
+              Medical:
+                value:
+                  name: Medical Insurance Plan Name
+                  carrier_id: 6592a62b-297b-459b-954b-7e4941095149
+                  plan_type: medical
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  has_aco: true
+                  network_id: '123456'
+                  aco_network_id: '654321'
+                  medical_metadata:
+                    deductible: 1000
+                    family_deductible: 2000
+                    out_of_pocket_max: 2200
+                    family_out_of_pocket_max: 3200
+                    office_visit: $30 Copay
+                    specialist: $60 Specialist
+                    inpatient: 0% Coinsurance
+                    outpatient: 0% Coinsurance
+                    emergency_room: $250 Copay
+                    has_fsa: true
+                  calculation_type: grouped
+                  rate_parameters:
+                    - insured_group
+                  rates:
+                    e_only: 200
+                    e_1child: 280
+                    e_2child: 300
+                    e_3child: 300
+                    e_spouse: 210
+                    e_partner: 215
+                    e_spouse_1child: 320
+                    e_spouse_2child: 350
+                    e_spouse_3child: 350
+                    e_partner_1child: 320
+                    e_partner_2child: 350
+                    e_partner_3child: 350
+                  eligibility_groups:
+                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
+              Dental:
+                value:
+                  name: Dental Insurance Plan Name
+                  carrier_id: 6592a62b-297b-459b-954b-7e4941095149
+                  plan_type: dental
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  has_aco: true
+                  network_id: '123456'
+                  aco_network_id: '654321'
+                  dental_metadata:
+                    deductible: 25
+                    preventative: 100% Covered
+                    basic: 80% Covered
+                    major: 50% Covered
+                    orthodontics: 50% Covered
+                    annual_benefit_maximum: 1500
+                    out_of_network: See plan overview
+                  calculation_type: grouped
+                  rate_parameters:
+                    - insured_group
+                  rates:
+                    e_only: 200
+                    e_1child: 280
+                    e_2child: 300
+                    e_3child: 300
+                    e_spouse: 210
+                    e_partner: 215
+                    e_spouse_1child: 320
+                    e_spouse_2child: 350
+                    e_spouse_3child: 350
+                    e_partner_1child: 320
+                    e_partner_2child: 350
+                    e_partner_3child: 350
+                  eligibility_groups:
+                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
+              Vision:
+                value:
+                  name: Vision Insurance Plan Name
+                  carrier_id: 6592a62b-297b-459b-954b-7e4941095149
+                  plan_type: vision
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  has_aco: true
+                  network_id: '123456'
+                  aco_network_id: '654321'
+                  vision_metadata:
+                    annual_eye_exam: $10
+                    contact_lens: Up to $40 (Standard); $0 (< 19 years of age)
+                    single_vision_lenses: $10
+                    bifocal_lenses: $10
+                    trifocal_lenses: $10
+                    polycarbonate: $40 (Standard); $0 (<19 years of age)
+                    progressive: $65 (Standard); $95 - 185 (Premium Tier 1 - 4)
+                    frame_allowance: $0 Copay
+                    elective_contact_lenses: $0 Copay
+                    laser_vision_correction: 15% off retail or 5% off promo price
+                  calculation_type: grouped
+                  rate_parameters:
+                    - insured_group
+                  rates:
+                    e_only: 200
+                    e_1child: 280
+                    e_2child: 300
+                    e_3child: 300
+                    e_spouse: 210
+                    e_partner: 215
+                    e_spouse_1child: 320
+                    e_spouse_2child: 350
+                    e_spouse_3child: 350
+                    e_partner_1child: 320
+                    e_partner_2child: 350
+                    e_partner_3child: 350
+                  eligibility_groups:
+                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
+              Life:
+                value:
+                  name: Paid Life Insurance Plan Name
+                  carrier_id: 6592a62b-297b-459b-954b-7e4941095149
+                  plan_type: life_insurance
+                  plan_details_url: 'https://example.com'
+                  life_metadata:
+                    subtype: employer_paid
+                    benefit: 100000
+                    benefit_scalar: '2'
+                    spouse_benefit: 50000
+                    child_benefit: 0
+                    multi_select: false
+                  calculation_type: grouped
+                  rate_parameters:
+                    - insured_group
+                  rates:
+                    e_only: 200
+                    e_1child: 280
+                    e_2child: 300
+                    e_3child: 300
+                    e_spouse: 210
+                    e_partner: 215
+                    e_spouse_1child: 320
+                    e_spouse_2child: 350
+                    e_spouse_3child: 350
+                    e_partner_1child: 320
+                    e_partner_2child: 350
+                    e_partner_3child: 350
+                  eligibility_groups:
+                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
+              Pet:
+                value:
+                  name: Pet Insurance Plan Name
+                  carrier_id: 6592a62b-297b-459b-954b-7e4941095149
+                  plan_type: pet_insurance
+                  plan_details_url: 'https://example.com'
+                  network_id: '123456'
+                  pet_metadata:
+                    annual_deductible: 0
+                    maximum_annual_benefit: 0
+                    accident: true
+                    injuries: true
+                    common_illnesses: true
+                    chronic_illnesses: true
+                    hereditary_conditions: true
+                    surgeries_and_hospitalizations: true
+                    scans: true
+                    rx: true
+                    wellness: true
+                    vaccinations: true
+                    spay: true
+                    flea_and_ticks: true
+                    heartworm: true
+                    blood_tests: true
+                  calculation_type: grouped
+                  rate_parameters:
+                    - insured_group
+                  rates:
+                    e_only: 200
+                    e_1child: 280
+                    e_2child: 300
+                    e_3child: 300
+                    e_spouse: 210
+                    e_partner: 215
+                    e_spouse_1child: 320
+                    e_spouse_2child: 350
+                    e_spouse_3child: 350
+                    e_partner_1child: 320
+                    e_partner_2child: 350
+                    e_partner_3child: 350
+                  eligibility_groups:
+                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
+              Hospital Indemnity:
+                value:
+                  name: Hospital Indemnity Plan Name
+                  carrier_id: 6592a62b-297b-459b-954b-7e4941095149
+                  plan_type: hospital_indemnity
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  has_aco: true
+                  network_id: '123456'
+                  aco_network_id: '654321'
+                  hospital_indemnity_metadata:
+                    admission: 1000
+                    confinement: $100 per day
+                  calculation_type: grouped
+                  rate_parameters:
+                    - insured_group
+                  rates:
+                    e_only: 200
+                    e_1child: 280
+                    e_2child: 300
+                    e_3child: 300
+                    e_spouse: 210
+                    e_partner: 215
+                    e_spouse_1child: 320
+                    e_spouse_2child: 350
+                    e_spouse_3child: 350
+                    e_partner_1child: 320
+                    e_partner_2child: 350
+                    e_partner_3child: 350
+                  eligibility_groups:
+                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
+              Short Term Disability:
+                value:
+                  name: Short Term Disability Plan Name
+                  carrier_id: 6592a62b-297b-459b-954b-7e4941095149
+                  plan_type: short_term_disability
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  has_aco: true
+                  network_id: '123456'
+                  aco_network_id: '654321'
+                  short_term_disability_metadata:
+                    benefit_summary: '60% of your monthly income, up to $1,200'
+                    benefits_begin: 90 days
+                    duration: Up to the Social Security (SS) normal retirement age
+                  calculation_type: grouped
+                  rate_parameters:
+                    - insured_group
+                  rates:
+                    e_only: 200
+                    e_1child: 280
+                    e_2child: 300
+                    e_3child: 300
+                    e_spouse: 210
+                    e_partner: 215
+                    e_spouse_1child: 320
+                    e_spouse_2child: 350
+                    e_spouse_3child: 350
+                    e_partner_1child: 320
+                    e_partner_2child: 350
+                    e_partner_3child: 350
+                  eligibility_groups:
+                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
+              Long Term Disability:
+                value:
+                  name: Long Term Disability Plan Name
+                  carrier_id: 6592a62b-297b-459b-954b-7e4941095149
+                  plan_type: long_term_disability
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  has_aco: true
+                  network_id: '123456'
+                  aco_network_id: '654321'
+                  long_term_disability_metadata:
+                    benefit_summary: '60% of your monthly income, up to $1,200'
+                    benefits_begin: 365 days
+                    duration: Up to the Social Security (SS) normal retirement age
+                  calculation_type: grouped
+                  rate_parameters:
+                    - insured_group
+                  rates:
+                    e_only: 200
+                    e_1child: 280
+                    e_2child: 300
+                    e_3child: 300
+                    e_spouse: 210
+                    e_partner: 215
+                    e_spouse_1child: 320
+                    e_spouse_2child: 350
+                    e_spouse_3child: 350
+                    e_partner_1child: 320
+                    e_partner_2child: 350
+                    e_partner_3child: 350
+                  eligibility_groups:
+                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
+              Critical Illness:
+                value:
+                  name: Critical Illness Insurance Plan Name
+                  carrier_id: 6592a62b-297b-459b-954b-7e4941095149
+                  plan_type: critical_illness
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  has_aco: true
+                  network_id: '123456'
+                  aco_network_id: '654321'
+                  critical_illness_metadata:
+                    benefit_amount: 15000
+                    covers_cancer: true
+                    heart_attack: 100% of Benefit Amount
+                    cancer: 100% of benefit amount for Invasive Cancers
+                    permanent_damate_due_to_stroke: 100% of Benefit Amount
+                    end_stage_renal_failure: 100% of Benefit Amount
+                  calculation_type: grouped
+                  rate_parameters:
+                    - insured_group
+                  rates:
+                    e_only: 200
+                    e_1child: 280
+                    e_2child: 300
+                    e_3child: 300
+                    e_spouse: 210
+                    e_partner: 215
+                    e_spouse_1child: 320
+                    e_spouse_2child: 350
+                    e_spouse_3child: 350
+                    e_partner_1child: 320
+                    e_partner_2child: 350
+                    e_partner_3child: 350
+                  eligibility_groups:
+                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
+              Accident:
+                value:
+                  name: Accident Insurance Plan Name
+                  carrier_id: 6592a62b-297b-459b-954b-7e4941095149
+                  plan_type: accident_insurance
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  has_aco: true
+                  network_id: '123456'
+                  aco_network_id: '654321'
+                  accident_metadata:
+                    benefit_amount: 1000
+                    catastrophic_loss: 2500
+                    common_disaster: 250
+                    common_carrier: '250000'
+                    urgent_care_doctor_visit: '60'
+                    diagnostic_x_ray: '75'
+                    diagnostic_ct_cat_mri_eeg: '240'
+                    emergency_room: '150'
+                    follow_up_visits: '60'
+                    physical_therapy: '45'
+                    ambulance: '300'
+                    air_ambulance: '1800'
+                    hospital_admission: '1200'
+                    hospital_icu_admission: '3750'
+                    hospital_confinement: $240 per day
+                    hospital_icu_confinement: $750 per day
+                    rehabilitation_confinement: '200'
+                    prescribed_appliance: '200'
+                    dental_crown_or_extraction: $300 per crown / $120 per extraction
+                    eye_surgery_or_object_removal: '500'
+                    prescribed_prosthetic: '$750 one device / $1,500 two or more devices'
+                    concussion: '210'
+                  calculation_type: grouped
+                  rate_parameters:
+                    - insured_group
+                  rates:
+                    e_only: 200
+                    e_1child: 280
+                    e_2child: 300
+                    e_3child: 300
+                    e_spouse: 210
+                    e_partner: 215
+                    e_spouse_1child: 320
+                    e_spouse_2child: 350
+                    e_spouse_3child: 350
+                    e_partner_1child: 320
+                    e_partner_2child: 350
+                    e_partner_3child: 350
+                  eligibility_groups:
+                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
+        description: |-
+          Every plan requires `name`, `carrier_id`, and `plan_type`.
+
+          There are also metadata fields that act as content holders for how employees see plan details in the Nayya employee-facing apps. Each type of plan, specified by `plan_type`, has a different set of metadata required to correctly display the plan details to the employee.
+
+          While the schema does not require these metadata fields, they should all be provided depending on the plan type that is being created, and the request may be rejected as unprocessible if all metadata attributes are not provided.
+      tags:
+        - Plans
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        description: The unique ID from Nayya which represents an employer.
+        in: path
+        required: true
+    get:
+      summary: List Plans belonging to Employer
+      operationId: get-api-employers-employer_id-plans
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        carrier_id:
+                          type: string
+                        plan_type:
+                          type: string
+                        plan_details_url:
+                          type: string
+                        has_hsa:
+                          type: boolean
+                        has_hra:
+                          type: boolean
+                        has_fsa:
+                          type: boolean
+                        has_limited_fsa:
+                          type: boolean
+                        has_aco:
+                          type: boolean
+                        network_id:
+                          type: string
+                        aco_network_id:
+                          type: string
+                        metadata:
+                          type: object
+                          description: Includes whatever metadata is provided for this plan's type. Not all possible attributes listed here. See `plans` docs for all possible attributes.
+                        calculation_type:
+                          $ref: '#/components/schemas/CalculationType'
+                        rate-parameters:
+                          $ref: '#/components/schemas/RateParameters'
+                        rates:
+                          oneOf:
+                            - $ref: '#/components/schemas/Insured-AgeRange'
+                            - $ref: '#/components/schemas/InsuredGroup'
+                            - $ref: '#/components/schemas/InsuredGroup-AgeRange'
+                            - $ref: '#/components/schemas/InsuredGroup-AgeRange-BenefitAmount'
+                            - $ref: '#/components/schemas/InsuredGroup-BenefitAmount'
+                      required:
+                        - id
+                        - name
+                        - carrier_id
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: ap3thp34t-34aadfh-3444-ba4-7712gdf23g3
+                        name: A Plan
+                        carrier_id: u424jb2224bt-89uodfd-6575-gha5-938yut42yh
+                        plan_type: Medical
+                        plan_details_url: 'https://example.com'
+                        has_hsa: true
+                        has_hra: false
+                        has_fsa: true
+                        has_limited_fsa: false
+                        has_aco: false
+                        network_id: '124854'
+                        aco_network_id: '124855'
+                        metadata:
+                          emergency_room: '100% for first visit, 80% after'
+                        calculation_type: grouped
+                        rate_parameters:
+                          - insured_group
+                        rates:
+                          e_only: 23
+                          e_1child: 200
+                          e_2child: 250
+                          e_3child: 300
+                          e_spouse: 45
+                          e_spouse_child1: 0
+                          e_spouse_child2: 0
+                          e_spouse_child3: 0
+      description: Lists all plans belonging to the provided employer.
+      tags:
+        - Plans
+  '/api/employers/{employer_id}/plans/{plan_id}':
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        description: The unique ID from Nayya which represents an employer.
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: plan_id
+        description: The unique ID from Nayya's which represents a plan.
+        in: path
+        required: true
+    patch:
+      summary: Modify a Plan
+      operationId: patch-plans-id
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      description: Update the details of a plan.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the plan that will be visible to employees.
+                carrier:
+                  type: string
+                  description: Name of the carrier or vendor for the plan.
+                plan_type:
+                  type: string
+                  description: |-
+                    Type of plan. Must be one of the following:
+                    `medical`
+                    `dental`
+                    `life_insurance`
+                    `critical_illness`
+                    `accident_insurance`
+                    `vision`
+                    `short_term_disability`
+                    `long_term_disability`
+                    `pet_insurance`
+                    `hospital_indemnity`
+                plan_details_url:
+                  type: string
+                  description: URL to a plan overview where an employee can se coverage details.
+                has_hsa:
+                  type: boolean
+                  description: True if this plan has an HSA
+                has_hra:
+                  type: boolean
+                  description: True if this plan has an HRA
+                has_fsa:
+                  type: boolean
+                  description: True if this plan has an FSA
+                has_limited_fsa:
+                  type: boolean
+                  description: True if this plan has an Limited FSA
+                notes:
+                  type: string
+                  description: Notes useful to admins
+                network_id:
+                  type: string
+                  description: An identifier for the network related to this plan.
+                medical_metadata:
+                  type: object
+                  properties:
+                    deductible:
+                      type: integer
+                    family_deductible:
+                      type: integer
+                    out_of_pocket_max:
+                      type: integer
+                    family_out_of_pocket_max:
+                      type: integer
+                    office_visit:
+                      type: string
+                    specialist:
+                      type: string
+                    inpatient:
+                      type: string
+                    outpatient:
+                      type: string
+                    emergency_room:
+                      type: string
+                    has_fsa:
+                      type: boolean
+                dental_metadata:
+                  type: object
+                  properties:
+                    deductible:
+                      type: integer
+                    preventative:
+                      type: string
+                    basic:
+                      type: string
+                    major:
+                      type: string
+                    orthodontics:
+                      type: string
+                    annual_benefit_maximum:
+                      type: integer
+                vision_metadata:
+                  type: object
+                  properties:
+                    annual_eye_exam:
+                      type: string
+                    contact_lens:
+                      type: string
+                    single_vision_lenses:
+                      type: string
+                    bifocal_lenses:
+                      type: string
+                    trifocal_lenses:
+                      type: string
+                    polycarbonate:
+                      type: string
+                    progressive:
+                      type: string
+                    frame_allowance:
+                      type: string
+                    elective_contact_lenses:
+                      type: string
+                    laser_vision_correction:
+                      type: string
+                life_metadata:
+                  type: object
+                  properties:
+                    subtype:
+                      type: string
+                      description: 'required and one of [''term'', ''whole'', ''universal'', ''employer_paid'']'
+                    min_employee_age:
+                      type: integer
+                      description: minimum age in years at which employee is eligible for benefit
+                    max_employee_age:
+                      type: integer
+                      description: maximum age in years at which employee is eligible for benefit
+                    min_benefit:
+                      type: integer
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].'
+                    max_benefit:
+                      type: integer
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].'
+                    increment:
+                      type: integer
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].  The increment by which the benefit amounts increase.'
+                    guaranteed_issue:
+                      type: integer
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].'
+                    max_benefit_scalar:
+                      type: string
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal'']. The multiple of employee salary that can be purchased as a benefit amount.  One of [''1'', ''1.5'', ''2'', ''3'', ''4'', ''5'', ''6'', ''7'', ''8'', ''9'', ''10'', ''N/A'', ''other'']'
+                    term:
+                      type: integer
+                      description: the term of the policy in years
+                    spouse:
+                      type: string
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].  Indicates whether a spousal benefit is available. One of [''spouse_yes'', ''spouse_no'']'
+                    min_spouse_age:
+                      type: integer
+                      description: minimum age in years at which spouse is eligible for benefit
+                    max_spouse_age:
+                      type: integer
+                      description: maximum age in years at which employee is eligible for benefit
+                    min_spouse_benefit:
+                      type: integer
+                      description: required if spouse == 'spouse_yes'
+                    max_spouse_benefit:
+                      type: integer
+                      description: required if spouse == 'spouse_yes'
+                    spouse_increment:
+                      type: integer
+                      description: required if spouse == 'spouse_yes'.  The increment by which the spouse benefit amounts increase.
+                    spouse_guaranteed_issue:
+                      type: integer
+                      description: required if spouse == 'spouse_yes'
+                    max_percent_spouse_benefit:
+                      type: string
+                      description: 'required if spouse == ''spouse_yes''.  Indicates percentage of employee benefit selection spouse is eligible for.  One of [''50'', ''60'', ''70'', ''80'', ''90'', ''100'', ''N/A'', ''other'']'
+                    child:
+                      type: string
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''].  Indicates whether a child benefit is available. One of [''child_yes'', ''child_no'']'
+                    infant:
+                      type: string
+                      description: 'required if subtype is one of [''term'', ''whole'', ''universal''] and child == ''child_yes''.  Indicates whether infant benefit is available in addition to child benefit. One of [''infant_yes'', ''infant_no'']'
+                    min_infant_age:
+                      type: integer
+                      description: minimum age in days at which infant is eligible for benefit
+                    max_infant_age:
+                      type: integer
+                      description: maximum age in months at which infant is eligible for benefit
+                    min_infant_benefit:
+                      type: integer
+                      description: required if infant == 'infant_yes'
+                    max_infant_benefit:
+                      type: integer
+                      description: required if infant == 'infant_yes'
+                    infant_increment:
+                      type: integer
+                      description: required if infant == 'infant_yes'. The increment by which the infant benefit amounts increase.
+                    min_child_age:
+                      type: integer
+                      description: minimum age in months at which child is eligible for benefit
+                    max_child_age:
+                      type: integer
+                      description: maximum age in years at which child is eligible for benefit
+                    min_child_benefit:
+                      type: integer
+                      description: required if child == 'child_yes'
+                    max_child_benefit:
+                      type: integer
+                      description: required if child == 'child_yes'
+                    child_increment:
+                      type: integer
+                      description: required if child == 'child_yes'. The increment by which the child benefit amounts increase.
+                    benefit:
+                      type: integer
+                      description: required if subtype == 'employer_paid'.  The benefit amount provided to the employee at no cost to them.
+                    benefit_scalar:
+                      type: string
+                      description: 'required if subtype == ''employer_paid''. The multiple of employee salary that is offered as an employer paid benefit amount.  One of [''1'', ''1.5'', ''2'', ''3'', ''4'', ''5'', ''6'', ''7'', ''8'', ''9'', ''10'', ''N/A'', ''other''].'
+                    spouse_benefit:
+                      type: integer
+                      description: required if subtype == 'employer_paid'. The value of spousal benefit offered at no cost to the employee.
+                    child_benefit:
+                      type: integer
+                      description: required if subtype == 'employer_paid'. The value of child benefit offered at no cost to the employee.
+                    details:
+                      type: string
+                      description: additional details about the plan
+                    percent_reduction_1:
+                      type: integer
+                      description: required if reduction_age_1 is populated.  The percent that the benefit reduces by at reduction_age_1.
+                    reduction_age_1:
+                      type: integer
+                      description: required if percent_reduction_1 is populated.  The age at which percent_reduction_1 occurs.
+                    percent_reduction_2:
+                      type: integer
+                      description: required if reduction_age_2 is populated.  The percent that the benefit reduces by at reduction_age_2.
+                    reduction_age_2:
+                      type: integer
+                      description: required if percent_reduction_2 is populated.  The age at which percent_reduction_2 occurs.
+                    percent_reduction_3:
+                      type: integer
+                      description: required if reduction_age_3 is populated.  The percent that the benefit reduces by at reduction_age_3.
+                    reduction_age_3:
+                      type: integer
+                      description: required if percent_reduction_3 is populated.  The age at which percent_reduction_3 occurs.
+                    percent_reduction_4:
+                      type: integer
+                      description: required if reduction_age_4 is populated.  The percent that the benefit reduces by at reduction_age_4.
+                    reduction_age_4:
+                      type: integer
+                      description: required if percent_reduction_4 is populated.  The age at which percent_reduction_4 occurs.
+                    multi_select:
+                      type: boolean
+                      description: 'flag to indicate that this plan may be selected in combination with other plans of this plan type. Do not apply to free plans that you wish to be auto-selected for the employee. Example: enabling multi_select for a whole life plan and a term life plan will enable both plans to be selected at the same time instead of the default behavior of one or none being selected.'
+                pet_metadata:
+                  type: object
+                  properties:
+                    annual_deductible:
+                      type: integer
+                    maximum_annual_benefit:
+                      type: integer
+                    accident:
+                      type: boolean
+                    injuries:
+                      type: boolean
+                    common_illnesses:
+                      type: boolean
+                    chronic_illnesses:
+                      type: boolean
+                    hereditary_conditions:
+                      type: boolean
+                    surgeries_and_hospitalizations:
+                      type: boolean
+                    scans:
+                      type: boolean
+                    rx:
+                      type: boolean
+                    wellness:
+                      type: boolean
+                    vaccinations:
+                      type: boolean
+                    spay:
+                      type: boolean
+                    flea_and_ticks:
+                      type: boolean
+                    heartworm:
+                      type: boolean
+                    blood_tests:
+                      type: boolean
+                hospital_indemnity_metadata:
+                  type: object
+                  properties:
+                    admission:
+                      type: integer
+                    confinement:
+                      type: string
+                short_term_disability_metadata:
+                  type: object
+                  properties:
+                    benefit_summary:
+                      type: string
+                    benefits_begin:
+                      type: string
+                    duration:
+                      type: string
+                long_term_disability_metadata:
+                  type: object
+                  properties:
+                    benefit_summary:
+                      type: string
+                    benefits_begin:
+                      type: string
+                    duration:
+                      type: string
+                critical_illness_metadata:
+                  type: object
+                  properties:
+                    benefit_amount:
+                      type: integer
+                    covers_cancer:
+                      type: boolean
+                    heart_attack:
+                      type: string
+                    cancer:
+                      type: string
+                    permanent_damate_due_to_stroke:
+                      type: string
+                    end_stage_renal_failure:
+                      type: string
+                accident_metadata:
+                  type: object
+                  properties:
+                    benefit_amount:
+                      type: integer
+                    catastrophic_loss:
+                      type: integer
+                    common_disaster:
+                      type: integer
+                    common_carrier:
+                      type: string
+                    urgent_care_doctor_visit:
+                      type: string
+                    diagnostic_x_ray:
+                      type: string
+                    diagnostic_ct_cat_mri_eeg:
+                      type: string
+                    emergency_room:
+                      type: string
+                    follow_up_visits:
+                      type: string
+                    physical_therapy:
+                      type: string
+                    ambulance:
+                      type: string
+                    air_ambulance:
+                      type: string
+                    hospital_admission:
+                      type: string
+                    hospital_icu_admission:
+                      type: string
+                    hospital_confinement:
+                      type: string
+                    hospital_icu_confinement:
+                      type: string
+                    rehabilitation_confinement:
+                      type: string
+                    prescribed_appliance:
+                      type: string
+                    dental_crown_or_extraction:
+                      type: string
+                    eye_surgery_or_object_removal:
+                      type: string
+                    prescribed_prosthetic:
+                      type: string
+                    concussion:
+                      type: string
+                calculation_type:
+                  $ref: '#/components/schemas/CalculationType'
+                rate_parameters:
+                  $ref: '#/components/schemas/RateParameters'
+                rates:
+                  oneOf:
+                    - $ref: '#/components/schemas/Insured-AgeRange'
+                    - $ref: '#/components/schemas/InsuredGroup'
+                    - $ref: '#/components/schemas/InsuredGroup-AgeRange'
+                    - $ref: '#/components/schemas/InsuredGroup-AgeRange-BenefitAmount'
+                    - $ref: '#/components/schemas/InsuredGroup-BenefitAmount'
+            examples:
+              Medical:
+                value:
+                  name: Medical Insurance Plan Name
+                  carrier: Carrier/Vendor
+                  plan_type: medical
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  notes: Internal notes for admins to look at
+                  network_id: '123456'
+                  medical_metadata:
+                    deductible: 1000
+                    family_deductible: 2000
+                    out_of_pocket_max: 2200
+                    family_out_of_pocket_max: 3200
+                    office_visit: $30 Copay
+                    specialist: $60 Specialist
+                    inpatient: 0% Coinsurance
+                    outpatient: 0% Coinsurance
+                    emergency_room: $250 Copay
+                    has_fsa: true
+              Dental:
+                value:
+                  name: Dental Insurance Plan Name
+                  carrier: Carrier/Vendor
+                  plan_type: medical
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  notes: Internal notes for admins to look at
+                  network_id: '123456'
+                  dental_metadata:
+                    deductible: 25
+                    preventative: 100% Covered
+                    basic: 80% Covered
+                    major: 50% Covered
+                    orthodontics: 50% Covered
+                    annual_benefit_maximum: 1500
+                    out_of_network: See plan overview
+              Vision:
+                value:
+                  name: Vision Insurance Plan Name
+                  carrier: Carrier/Vendor
+                  plan_type: medical
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  notes: Internal notes for admins to look at
+                  network_id: '123456'
+                  vision_metadata:
+                    annual_eye_exam: $10
+                    contact_lens: Up to $40 (Standard); $0 (< 19 years of age)
+                    single_vision_lenses: $10
+                    bifocal_lenses: $10
+                    trifocal_lenses: $10
+                    polycarbonate: $40 (Standard); $0 (<19 years of age)
+                    progressive: $65 (Standard); $95 - 185 (Premium Tier 1 - 4)
+                    frame_allowance: $0 Copay
+                    elective_contact_lenses: $0 Copay
+                    laser_vision_correction: 15% off retail or 5% off promo price
+              Life:
+                value:
+                  name: Life Insurance Plan Name
+                  carrier: Carrier/Vendor
+                  plan_type: life_insurance
+                  plan_details_url: 'https://example.com'
+                  life_metadata:
+                    subtype: universal
+                    min_benefit: 50000
+                    max_benefit: 300000
+                    increment: 10000
+                    guaranteed_issue: 150000
+                    max_benefit_scalar: '3'
+                    term: 10
+                    spouse: spouse_yes
+                    min_spouse_benefit: 25000
+                    max_spouse_benefit: 150000
+                    spouse_increment: 5000
+                    spouse_guaranteed_issue: 75000
+                    max_percent_spouse_benefit: N/A
+                    child: child_yes
+                    infant: infant_yes
+                    min_infant_age: 14
+                    max_infant_age: 6
+                    min_infant_benefit: 2500
+                    max__infant_benefit: 5000
+                    infant_increment: 2500
+                    min_child_age: 6
+                    max_child_age: 26
+                    min_child_benefit: 5000
+                    max_child_benefit: 10000
+                    child_increment: 2500
+                    multi_select: true
+              Pet:
+                value:
+                  name: Pet Insurance Plan Name
+                  carrier: Carrier/Vendor
+                  plan_type: medical
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  notes: Internal notes for admins to look at
+                  network_id: '123456'
+                  pet_metadata:
+                    annual_deductible: 250
+                    maximum_annual_benefit: 7500
+                    accident: true
+                    injuries: true
+                    common_illnesses: true
+                    chronic_illnesses: true
+                    hereditary_conditions: true
+                    surgeries_and_hospitalizations: true
+                    scans: true
+                    rx: true
+                    wellness: true
+                    vaccinations: true
+                    spay: true
+                    flea_and_ticks: true
+                    heartworm: true
+                    blood_tests: true
+              Hospital Indemnity:
+                value:
+                  name: Hospital Indemnity Plan Name
+                  carrier: Carrier/Vendor
+                  plan_type: medical
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  notes: Internal notes for admins to look at
+                  network_id: '123456'
+                  hospital_indemnity_metadata:
+                    admission: 1000
+                    confinement: $100 per day
+              Short Term Disability:
+                value:
+                  name: Short Term Disability Plan Name
+                  carrier: Carrier/Vendor
+                  plan_type: medical
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  notes: Internal notes for admins to look at
+                  network_id: '123456'
+                  short_term_disability_metadata:
+                    benefit_summary: '60% of your monthly income, up to $1,200'
+                    benefits_begin: 90 days
+                    duration: Up to the Social Security (SS) normal retirement age
+              Long Term Disability:
+                value:
+                  name: Long Term Disability Plan Name
+                  carrier: Carrier/Vendor
+                  plan_type: medical
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  notes: Internal notes for admins to look at
+                  network_id: '123456'
+                  long_term_disability_metadata:
+                    benefit_summary: '60% of your monthly income, up to $1,200'
+                    benefits_begin: 365 days
+                    duration: Up to the Social Security (SS) normal retirement age
+              Critical Illness:
+                value:
+                  name: Critical Illness Plan Name
+                  carrier: Carrier/Vendor
+                  plan_type: medical
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  notes: Internal notes for admins to look at
+                  network_id: '123456'
+                  critical_illness_metadata:
+                    benefit_amount: 15000
+                    covers_cancer: false
+                    heart_attack: 100% of Benefit Amount
+                    permanent_damate_due_to_stroke: 100% of Benefit Amount
+                    end_stage_renal_failure: 100% of Benefit Amount
+              Accident:
+                value:
+                  name: Accident Insurance Plan Name
+                  carrier: Carrier/Vendor
+                  plan_type: medical
+                  plan_details_url: 'https://example.com'
+                  has_hsa: true
+                  has_hra: false
+                  has_fsa: true
+                  has_limited_fsa: false
+                  notes: Internal notes for admins to look at
+                  network_id: '123456'
+                  accident_metadata:
+                    benefit_amount: 1000
+                    catastrophic_loss: 2500
+                    common_disaster: 250
+                    common_carrier: '250000'
+                    urgent_care_doctor_visit: '60'
+                    diagnostic_x_ray: '75'
+                    diagnostic_ct_cat_mri_eeg: '240'
+                    emergency_room: '150'
+                    follow_up_visits: '60'
+                    physical_therapy: '45'
+                    ambulance: '300'
+                    air_ambulance: '1800'
+                    hospital_admission: '1200'
+                    hospital_icu_admission: '3750'
+                    hospital_confinement: $240 per day
+                    hospital_icu_confinement: $750 per day
+                    rehabilitation_confinement: '200'
+                    prescribed_appliance: '200'
+                    dental_crown_or_extraction: $300 per crown / $120 per extraction
+                    eye_surgery_or_object_removal: '500'
+                    prescribed_prosthetic: '$750 one device / $1,500 two or more devices'
+                    concussion: '210'
+        description: |-
+          Non-metadata attributes are optional and will be updated as provided. Metadata attributes will be overwritten.
+
+          Note that there are metadata fields that act as content holders for how employees see plan details in the Nayya employee-facing apps. Each type of plan, specified by `plan_type`, has a different set of metadata required to correctly display the plan details to the employee.
+      tags:
+        - Plans
+    delete:
+      summary: Remove a Plan
+      operationId: delete-plans-id
+      responses:
+        '204':
+          description: No Content
+      description: Removes the specified plan. Employees will no longer be recommended this plan when going through the decision support system.
+      tags:
+        - Plans
+  '/api/employees/{employee_id}/selections':
+    parameters:
+      - schema:
+          type: string
+        name: employee_id
+        in: path
+        required: true
+    get:
+      summary: List all Employee Plan Selections
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        plan_id:
+                          type: string
+                          description: Nayya's unique id representing the plan that the employee has selected.
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                      total_pages:
+                        type: integer
+                      total_count:
+                        type: integer
+              examples:
+                example-1:
+                  value:
+                    data:
+                      - plan_id: g9hg9384t-0834hg083h4-ih43g08g-ngrf34th
+                      - plan_id: ih43g08g-g9hg9384t-0834hg083h4-ngrf34th
+                      - plan_id: 0834hg083h4-ih43g08g-g9hg9384t-ngrf34th
+      operationId: get-dst-employee-employee_id-recommendations
+      description: |-
+        Retrieve the plans selected by the employee during the decision support process.
+
+        These plans should be mapped to the plans in your system using the `plan_id` attribute.
+      tags:
+        - Choices
+  '/api/employees/{employee_id}/detailed-selections':
+    parameters:
+      - schema:
+          type: string
+        name: employee_id
+        in: path
+        required: true
+    get:
+      summary: List all employee plan selections with details
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  family_group_plans:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        plan_id:
+                          type: string
+                          description: Nayya's unique id representing the plan that the employee has selected.
+                        dependents:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                description: Nayya's unique id representing a dependent the employee has selected to be covered under the plan.
+                              relationship:
+                                type: string
+                                description: the relationship type for the dependent selected
+                        employee_selected:
+                          type: boolean
+                          description: indicator for whether the employee has been selected to be covered under the plan.
+                        volume:
+                          type: number
+                          description: volume amount selected for the plan in USD currency.
+                  individual_plans:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        plan_id:
+                          type: string
+                          description: Nayya's unique id representing the plan that the employee has selected.
+                        dependent:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: Nayya's unique id representing a dependent the employee has selected to be covered under the plan.
+                            relationship:
+                              type: string
+                              description: the relationship type for the dependent selected
+                        employee_selected:
+                          type: boolean
+                          description: indicator for whether the employee has been selected to be covered under the plan.
+                        volume:
+                          type: number
+                          description: volume amount selected for the plan in USD currency.
+              examples:
+                example-1:
+                  value:
+                    family_group_plans:
+                      - plan_id: g9hg9384t-0834hg083h4-ih43g08g-ngrf34th
+                        employee_selected: true
+                        dependents:
+                          - id: 0834hg083h4-ih43g08g-g9hg9384t-ngrf34th
+                            relationship: spouse
+                          - id: eh43g08g-g9hg9384t-0834hg083h4-ngrf34th
+                            relationship: child
+                      - plan_id: ih43g08g-g9hg9384t-0834hg083h4-ngrf34th
+                        employee_selected: true
+                    individual_plans:
+                      - plan_id: 0834hg083h4-ih43g08g-g9hg9384t-ngrf34th
+                        employee_selected: true
+                        dependents:
+                          - id: 0834hg083h4-ih43g08g-g9hg9384t-ngrf34th
+                            relationship: spouse
+                        volume: 10000
+                      - plan_id: 0834hg083h4-ih43g08g-g9hg9384t-ngrf34th
+                        employee_selected: false
+                        dependents:
+                          - id: 0834hg083h4-ih43g08g-g9hg9384t-ngrf34th
+                            relationship: spouse
+      operationId: get-dst-employee-employee_id-detailed-recommendations
+      description: |-
+        Retrieve the plans selected by the employee during the decision support process with the addition of details regarding the type of plan selection (family_grouping or individual), the family members selected for coverage under the plan, and the volume amount selected (if applicable).
+
+        These plans should be mapped to the plans, dependents, and the employee in your system using the `plan_id`, `dependent_id`, and `employee_id` attributes.
+        You may alternatively use the dependent `relationship` attribute to interpret the dependents selected for plan coverage.
+      tags:
+        - Choices
+  '/api/employers/{employer_id}/open-enrollments':
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        description: The unique ID from Nayya which represents an employer.
+        in: path
+        required: true
+    get:
+      summary: List all Open Enrollments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Unique id for an open enrollment.
+                        employer_id:
+                          type: string
+                          description: Unique id for this open employer.
+                        from:
+                          type: string
+                          description: 'Start date of the open enrollment in the format: `YYYY-MM-DD`'
+                        to:
+                          type: string
+                          description: 'End date of the open enrollment in the format: `YYYY-MM-DD`'
+                        published:
+                          type: boolean
+                          description: Whether or not the open enrollment is live for employees or not
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                      total_pages:
+                        type: integer
+                      total_count:
+                        type: integer
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: 34gh98ph-ndoauh4p-napvw4t4-poiuh45
+                        employer_id: 8fca4551-4bfd-4ca9-a799-b85580d3b856
+                        from: '2020-02-15'
+                        to: '2020-03-17'
+                        published: false
+                      - id: ndoauh4p-napvw4t4-34gh98ph-poiuh45
+                        employer_id: 8fca4551-4bfd-4ca9-a799-b85580d3b856
+                        from: '2021-01-05'
+                        to: '2021-02-04'
+                        published: true
+                    meta:
+                      current_page: 1
+                      total_pages: 1
+                      total_count: 1
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-api-employers-employer_id-open-enrollments
+      description: Retrieve a list of open enrollments for the provided employer.
+      tags:
+        - Open Enrollments
+    post:
+      summary: Add new Open Enrollment
+      operationId: post-api-employers-employer_id-open-enrollments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 'Unique id that represents the open enrollment. Any time you want to refer to this open enrollment at a later date, use this ID.'
+                        employer_id:
+                          type: string
+                          description: Unique id for this open employer.
+                        from:
+                          type: string
+                          description: 'Start date of the open enrollment in the format: `YYYY-MM-DD`'
+                        to:
+                          type: string
+                          description: 'End date of the open enrollment in the format: `YYYY-MM-DD`'
+                        published:
+                          type: boolean
+                          description: Whether or not the open enrollment is live for employees or not
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      description: Add a new open enrollment for an employer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from:
+                  type: string
+                  description: 'Start date of the open enrollment in the format: `YYYY-MM-DD`'
+                to:
+                  type: string
+                  description: 'End date of the open enrollment in the format: `YYYY-MM-DD`'
+                published:
+                  type: boolean
+                  description: Whether the open enrollment should be immediately active
+      tags:
+        - Open Enrollments
+  '/api/employers/{employer_id}/open-enrollments/{enrollment_id}':
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        description: The unique ID from Nayya which represents an employer.
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: enrollment_id
+        description: The unique ID from Nayya which represents an open enrollment.
+        in: path
+        required: true
+    patch:
+      summary: Modify an Open Enrollment
+      operationId: patch-api-employers-employer_id-open-enrollments-enrollment_id
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      description: 'Update details of an open enrollment. Typically this is used to publish an unpublished open enrollment, or can be used to adjust the start and end dates of the enrollment period.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from:
+                  type: string
+                  description: 'Start date of the open enrollment in the format: `YYYY-MM-DD`'
+                to:
+                  type: string
+                  description: 'End date of the open enrollment in the format: `YYYY-MM-DD`'
+                published:
+                  type: boolean
+                  description: Whether the open enrollment should be immediately active
+      tags:
+        - Open Enrollments
+  '/api/employees/{employee_id}/dependents':
+    parameters:
+      - schema:
+          type: string
+        name: employee_id
+        description: The unique ID of the employee from Nayya.
+        in: path
+        required: true
+    get:
+      summary: Retrieve Dependents of an Employee
+      tags:
+        - Employees
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The unique ID from Nayya that represents an employee's dependent.
+                        name:
+                          type: string
+                          description: Name of a dependent.
+                        age:
+                          type: integer
+                          description: |-
+                            [DEPRECATED] Age of an dependent.
+                            Please use `date_of_birth` in lieu of `age`.
+                        relationship:
+                          type: string
+                          description: 'Relationship to the employee. Will be either: ''spouse'', ''child'', or ''domestic_partner'''
+                        date_of_birth:
+                          type: string
+                          description: 'The day that the dependent was born in the format: `YYYY-MM-DD`'
+                        income_amount_cents:
+                          type: integer
+                          description: Income amount in cents. (Note&#58; must be provided with 'income_type'.)
+                        income_type:
+                          type: string
+                          enum:
+                            - salary
+                            - hourly
+                          description: (Note&#58; must be provided with 'income_amount_cents'.)
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                      total_pages:
+                        type: integer
+                      total_count:
+                        type: integer
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: 8e86aa5b-9987-4e93-baae-9a4ab083dfa7
+                        name: Jamie
+                        age: 66
+                        relationship: spouse
+                        date_of_birth: '1957-05-05'
+                        income_amount_cents: 6000000
+                        income_type: salary
+                    meta:
+                      current_page: 0
+                      total_pages: 1
+                      total_count: 1
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-api-employees-id-dependents
+      description: Retrieves data for all dependents of the given employee.
+    post:
+      summary: Add One or More Dependents
+      operationId: post-api-employees-id-dependents
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The unique ID from Nayya that represents an employee's dependent.
+                        name:
+                          type: string
+                          description: Name of a dependent.
+                        age:
+                          type: integer
+                          description: |-
+                            [DEPRECATED] Age of an dependent.
+                            Please use `date_of_birth` in lieu of `age`.
+                        relationship:
+                          type: string
+                          description: 'Relationship to the employee. Will be either: ''spouse'', ''child'', or ''domestic_partner'''
+                        date_of_birth:
+                          type: string
+                          description: 'The day that the dependent was born in the format: `YYYY-MM-DD`'
+                        income_amount_cents:
+                          type: integer
+                          description: Income amount in cents. (Note&#58; must be provided with 'income_type'.)
+                        income_type:
+                          type: string
+                          enum:
+                            - salary
+                            - hourly
+                          description: (Note&#58; must be provided with 'income_amount_cents'.)
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: 8e86aa5b-9987-4e93-baae-9a4ab083dfa7
+                        name: Jamie
+                        age: 66
+                        relationship: spouse
+                        date_of_birth: '1957-05-05'
+                        income_amount_cents: 6000000
+                        income_type: salary
+      description: Create one or many dependents for an employee.
+      tags:
+        - Employees
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        minLength: 1
+                        description: Name of a dependent.
+                      age:
+                        type: number
+                        description: |-
+                          [DEPRECATED] Age of an dependent.
+                          Please use `date_of_birth` in lieu of `age`.
+                      relationship:
+                        type: string
+                        minLength: 1
+                        description: 'Relationship to the employee. Will be either: ''spouse'', ''child'', or ''domestic_partner'''
+                      date_of_birth:
+                        type: string
+                        minLength: 1
+                        description: 'The day that the dependent was born in the format: `YYYY-MM-DD`'
+                      income_amount_cents:
+                        type: integer
+                        description: Income amount in cents. (Note&#58; must be provided with 'income_type'.)
+                      income_type:
+                        type: string
+                        enum:
+                          - salary
+                          - hourly
+                        description: (Note&#58; must be provided with 'income_amount_cents'.)
+  '/api/employees/{employee_id}/dependents/{dependent_id}':
+    parameters:
+      - schema:
+          type: string
+        name: employee_id
+        description: The unique ID of the employee from Nayya.
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: dependent_id
+        description: The unique ID from Nayya that represents an employee's dependent.
+        in: path
+        required: true
+    get:
+      summary: Retrieve a Dependent
+      tags:
+        - Employees
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique ID from Nayya that represents an employee's dependent.
+                  name:
+                    type: string
+                    description: Name of the dependent.
+                  age:
+                    type: integer
+                    description: |-
+                      [DEPRECATED] Age of an dependent.
+                      Please use `date_of_birth` in lieu of `age`.
+                  relationship:
+                    type: string
+                    description: 'Relationship to the employee. Will be either: ''spouse'', ''child'', or ''domestic_partner'''
+                  date_of_birth:
+                    type: string
+                    description: 'The day that the dependent was born in the format: `YYYY-MM-DD`'
+                  income_amount_cents:
+                    type: integer
+                    description: Income amount in cents. (Note&#58; must be provided with 'income_type'.)
+                  income_type:
+                    type: string
+                    enum:
+                      - salary
+                      - hourly
+                    description: (Note&#58; must be provided with 'income_amount_cents'.)
+              examples:
+                Success:
+                  value:
+                    id: 377d6155-0df8-4abb-9e1f-d3a5bd884a07
+                    name: Lana
+                    age: 54
+                    relationship: domestic_partner
+                    date_of_birth: '1965-02-02'
+                    income_amount_cents: 3200000
+                    income_type: salary
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-api-employees-id-dependents-dependent_id
+      description: Returns information about a specific dependent of an employee.
+    patch:
+      summary: Modify a Dependent
+      operationId: patch-api-employees-id-dependents-dependent_id
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      description: Change the details related to one of an employee's dependents.
+      tags:
+        - Employees
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        minLength: 1
+                        description: Name of a dependent.
+                      age:
+                        type: number
+                        description: |-
+                          [DEPRECATED] Age of an dependent.
+                          Please use `date_of_birth` in lieu of `age`.
+                      relationship:
+                        type: string
+                        minLength: 1
+                        description: 'Relationship to the employee. Will be either: ''spouse'', ''child'', or ''domestic_partner'''
+                      date_of_birth:
+                        type: string
+                        minLength: 1
+                        description: 'The day that the dependent was born in the format: `YYYY-MM-DD`'
+                      income_amount_cents:
+                        type: integer
+                        description: Income amount in cents. (Note&#58; must be provided with 'income_type'.)
+                      income_type:
+                        type: string
+                        enum:
+                          - salary
+                          - hourly
+                        description: (Note&#58; must be provided with 'income_amount_cents'.)
+  /api/carriers:
+    get:
+      summary: Retrieve List of Carriers
+      tags:
+        - Carriers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                  metadata:
+                    type: object
+                    description: Includes whatever metadata is provided for this plan's type. Not all possible attributes listed here. See `plans` docs for all possible attributes.
+                    properties:
+                      current_page:
+                        type: integer
+                      total_pages:
+                        type: integer
+                      total_count:
+                        type: integer
+              examples:
+                Success:
+                  value:
+                    data:
+                      - id: 0daf5c62-a940-41b5-95ef-b87372bba728
+                        name: Aetna
+                      - id: 8b9629c3-0354-43ef-8d52-26dcb3d36493
+                        name: Aflac
+                    metadata:
+                      current_page: 4
+                      total_pages: 30
+                      total_count: 65000
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-api-carriers
+      description: Returns the list of valid carriers that can be associated with plans.
+  '/api/employees/{employee_id}/eligibility':
+    parameters:
+      - schema:
+          type: string
+        name: employee_id
+        description: The unique ID of the employee from Nayya.
+        in: path
+        required: true
+    get:
+      summary: List Plans Available to Employee
+      tags:
+        - Eligibility Groups
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        plan_id:
+                          type: string
+                          description: 'Unique id that represents this plan. Any time you want to refer to this plan at a later date, use this ID.'
+                        rates:
+                          type: object
+                          properties:
+                            e_only:
+                              type: number
+                            e_1child:
+                              type: number
+                            e_2child:
+                              type: number
+                            e_3child:
+                              type: number
+                            e_spouse:
+                              type: number
+                            e_spouse_child1:
+                              type: number
+                            e_spouse_child2:
+                              type: number
+                            e_spouse_child3:
+                              type: number
+              examples:
+                Two Plans with Rates:
+                  value:
+                    data:
+                      - plan_id: fd319917-5c4e-4417-b37f-7fff50a95275
+                        rates:
+                          e_only: 10
+                          e_1child: 20
+                          e_2child: 30
+                          e_3child: 40
+                          e_spouse: 50
+                          e_spouse_1child: 60
+                          e_spouse_2child: 70
+                          e_spouse_3child: 80
+                      - plan_id: b56901ef-d6d2-491d-9ea0-7b2941dab96f
+                        rates:
+                          e_only: 15
+                          e_1child: 25
+                          e_2child: 35
+                          e_3child: 45
+                          e_spouse: 55
+                          e_spouse_1child: 65
+                          e_spouse_2child: 75
+                          e_spouse_3child: 85
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-api-employees-employee_id-eligibility
+      description: Returns the set of plans available to the specified employee.
+    put:
+      summary: Specify List of Plans Available to Employee
+      operationId: put-api-employees-employee_id-eligibility
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        plan_id:
+                          description: Nayya's unique id representing a plan.
+                          type: string
+                        rates:
+                          type: object
+                          properties:
+                            e_only:
+                              type: number
+                            e_1child:
+                              type: number
+                            e_2child:
+                              type: number
+                            e_3child:
+                              type: number
+                            e_spouse:
+                              type: number
+                            e_spouse_1child:
+                              type: number
+                            e_spouse_2child:
+                              type: number
+                            e_spouse_3child:
+                              type: number
+              examples:
+                Success:
+                  value:
+                    data:
+                      - plan_id: ap3thp34t-34aadfh-3444-ba4-7712gdf23g3
+                        rates:
+                          e_only: 23
+                          e_1child: 200
+                          e_2child: 250
+                          e_3child: 300
+                          e_spouse: 45
+                          e_spouse_child1: 0
+                          e_spouse_child2: 0
+                          e_spouse_child3: 0
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      description: |-
+        This endpoint exposes another option when it comes to managing eligibility for employees.
+
+        If, instead of using eligibility groups to group sets of plans available to a known set of employees, you'd prefer to specify a unique set of plans per employee, keeping the logic for how this works in your system, then this may be the endpoint for you.
+
+        Provide a list of plans that an employee should have access to, and a unique eligibility group will be generated with those plans attached.
+
+        Subsequent requests will overwrite the existing plans, not accumulate them, so be careful to always send the full set of plans.
+
+        Also note that if eligibility changes in your system, then you will need to update any and all employees, one-by-one, in the Nayya system to get things consistent.
+
+        Additionally, you may provide exact rates per employee if you'd rather house your own logic for rates and skip integrating with the Nayya rates engine.
+      tags:
+        - Eligibility Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      plan_id:
+                        description: Nayya's unique id representing a plan.
+                        type: string
+                      calculation_type:
+                        type: string
+                        description: 'optionally one of [''grouped'', ''individual''] - defaults to ''grouped'' to be used for family-group plans (i.e. medical, dental, vision) - use ''individual'' when configuring individual rates for plans like life insurance, long term disability, critical illness'
+                      rate_parameters:
+                        type: array
+                        description: 'optional for family-group rates, required for individual rates - an array of enums describing the order in which keys appear in the rates hash - for family group rates, defaults to [''insured_group''] - for individual, benefit-dependent rates, use [''insured'', ''benefit_amount''].  Optionally include ''tobacco_usage'', where values in rates object are ''true'' and ''false'''
+                        items: {}
+                      rates:
+                        type: object
+                        properties:
+                          e_only:
+                            description: 'for family group rates, this value is the rate of the plan for the employee only.  For individual rates, this can either be the value of the rate or an object with benefit_amount as the inner key.'
+                            type:
+                              - object
+                              - number
+                          e_1child:
+                            type: number
+                            description: only present for family group rates
+                          e_2child:
+                            type: number
+                            description: only present for family group rates
+                          e_3child:
+                            type: number
+                            description: only present for family group rates
+                          e_spouse:
+                            type: number
+                            description: only present for family group rates
+                          e_spouse_1child:
+                            type: number
+                            description: only present for family group rates
+                          e_spouse_2child:
+                            type: number
+                            description: only present for family group rates
+                          e_spouse_3child:
+                            type: number
+                            description: only present for family group rates
+                          spouse:
+                            description: only present for individual rates
+                            type:
+                              - number
+                              - object
+                          children:
+                            description: only present for individual rates
+                            type:
+                              - number
+                              - object
+            examples:
+              Two Plans with Family Group Rates:
+                value:
+                  data:
+                    - id: fd319917-5c4e-4417-b37f-7fff50a95275
+                      rates:
+                        e_only: 10
+                        e_1child: 20
+                        e_2child: 30
+                        e_3child: 40
+                        e_spouse: 50
+                        e_spouse_1child: 60
+                        e_spouse_2child: 70
+                        e_spouse_3child: 80
+                    - id: b56901ef-d6d2-491d-9ea0-7b2941dab96f
+                      rates:
+                        e_only: 15
+                        e_1child: 25
+                        e_2child: 35
+                        e_3child: 45
+                        e_spouse: 55
+                        e_spouse_1child: 65
+                        e_spouse_2child: 75
+                        e_spouse_3child: 85
+              'One plan with individual, benefit-dependent rates':
+                value:
+                  data:
+                    - id: fd319917-5c4e-4417-b37f-7fff50a95275
+                      calculation_type: individual
+                      rate_parameters:
+                        - insured
+                        - benefit_amount
+                      rates:
+                        e_only:
+                          '10000': 1
+                          '20000': 2
+                          '30000': 3
+                        spouse:
+                          '5000': 0.5
+                          '10000': 1
+                          '15000': 1.5
+                        children:
+                          '1000': 0.25
+              'One plan with individual, benefit-dependent, tobacco-usage dependent rates':
+                value:
+                  data:
+                    - id: fd319917-5c4e-4417-b37f-7fff50a95275
+                      calculation_type: individual
+                      rate_parameters:
+                        - insured
+                        - tobacco_usage
+                        - benefit_amount
+                      rates:
+                        e_only:
+                          'true':
+                            '10000': 2
+                            '20000': 3
+                            '30000': 4
+                          'false':
+                            '10000': 1.5
+                            '20000': 2.5
+                            '30000': 3.5
+                        spouse:
+                          'true':
+                            '5000': 1.5
+                            '10000': 2
+                            '15000': 3.5
+                          'false':
+                            '5000': 0.5
+                            '10000': 1
+                            '15000': 1.5
+                        children:
+                          'true':
+                            '1000': 0.3
+                          'false':
+                            '1000': 0.25
+        description: ''
+components:
+  schemas:
+    Insured:
+      title: Insured
+      type: object
+      example:
+        e_only: 2345
+        spouse: 4534
+        partner: 8967
+        children: 2345
+      properties:
+        e_only:
+          $ref: '#/components/schemas/RateAmount'
+        spouse:
+          $ref: '#/components/schemas/RateAmount'
+        partner:
+          $ref: '#/components/schemas/RateAmount'
+        children:
+          $ref: '#/components/schemas/RateAmount'
+      required:
+        - e_only
+    Insured-AgeRange:
+      title: Insured-AgeRange
+      type: object
+      example:
+        e_only:
+          1-10: 1100
+          11-20: 2200
+        spouse:
+          1-10: 1200
+          11-20: 2300
+        partner:
+          1-10: 3456
+          11-20: 4321
+        children:
+          1-10: 9823
+          11-20: 1534
+      properties:
+        e_only:
+          $ref: '#/components/schemas/AgeRangeBand'
+        spouse:
+          $ref: '#/components/schemas/AgeRangeBand'
+        partner:
+          $ref: '#/components/schemas/AgeRangeBand'
+        children:
+          $ref: '#/components/schemas/AgeRangeBand'
+      required:
+        - e_only
+    Insured-AgeRange-BenefitAmount:
+      title: Insured-AgeRange-BenefitAmount
+      type: object
+      example:
+        e_only:
+          1-10:
+            '10000': 1100
+            '20000': 2200
+          11-20:
+            '10000': 1200
+            '20000': 2300
+        spouse:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+        partner:
+          1-10:
+            '10000': 1100
+            '20000': 2200
+          11-20:
+            '10000': 1200
+            '20000': 2300
+        children:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+      properties:
+        e_only:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        spouse:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        partner:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        children:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+      required:
+        - e_only
+    Insured-BenefitAmount:
+      title: Insured-BenefitAmount
+      type: object
+      example:
+        e_only:
+          '10000': 2345
+          '20000': 3344
+        spouse:
+          '10000': 4534
+          '20000': 5455
+        partner:
+          '10000': 8967
+          '20000': 9901
+        children:
+          '10000': 9834
+          '20000': 9972
+      properties:
+        e_only:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        spouse:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        partner:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        children:
+          $ref: '#/components/schemas/BenefitAmountBand'
+      required:
+        - e_only
+    InsuredGroup:
+      title: InsuredGroup
+      type: object
+      example:
+        e_only: 2345
+        e_1child: 3456
+        e_2child: 4563
+        e_3child: 5786
+        e_spouse: 2567
+        e_spouse_1child: 7648
+        e_spouse_2child: 8975
+        e_spouse_3child: 9075
+        e_partner: 2588
+        e_partner_1child: 7992
+        e_partner_2child: 8994
+        e_partner_3child: 9993
+      required:
+        - e_only
+    InsuredGroup-AgeRange:
+      title: InsuredGroup-AgeRange
+      type: object
+      properties:
+        e_only:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_1child:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_2child:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_3child:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_spouse:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_spouse_1child:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_spouse_2child:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_spouse_3child:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_partner:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_partner_1child:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_partner_2child:
+          $ref: '#/components/schemas/AgeRangeBand'
+        e_partner_3child:
+          $ref: '#/components/schemas/AgeRangeBand'
+      required:
+        - e_only
+      example:
+        e_only:
+          1-10: 10001
+          11-20: 20001
+        e_1child:
+          1-10: 30001
+          11-20: 40001
+        e_2child:
+          1-10: 30001
+          11-20: 40001
+        e_3child:
+          1-10: 30001
+          11-20: 40001
+        e_spouse:
+          1-10: 30001
+          11-20: 40001
+        e_spouse_1child:
+          1-10: 30001
+          11-20: 40001
+        e_spouse_2child:
+          1-10: 30001
+          11-20: 40001
+        e_spouse_3child:
+          1-10: 20001
+          11-20: 30001
+        e_partner:
+          1-10: 5001
+          11-20: 6001
+        e_partner_1child:
+          1-10: 5001
+          11-20: 6001
+        e_partner_2child:
+          1-10: 5001
+          11-20: 6001
+        e_partner_3child:
+          1-10: 5001
+          11-20: 6001
+    InsuredGroup-AgeRange-BenefitAmount:
+      title: InsuredGroup-AgeRange-BenefitAmount
+      type: object
+      example:
+        e_only:
+          1-10:
+            '10000': 1100
+            '20000': 2200
+          11-20:
+            '10000': 1200
+            '20000': 2300
+        e_1child:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+        e_2chilc:
+          1-10:
+            '10000': 1100
+            '20000': 2200
+          11-20:
+            '10000': 1200
+            '20000': 2300
+        e_3child:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+        e_spouse:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+        e_spouse_1child:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+        e_spouse_2child:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+        e_spouse_3child:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+        e_partner:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+        e_partner_1child:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+        e_partner_2child:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+        e_partner_3child:
+          1-10:
+            '10000': 1300
+            '20000': 2400
+          11-20:
+            '10000': 1400
+            '20000': 2500
+      properties:
+        e_only:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_1child:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_2child:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_3child:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_spouse:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_spouse_1child:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_spouse_2child:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_spouse_3child:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_partner:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_partner_1child:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_partner_2child:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+        e_partner_3child:
+          $ref: '#/components/schemas/AgeRangeBand-BenefitAmountBand'
+      required:
+        - e_only
+    InsuredGroup-BenefitAmount:
+      title: InsuredGroup-BenefitAmount
+      type: object
+      example:
+        e_only:
+          '10000': 2345
+          '20000': 3344
+        e_spouse:
+          '10000': 4534
+          '20000': 5455
+        e_spouse_1child:
+          '10000': 8967
+          '20000': 9901
+        e_spouse_2child:
+          '10000': 9834
+          '20000': 9972
+        e_spouse_3child:
+          '10000': 1834
+          '20000': 2972
+        e_partner:
+          '10000': 9134
+          '20000': 9272
+        e_partner_1child:
+          '10000': 9334
+          '20000': 9472
+        e_partner_2child:
+          '10000': 9534
+          '20000': 9672
+        e_partner_3child:
+          '10000': 9734
+          '20000': 9972
+      properties:
+        e_only:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_1child:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_2child:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_3child:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_spouse:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_spouse_1child:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_spouse_2child:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_spouse_3child:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_partner:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_partner_1child:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_partner_2child:
+          $ref: '#/components/schemas/BenefitAmountBand'
+        e_partner_3child:
+          $ref: '#/components/schemas/BenefitAmountBand'
+      required:
+        - e_only
+    AgeRangeBand:
+      title: AgeRage
+      type: object
+      additionalProperties:
+        oneOf:
+          - $ref: '#/components/schemas/RateAmount'
+      example:
+        1-10: 6642
+      description: |
+        Age banded rates charge based upon the ages of the participants.
+    BenefitAmountBand:
+      title: BenefitAmount
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/RateAmount'
+      example:
+        '10000': 6642
+        '20000': 3345
+      description: |
+        Benefit cost banded rates charge based on the cost of the benefit.
+    AgeRangeBand-BenefitAmountBand:
+      title: AgeRange-BenefitAmount
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/BenefitAmountBand'
+      example:
+        1-10:
+          '10000': 1100
+          '20000': 2200
+        11-20:
+          '10000': 1200
+          '20000': 2300
+      description: |
+        Age-Benefit banded rates charge based upon the ages of the participants and the amount of the benefit
+    RateAmount:
+      type: integer
+      title: RateAmount
+      example: 2345
+      description: |
+        Amount of rate
+      minimum: 0
+    RateParameters:
+      title: RateParameters
+      type: array
+      items:
+        type: string
+        enum:
+          - age_range
+          - benefit_amount
+          - insured
+          - insured_group
+        x-examples:
+          insured:
+            - insured
+          insured-age_range:
+            - insured
+            - age_range
+          insured_group:
+            - insured_group
+          insured_group-age_range:
+            - insured_group
+            - age_range
+          insured_group-age_range-benefit_amount:
+            - insured_group
+            - age_range
+            - benefit_amount
+          insured_group-benefit_amount:
+            - insured_group
+            - benefit_amount
+    CalculationType:
+      title: CalculationType
+      type: string
+      enum:
+        - grouped
+        - grouped_sum
+        - individual
+  securitySchemes: {}
+  responses: {}
+  parameters: {}
+tags:
+  - name: Employers
+    description: 'All configuration is related to an employer, so an employer is the first thing needed to get started using Nayya.'
+  - name: Employees
+    description: 'Employees can be entered in bulk, and should be added after configuration is done; set up an employer, eligibility groups, and plans before adding your employees to ease setup.'
+  - name: Eligibility Groups
+    description: Eligibility groups are how you can specify which employees are eligible for which plans.
+  - name: Open Enrollments
+    description: Open enrollments are required for employees to participate in getting recommendations for plans. Individual enrollments can also be added for qualifying events.
+  - name: Plans
+    description: The Plan domain is used to configure plans that are available for purchase.
+  - name: Plan Types
+    description: 'Plan types are the supported types of plans that can be added. Plan types are static and cannot be added, edited, or deleted.'
+  - name: Choices
+    description: Recommendations are made to an employee after they go through a brief survey and then their choices based on those recommendations are cached and available for benefit admin systems to retrieve to create a seamless user experience between the two systems.
+  - name: Carriers
+    description: The financial resource behind the coverage provided in an insurance polic
+x-tagGroups:
+  - name: Carriers
+    tags:
+      - Carriers
+  - name: Employer
+    description: 'The Employer domain is used to configure employer-specific settings, manage employees and admin users, and specify which employees are eligible for which plans.'
+    tags:
+      - Employers
+      - Employees
+      - Eligibility Groups
+      - Open Enrollments
+  - name: Plan
+    tags:
+      - Plans
+      - Plan Types
+  - name: Recommendation
+    tags:
+      - Choices
