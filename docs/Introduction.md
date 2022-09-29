@@ -1,4 +1,3 @@
-
 # Introduction
 
 Decision Support API
