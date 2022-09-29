@@ -11,8 +11,7 @@ info:
     url: /docs/nayya-blue.png
     backgroundColor: '#FFFFFF'
     altText: Nayya
-  description: |-
-    HrOpen Decsition Support API
+  description: HrOpen Decsition Support API
   contact:
     email: api@nayya.com
     url: 'https://nayya.com'
@@ -25,7 +24,7 @@ servers:
   - url: 'https://staging.app.nayya.com/hropen'
     description: Development
   - url: 'http://localhost:3000/hropen'
-    description: Development  
+    description: Development
 components:
   securitySchemes:
     bearerAuth:

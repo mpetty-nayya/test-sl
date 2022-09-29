@@ -32,12 +32,12 @@
     {
       "type": "item",
       "title": "Decision Support Api",
-      "uri": "/reference/Nayya_API.v1.yaml"
+      "uri": "/reference/decision-support-api-hropen.yaml"
     },
     {
       "type": "item",
       "title": "Decision Support Api (HrOpen)",
-      "uri": "/reference/hropen.v1.yaml"      
+      "uri": "/reference/decision-support-api-standard.yaml"
     },
     {
       "type": "divider",
@@ -94,7 +94,7 @@
       "items": [
         {
           "type": "item",
-          "title": "EmployerCreateParams",
+          "title": "Carrier",
           "uri": "models/Carrier.yaml"
         }        
       ]

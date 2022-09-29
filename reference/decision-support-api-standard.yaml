@@ -8,8 +8,7 @@ info:
     url: /docs/nayya-blue.png
     backgroundColor: '#FFFFFF'
     altText: Nayya
-  description: |-
-    Standard Decision Support API   
+  description: 'Standard Decision Support API   '
   contact:
     name: Nayya Team
     url: 'https://nayya.com'
@@ -21,7 +20,7 @@ servers:
   - url: 'https://staging.app.nayya.com/api'
     description: Development
   - url: 'http://localhost:3000/api'
-    description: Development  
+    description: Development
 paths:
   /api/employers:
     post:
