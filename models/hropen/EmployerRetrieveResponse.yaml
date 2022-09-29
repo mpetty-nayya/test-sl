@@ -1,6 +1,6 @@
-title: EmployerCreateResponse
+title: EmployerRetrieveResponse
 x-stoplight:
-  id: obofsagyawn5a
+  id: iit1d7gvu4usl
 examples:
   - id:
       value: string
@@ -11,3 +11,5 @@ allOf:
     properties:
       taxId:
         $ref: ./base/IdentifierType.yaml
+x-tags:
+  - hropen

@@ -2,7 +2,7 @@ openapi: 3.1.0
 x-stoplight:
   id: c6c14ibszbmrx
 info:
-  title: Nayya Decision Support API
+  title: Decision Support API
   version: '1.0'
   x-logo:
     url: /docs/nayya-blue.png
