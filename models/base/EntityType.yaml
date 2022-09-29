@@ -16,3 +16,5 @@ examples:
   - id:
       value: string
     name: string
+x-tags:
+  - hropen
