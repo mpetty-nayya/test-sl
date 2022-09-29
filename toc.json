@@ -1,0 +1,47 @@
+{
+  "collapseTableOfContents": true,
+  "items": [    
+    {
+      "type": "item",
+      "title": "Introduction",
+      "uri": "docs/Introduction.md"
+    },
+    {
+      "type": "item",
+      "title": "Getting Started",
+      "uri": "docs/Getting-Started.md"
+    },
+    {
+      "type": "item",
+      "title": "Authorization",
+      "uri": "docs/Authorization.md"
+    },
+    {
+      "type": "group",
+      "title": "Clickable Group",
+      "uri": "docs/another-section.md",
+      "items": [
+        {
+          "type": "item",
+          "title": "Nested Article",
+          "uri": "/docs/Article-Three.md"
+        },
+        {
+          "type": "item",
+          "title": "External Link",
+          "uri": "https://stoplight.io"
+        }
+      ]
+    },
+   {
+      "type": "item",
+      "title": "Decision Support Api",
+      "uri": "/reference/Nayya_API.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "Decision Support Api (HrOpen)",
+      "uri": "/reference/hropen.v1.yaml"
+    }
+  ]
+}
