@@ -89,6 +89,28 @@
     },
     {
       "type": "group",
+      "title": "HrOpen / Base",
+      "uri": "docs/HrOpen.md",
+      "items": [
+        {
+          "type": "item",
+          "title": "CodeType",
+          "uri": "models/hropen/base/CodeType.yaml"
+        },
+        {
+          "type": "item",
+          "title": "EntityType",
+          "uri": "models/hropen/base/EntityType.yaml"
+        },
+        {
+          "type": "item",
+          "title": "EmployerRetrieveResponse",
+          "uri": "models/hropen/base/IdentifierType.yaml"
+        }
+      ]
+    },
+    {
+      "type": "group",
       "title": "Standard",
       "uri": "docs/Standard.md",
       "items": [
