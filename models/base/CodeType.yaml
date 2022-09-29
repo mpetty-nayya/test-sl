@@ -6,4 +6,4 @@ description: 'A code is a character string of letters, numbers, special characte
 examples:
   - string
 x-tags:
-  - hropen
+  - hropen/base
