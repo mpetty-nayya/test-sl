@@ -17,26 +17,14 @@
     },
     {
       "type": "item",
-      "title": "Authorization",
-      "uri": "docs/Authorization.md"
+      "title": "Frequently Asked Questions",
+      "uri": "docs/FAQ.md"
     },
     {
-      "type": "group",
-      "title": "Clickable Group",
-      "uri": "docs/another-section.md",
-      "items": [
-        {
-          "type": "item",
-          "title": "Nested Article",
-          "uri": "/docs/Article-Three.md"
-        },
-        {
-          "type": "item",
-          "title": "External Link",
-          "uri": "https://stoplight.io"
-        }
-      ]
-    },
+      "type": "item",
+      "title": "Authorization",
+      "uri": "docs/Authorization.md"
+    },    
     {
       "type": "divider",
       "title": "API"
@@ -49,11 +37,67 @@
     {
       "type": "item",
       "title": "Decision Support Api (HrOpen)",
-      "uri": "/reference/hropen.v1.yaml"
+      "uri": "/reference/hropen.v1.yaml"      
     },
     {
       "type": "divider",
       "title": "Schemas"
+    },
+    {
+      "type": "group",
+      "title": "Common",
+      "uri": "docs/Common.md",
+      "items": [
+        {
+          "type": "item",
+          "title": "ApiError401Response",
+          "uri": "models/ApiError401Response.yaml"
+        },  
+        {
+          "type": "item",
+          "title": "ApiError403Response",
+          "uri": "models/ApiError403Response.yaml"
+        },
+        {
+          "type": "item",
+          "title": "Pagination",
+          "uri": "models/Pagination.yaml"
+        }
+      ]
+    },    
+    {
+      "type": "group",
+      "title": "HrOpen",
+      "uri": "docs/HrOpen.md",
+      "items": [
+        {
+          "type": "item",
+          "title": "EmployerCreateParams",
+          "uri": "models/hropen/EmployerCreateParams.yaml"
+        },
+        {
+          "type": "item",
+          "title": "EmployerCreateResponse",
+          "uri": "models/hropen/EmployerCreateResponse.yaml"
+        },
+        {
+          "type": "item",
+          "title": "EmployerRetrieveResponse",
+          "uri": "models/hropen/EmployerRetrieveResponse.yaml"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Standard",
+      "uri": "docs/Standard.md",
+      "items": [
+        {
+          "type": "item",
+          "title": "EmployerCreateParams",
+          "uri": "models/Carrier.yaml"
+        }        
+      ]
     }
   ]
 }
