@@ -17,4 +17,4 @@ examples:
       value: string
     name: string
 x-tags:
-  - hropen
+  - hropen/base
