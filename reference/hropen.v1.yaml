@@ -47,7 +47,7 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: ../models/EmployerCreateResponse.yaml
+                    $ref: ../models/hropen/EmployerCreateResponse.yaml
               examples:
                 '201':
                   value:
@@ -73,7 +73,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ../models/EmployerCreateParams.yaml
+              $ref: ../models/hropen/EmployerCreateParams.yaml
             examples:
               example-1:
                 value:
@@ -94,7 +94,7 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: ../models/EmployerRetrieveResponse.yaml
+                    $ref: ../models/hropen/EmployerRetrieveResponse.yaml
         '401':
           description: Unauthorized
           content:
