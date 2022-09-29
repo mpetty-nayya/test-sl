@@ -11,3 +11,5 @@ allOf:
     properties:
       taxId:
         $ref: ./base/IdentifierType.yaml
+x-tags:
+  - hropen
