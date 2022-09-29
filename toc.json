@@ -2,6 +2,10 @@
   "collapseTableOfContents": true,
   "items": [    
     {
+      "type": "divider",
+      "title": "Documentation"
+    },
+    {
       "type": "item",
       "title": "Introduction",
       "uri": "docs/Introduction.md"
@@ -33,7 +37,11 @@
         }
       ]
     },
-   {
+    {
+      "type": "divider",
+      "title": "API"
+    },
+    {
       "type": "item",
       "title": "Decision Support Api",
       "uri": "/reference/Nayya_API.v1.yaml"
@@ -42,6 +50,10 @@
       "type": "item",
       "title": "Decision Support Api (HrOpen)",
       "uri": "/reference/hropen.v1.yaml"
+    },
+    {
+      "type": "divider",
+      "title": "Schemas"
     }
   ]
 }
