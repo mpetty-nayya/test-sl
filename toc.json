@@ -22,8 +22,8 @@
     },
     {
       "type": "item",
-      "title": "Authorization",
-      "uri": "docs/Authorization.md"
+      "title": "Authentication",
+      "uri": "docs/Authentication.md"
     },    
     {
       "type": "divider",
