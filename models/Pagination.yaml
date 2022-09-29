@@ -13,3 +13,5 @@ required:
   - current_page
   - total_count
   - total_pages
+x-tags:
+  - common

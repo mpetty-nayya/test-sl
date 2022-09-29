@@ -1,7 +1,0 @@
-title: testmodel
-x-stoplight:
-  id: zvd61rt690lq4
-type: object
-properties:
-  id:
-    type: string

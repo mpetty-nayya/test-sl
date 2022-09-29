@@ -238,10 +238,12 @@ info:
     email: api@nayya.com
   termsOfService: 'https://nayya.com'
 servers:
-  - url: 'http://localhost:3000'
-    description: Development
-  - url: 'https://nayya.com'
+  - url: 'https://app.nayya.com/hropen'
     description: Production
+  - url: 'https://staging.app.nayya.com/hropen'
+    description: Development
+  - url: 'http://localhost:3000'
+    description: Development  
 paths:
   /api/employers:
     post:

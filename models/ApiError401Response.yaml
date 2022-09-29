@@ -18,3 +18,5 @@ properties:
 required:
   - status
   - message
+x-tags:
+  - common
