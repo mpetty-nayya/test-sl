@@ -14,4 +14,8 @@ If you have a key that needs to be rolled because of a security breach or becaus
 
 ## How do contact Nayya about an error I don't understand
 
-Contact nayya with [Request-Id](RequestIds.md) and a short description of the issue.
+`409` and `422` errors should provide enough information to fix the error without contacting Nayya.
+
+`5xx` errors should be rare but sometimes provide enough information to prevent contacting Nayya.
+
+Contact nayya by emailing api@nayya.com with the [Request-Id](RequestIds.md) and a short description of the issue.
