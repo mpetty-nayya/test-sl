@@ -3,7 +3,7 @@
   "items": [    
     {
       "type": "divider",
-      "title": "Documentation"
+      "title": "Basics"
     },
     {
       "type": "item",
@@ -12,19 +12,29 @@
     },
     {
       "type": "item",
-      "title": "Getting Started",
-      "uri": "docs/Getting-Started.md"
+      "title": "Authentication",
+      "uri": "docs/Authentication.md"
+    },    
+    {
+      "type": "item",
+      "title": "Errors",
+      "uri": "docs/Errors.md"
+    },    
+    {
+      "type": "item",
+      "title": "Request IDs",
+      "uri": "docs/RequestIDs.md"
+    },            
+    {
+      "type": "item",
+      "title": "Workflow",
+      "uri": "docs/Workflow.md"
     },
     {
       "type": "item",
       "title": "Frequently Asked Questions",
       "uri": "docs/FAQ.md"
-    },
-    {
-      "type": "item",
-      "title": "Authentication",
-      "uri": "docs/Authentication.md"
-    },    
+    },  
     {
       "type": "divider",
       "title": "API"
