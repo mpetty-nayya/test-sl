@@ -196,6 +196,9 @@ paths:
                       current_page: 1
                       total_pages: 1
                       total_count: 1
+          headers:
+            Request-Id:
+              $ref: ./decision-support-api-hropen.yaml#/components/headers/Request-Id
         '403':
           description: Forbidden
         '500':
