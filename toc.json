@@ -124,7 +124,7 @@
         },
         {
           "type": "item",
-          "title": "EmployerRetrieveResponse",
+          "title": "IdentifierType",
           "uri": "models/hropen/base/IdentifierType.yaml"
         }
       ]
