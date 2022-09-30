@@ -61,17 +61,27 @@
         {
           "type": "item",
           "title": "ApiError401Response",
-          "uri": "models/ApiError401Response.yaml"
+          "uri": "models/common/ApiError401Response.yaml"
         },  
         {
           "type": "item",
           "title": "ApiError403Response",
-          "uri": "models/ApiError403Response.yaml"
+          "uri": "models/common/ApiError403Response.yaml"
+        },
+        {
+          "type": "item",
+          "title": "ApiError409Response",
+          "uri": "models/common/ApiError409Response.yaml"
+        },
+        {
+          "type": "item",
+          "title": "ApiError422Response",
+          "uri": "models/common/ApiError422Response.yaml"
         },
         {
           "type": "item",
           "title": "Pagination",
-          "uri": "models/Pagination.yaml"
+          "uri": "models/common/Pagination.yaml"
         }
       ]
     },    
