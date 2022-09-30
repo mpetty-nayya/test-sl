@@ -26,17 +26,17 @@ servers:
   - url: 'http://localhost:3000/hropen'
     description: Development
 components:
-  headers:
-    Request-Id:
-      description: Unique id for a request
-      schema:
-        type: string
-      example: fd319917-5c4e-4417-b37f-7fff50a95275
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       description: JWT token
+  headers:
+    Request-Id:
+      description: Unique id of request
+      schema:
+        type: string
+      example: 123e4567-e89b-12d3-a456-426614174000
 paths:
   /employers:
     post:
@@ -53,7 +53,8 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: ../models/hropen/EmployerCreateResponse.yaml
+                    schema:
+                      $ref: ../models/hropen/EmployerCreateResponse.yaml
               examples:
                 '201':
                   value:
@@ -62,6 +63,9 @@ paths:
                     name: string
                     taxId:
                       value: string
+          headers:
+            Request-Id:
+              $ref: '#/components/headers/Request-Id'
         '401':
           description: Unauthorized
           content:
@@ -101,18 +105,27 @@ paths:
                 properties:
                   data:
                     $ref: ../models/hropen/EmployerRetrieveResponse.yaml
+          headers:
+            Request-Id:
+              $ref: '#/components/headers/Request-Id'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 $ref: ../models/ApiError401Response.yaml
+          headers:
+            Request-Id:
+              $ref: '#/components/headers/Request-Id'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: ../models/ApiError403Response.yaml
+          headers:
+            Request-Id:
+              $ref: '#/components/headers/Request-Id'
       operationId: get-employer
       description: Retrieve an employer.
     parameters:
@@ -144,18 +157,27 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Request-Id:
+              $ref: '#/components/headers/Request-Id'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 $ref: ../models/ApiError401Response.yaml
+          headers:
+            Request-Id:
+              $ref: '#/components/headers/Request-Id'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: ../models/ApiError403Response.yaml
+          headers:
+            Request-Id:
+              $ref: '#/components/headers/Request-Id'
       description: Remove an employee and all PII.
 tags:
   - name: Employees
