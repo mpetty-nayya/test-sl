@@ -12,4 +12,4 @@ Authentication to the API is performed via Bearer Auth. Simply include a header 
 
 All API requests must be made over [https](http://en.wikipedia.org/wiki/HTTP_Secure). Any calls made without authentication or made over http will fail.
 
-Related Articles: [Authentication FAQ](FAQ.md#authentication)
+Related guide: [Authentication FAQ](FAQ.md#authentication)
