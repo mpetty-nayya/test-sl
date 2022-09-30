@@ -11,7 +11,7 @@ All top-level API resources have support for bulk fetches via "list" API methods
 **Request**
 
 ```
-GET https://app.nayya.com/api/employers
+GET https://app.nayya.com/api/employers?page=1&per_page=25
 ```
 
 **Response**
