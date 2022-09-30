@@ -4064,7 +4064,11 @@ components:
         - grouped
         - grouped_sum
         - individual
-  securitySchemes: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token
   responses: {}
   parameters: {}
 tags:
@@ -4102,3 +4106,5 @@ x-tagGroups:
   - name: Recommendation
     tags:
       - Choices
+security:
+  - bearerAuth: []
