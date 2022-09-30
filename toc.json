@@ -42,12 +42,12 @@
     {
       "type": "item",
       "title": "Decision Support Api",
-      "uri": "/reference/decision-support-api-hropen.yaml"
+      "uri": "/reference/decision-support-api-standard.yaml"
     },
     {
       "type": "item",
       "title": "Decision Support Api (HrOpen)",
-      "uri": "/reference/decision-support-api-standard.yaml"
+      "uri": "/reference/decision-support-api-hropen.yaml"
     },
     {
       "type": "divider",
