@@ -3549,6 +3549,12 @@ paths:
                             '1000': 0.25
         description: ''
 components:
+  headers:
+    Request-Id:
+      description: Unique id for a request
+      schema:
+        type: string
+      example: fd319917-5c4e-4417-b37f-7fff50a95275
   schemas:
     Insured:
       title: Insured
