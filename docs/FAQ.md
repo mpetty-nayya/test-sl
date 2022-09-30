@@ -22,7 +22,7 @@ Contact Nayya by emailing api@nayya.com with the [Request-Id](RequestIds.md) and
 
 ## Postman
 
-## Does Nayya support Postman?
+### Does Nayya support Postman?
 
 1. Browse to the [standard api](../reference/decision-support-api-standard.yaml) or [hropen api](../reference/decision-support-api-hropen.yaml).
 2. Select `Exports / Bundled References` to download a self contained OpenAPI document of the Nayya API
