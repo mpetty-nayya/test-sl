@@ -4,7 +4,7 @@ stoplight-id: 72b66de24898e
 
 # Introduction
 
-The Nayya Decision Support API is a typical HTTP API that consumes and produces  JSON.  There two distinct APIs, a standard version [HROpen](https://www.hropenstandards.org/) version.
+The Nayya Decision Support API is a typical HTTP API that consumes and produces  JSON.  There are two distinct APIs, a standard version and an [HROpen](https://www.hropenstandards.org/) version.
 
 ## Standard
 
