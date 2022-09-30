@@ -15,7 +15,7 @@ Code | Summary
 **403 - Forbidden** | The API key doesn't have permissions to perform the request.
 **404 - Not Found** |	The requested resource doesn't exist.
 **409 - Conflict** | The parameters were valid but the request failed.
-**422 - Invalid** | The parameters were invalid
+**422 - Unprocessable Entity** | The parameters were invalid
 **500, 502, 503, 504 - Server Errors** | Something went wrong on Stripe's end. (These are rare.)
 
 Related guide: [Errors FAQ](FAQ.md#errors)
