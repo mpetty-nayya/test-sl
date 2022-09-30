@@ -12,7 +12,7 @@ If you have a key that needs to be rolled because of a security breach or becaus
 
 ## Errors
 
-## How do contact Nayya about an error I don't understand
+### How do contact Nayya about an error I don't understand
 
 `409` and `422` errors should provide enough information to fix the error without contacting Nayya.
 
