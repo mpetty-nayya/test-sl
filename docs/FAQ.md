@@ -26,4 +26,4 @@ Contact Nayya by emailing api@nayya.com with the [Request-Id](RequestIds.md) and
 
 1. Browse to the [standard api](../reference/decision-support-api-standard.yaml) or [hropen api](../reference/decision-support-api-hropen.yaml).
 2. Select `Exports / Bundled References` to download a self contained OpenAPI document of the Nayya API
-3. Import the OpenAPI document as an API in Postman.  There is an option to generate collections from the Open API file.
+3. Import the OpenAPI document as an API in Postman.  There is an option to generate collections during the OpenAPI import
