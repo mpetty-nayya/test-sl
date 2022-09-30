@@ -1,5 +1,5 @@
-module HrOpen
-  module Contracts
+module DecisionSupport
+  module Common
     class Api401ErrorResponse < Dry::Validation::Contract
       params do
         required(:status).value(eql?: 401)
