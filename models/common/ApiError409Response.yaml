@@ -1,0 +1,21 @@
+title: ApiError409Response
+x-stoplight:
+  id: p0wj99p3y33n2
+type: object
+examples:
+  - status: 409
+    message: A carrier is required to create plan    
+properties:
+  status:
+    type: number
+    minimum: 409
+    maximum: 409
+  message:
+    type: string
+  errors:
+    type: object
+required:
+  - status
+  - message  
+x-tags:
+  - common

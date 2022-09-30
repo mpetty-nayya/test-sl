@@ -3,6 +3,9 @@ x-stoplight:
   id: c6c14ibszbmrx
 info:
   title: Decision Support API
+  license:
+    name: Unknown
+    url: 'https://nayya.com'
   version: '1.0'
   x-logo:
     url: /docs/nayya-blue.png
@@ -71,6 +74,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       requestBody:
@@ -209,6 +216,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       description: |-
@@ -329,6 +340,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       description: |-
@@ -580,6 +595,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       tags:
@@ -658,6 +677,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       tags:
@@ -719,6 +742,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       description: 'Create an eligibility group. Eligibility groups are used to authorize plans for employees. In order for an employee to have access to a plan when going through the decision support system, they must be associated with an eligibility group associated with that plan.'
@@ -815,6 +842,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       description: Update data related to an eligibility grouping.
@@ -841,6 +872,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       tags:
@@ -854,11 +889,13 @@ paths:
       - schema:
           type: string
         name: group_id
+        description: Nayya's eligibilty group id
         in: path
         required: true
       - schema:
           type: string
         name: employee_id
+        description: Nayya's employee id
         in: path
         required: true
   '/api/employers/{employer_id}/plans':
@@ -980,6 +1017,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       description: |-
@@ -1955,6 +1996,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       description: Update the details of a plan.
@@ -2580,6 +2625,7 @@ paths:
       - schema:
           type: string
         name: employee_id
+        description: Nayya's employee id
         in: path
         required: true
     get:
@@ -2628,6 +2674,7 @@ paths:
       - schema:
           type: string
         name: employee_id
+        description: Nayya's employee id
         in: path
         required: true
     get:
@@ -2833,6 +2880,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       description: Add a new open enrollment for an employer.
@@ -2879,6 +2930,10 @@ paths:
           description: Not Found
         '422':
           description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
         '500':
           description: Internal Server Error
       description: 'Update details of an open enrollment. Typically this is used to publish an unpublished open enrollment, or can be used to adjust the start and end dates of the enrollment period.'

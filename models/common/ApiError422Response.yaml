@@ -1,0 +1,25 @@
+title: ApiError422Response
+x-stoplight:
+  id: vop9jpjt6piox
+type: object
+examples:
+  - status: 422
+    message: Invalid request
+    errors: {
+      "age": "Age must greater than 0"
+    }
+properties:
+  status:
+    type: number
+    minimum: 422
+    maximum: 422
+  message:
+    type: string
+  errors:
+    type: object
+required:
+  - status
+  - message  
+  - errors
+x-tags:
+  - common

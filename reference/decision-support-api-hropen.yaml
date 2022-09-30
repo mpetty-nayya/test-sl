@@ -66,18 +66,18 @@ paths:
           headers:
             Request-Id:
               $ref: '#/components/headers/Request-Id'
-        '401':
-          description: Unauthorized
+        '409':
+          description: Conflict
           content:
             application/json:
               schema:
-                $ref: ../models/ApiError401Response.yaml
-        '403':
-          description: Forbidden
+                $ref: ../models/common/ApiError409Response.yaml
+        '422':
+          description: Unprocessable Entity (WebDAV)
           content:
             application/json:
               schema:
-                $ref: ../models/ApiError403Response.yaml
+                $ref: ../models/common/ApiError422Response.yaml
       description: Add an employer
       requestBody:
         content:
@@ -105,24 +105,6 @@ paths:
                 properties:
                   data:
                     $ref: ../models/hropen/EmployerRetrieveResponse.yaml
-          headers:
-            Request-Id:
-              $ref: '#/components/headers/Request-Id'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: ../models/ApiError401Response.yaml
-          headers:
-            Request-Id:
-              $ref: '#/components/headers/Request-Id'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: ../models/ApiError403Response.yaml
           headers:
             Request-Id:
               $ref: '#/components/headers/Request-Id'
@@ -160,21 +142,21 @@ paths:
           headers:
             Request-Id:
               $ref: '#/components/headers/Request-Id'
-        '401':
-          description: Unauthorized
+        '409':
+          description: Conflict
           content:
             application/json:
               schema:
-                $ref: ../models/ApiError401Response.yaml
+                $ref: ../models/common/ApiError409Response.yaml
           headers:
             Request-Id:
               $ref: '#/components/headers/Request-Id'
-        '403':
-          description: Forbidden
+        '422':
+          description: Unprocessable Entity (WebDAV)
           content:
             application/json:
               schema:
-                $ref: ../models/ApiError403Response.yaml
+                $ref: ../models/common/ApiError422Response.yaml
           headers:
             Request-Id:
               $ref: '#/components/headers/Request-Id'
