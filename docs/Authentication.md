@@ -12,6 +12,4 @@ Authentication to the API is performed via Bearer Auth. Simply include a header 
 
 All API requests must be made over [https](http://en.wikipedia.org/wiki/HTTP_Secure). Any calls made without authentication or made over http will fail.
 
-## New JWT Token
-
-If you have a key that needs to be rolled because of a security breach, or because of your security protocols, you may contact api@nayya.com for a new JWT Token.
+Related Articles: [Authentication FAQ](FAQ.md#authentication)
