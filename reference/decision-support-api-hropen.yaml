@@ -22,7 +22,7 @@ servers:
   - url: 'https://app.nayya.com/hropen'
     description: Production
   - url: 'https://staging.app.nayya.com/hropen'
-    description: Development
+    description: Staging
   - url: 'http://localhost:3000/hropen'
     description: Development
 components:

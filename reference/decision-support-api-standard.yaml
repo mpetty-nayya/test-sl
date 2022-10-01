@@ -21,7 +21,7 @@ servers:
   - url: 'https://app.nayya.com'
     description: Production
   - url: 'https://staging.app.nayya.com'
-    description: Development
+    description: Staging
   - url: 'http://localhost:3000'
     description: Development
 paths:
