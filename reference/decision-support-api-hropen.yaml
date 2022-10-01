@@ -19,11 +19,11 @@ info:
   termsOfService: 'https://nayya.com'
   summary: Decission Support in Hr Open
 servers:
-  - url: 'https://app.nayya.com/hropen'
+  - url: 'https://app.nayya.com/hr_open'
     description: Production
-  - url: 'https://staging.app.nayya.com/hropen'
+  - url: 'https://staging.app.nayya.com/hr_open'
     description: Staging
-  - url: 'http://localhost:3000/hropen'
+  - url: 'http://localhost:3000/hr_open'
     description: Development
 components:
   securitySchemes:
