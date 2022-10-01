@@ -18,11 +18,11 @@ info:
     email: api@nayya.com
   termsOfService: 'https://nayya.com'
 servers:
-  - url: 'https://app.nayya.com/api'
+  - url: 'https://app.nayya.com'
     description: Production
-  - url: 'https://staging.app.nayya.com/api'
+  - url: 'https://staging.app.nayya.com'
     description: Development
-  - url: 'http://localhost:3000/api'
+  - url: 'http://localhost:3000'
     description: Development
 paths:
   /api/employers:
