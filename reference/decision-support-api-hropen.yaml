@@ -19,11 +19,11 @@ info:
   termsOfService: 'https://nayya.com'
   summary: Decission Support in Hr Open
 servers:
-  - url: 'https://app.nayya.com/hr_open'
+  - url: 'https://app.nayya.com'
     description: Production
-  - url: 'https://staging.app.nayya.com/hr_open'
+  - url: 'https://staging.app.nayya.com'
     description: Staging
-  - url: 'http://localhost:3000/hr_open'
+  - url: 'http://localhost:3000'
     description: Development
 components:
   securitySchemes:
@@ -38,7 +38,7 @@ components:
         type: string
       example: 123e4567-e89b-12d3-a456-426614174000
 paths:
-  /employers:
+  /hr_open/employers:
     post:
       summary: Add an employer
       tags:
@@ -85,12 +85,15 @@ paths:
             schema:
               $ref: ../models/hropen/EmployerCreateParams.yaml
             examples:
-              example-1:
+              Simple:
                 value:
-                  id:
-                    value: string
-                  name: string
-  '/employers/{employer_id}':
+                  employerOrganization:
+                    id:
+                      value: string
+                    name: string
+        description: ''
+    parameters: []
+  '/hr_open/employers/{employer_id}':
     get:
       summary: Retrieve an employer
       tags:
@@ -117,7 +120,7 @@ paths:
         in: path
         required: true
         description: External employer id
-  '/employers/{employer_id}/employees/{employee_id}':
+  '/hr_open/employers/{employer_id}/employees/{employee_id}':
     parameters:
       - schema:
           type: string
