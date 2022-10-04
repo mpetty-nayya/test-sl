@@ -18,7 +18,7 @@ If you have a key that needs to be rolled because of a security breach or becaus
 
 `5xx` errors should be rare but sometimes provide enough information to prevent contacting Nayya.
 
-Contact Nayya by emailing api@nayya.com with the [Request-Id](RequestIds.md) and a short description of the issue.
+Contact Nayya by emailing api@nayya.com with the [Request-Id](RequestIDs.md) and a short description of the issue.
 
 ## Postman
 
