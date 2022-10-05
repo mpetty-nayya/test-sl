@@ -1,0 +1,13 @@
+type: array
+title: VolumeParametersType
+x-stoplight:
+  id: gmtz88ly1blo5
+examples:
+  - value: string
+x-tags:
+  - hropen/base
+minItems: 3
+maxItems: 3
+items:
+  $ref: ./VolumeParameterType.yaml
+description: 'A set of parameters that can be used to calculate all volumes and rates available to an employee - must contain exactly 3 elements, one each for minimum, maximum, and increment.  volumeRateUnit should be the same enum for all 3 elements.'

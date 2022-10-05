@@ -1,0 +1,29 @@
+type: object
+x-examples:
+  example-1:
+    volumeAmount:
+      value: 1000
+    volumeRateAmount:
+      value: 2
+    volumeRateUnit: string
+properties:
+  volumeAmount:
+    type: object
+    required:
+      - value
+    properties:
+      value:
+        type: integer
+  volumeRateAmount:
+    type: object
+    required:
+      - value
+    properties:
+      value:
+        type: integer
+  volumeRateUnit:
+    $ref: ./VolumeRateUnitType.yaml
+required:
+  - volumeAmount
+  - volumeRateAmount
+  - volumeRateUnit
