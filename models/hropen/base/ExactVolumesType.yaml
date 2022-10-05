@@ -1,0 +1,12 @@
+type: array
+x-stoplight:
+  id: ftvb030bps4h5
+title: ExactVolumesType
+examples:
+  - value: string
+x-tags:
+  - hropen/base
+minItems: 1
+description: Volumes and rates for which an employee is eligible
+items:
+  $ref: ./volumeType.yaml

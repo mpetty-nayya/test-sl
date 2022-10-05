@@ -1,4 +1,6 @@
 type: object
+x-stoplight:
+  id: 8635923d9e207
 x-examples:
   example-1:
     volumeAmount:
