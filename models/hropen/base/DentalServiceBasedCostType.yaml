@@ -1,0 +1,110 @@
+type: object
+properties:
+  outOfPocketMaximums:
+    type: array
+    items:
+      type: object
+      properties:
+        outOfPocketMaximumAmount:
+          type: object
+          properties:
+            currency:
+              type: string
+            value:
+              type: string
+        networkApplicability:
+          type: string
+        serviceApplicability:
+          type: string
+        unitTime:
+          type: string
+  deductibles:
+    type: array
+    items:
+      type: object
+      properties:
+        deductibleAmount:
+          type: object
+          properties:
+            currency:
+              type: string
+            value:
+              type: string
+        networkApplicability:
+          type: string
+        serviceType:
+          type: string
+  coinsurance:
+    type: array
+    items:
+      type: object
+      properties:
+        networkApplicability:
+          type: string
+        serviceType:
+          type: string
+        coinsuranceAmount:
+          type: integer
+x-examples:
+  example-1:
+    outOfPocketMaximums:
+      - outOfPocketMaximumAmount:
+          currency: USD
+          value: '15000'
+        networkApplicability: OutOfNetwork
+        serviceApplicability: Orthodontics
+        unitTime: Annual
+      - outOfPocketMaximumAmount:
+          currency: USD
+          value: '7500'
+        networkApplicability: InNetwork
+        serviceApplicability: Orthodontics
+        unitTime: Annual
+      - outOfPocketMaximumAmount:
+          currency: USD
+          value: '35000'
+        networkApplicability: OutOfNetwork
+        serviceApplicability: Orthodontics
+        unitTime: Lifetime
+      - outOfPocketMaximumAmount:
+          currency: USD
+          value: '20000'
+        networkApplicability: InNetwork
+        serviceApplicability: Orthodontics
+        unitTime: Lifetime
+    deductibles:
+      - deductibleAmount:
+          currency: USD
+          value: '45'
+        networkApplicability: OutOfNetwork
+        serviceType: DentalPreventativeCare
+      - deductibleAmount:
+          currency: USD
+          value: '30'
+        networkApplicability: InNetwork
+        serviceType: DentalPreventativeCare
+    coinsurance:
+      - networkApplicability: OutOfNetwork
+        serviceType: EndodonticsBasic
+        coinsuranceAmount: 15
+      - networkApplicability: InNetwork
+        serviceType: EndodonticsBasic
+        coinsuranceAmount: 10
+      - networkApplicability: OutOfNetwork
+        serviceType: PreventativeCare
+        coinsuranceAmount: 18
+      - networkApplicability: InNetwork
+        serviceType: PreventativeCare
+        coinsuranceAmount: 12
+      - networkApplicability: OutOfNetwork
+        serviceType: Orthodontics
+        coinsuranceAmount: 20
+      - networkApplicability: InNetwork
+        serviceType: Orthodontics
+        coinsuranceAmount: 15
+      - networkApplicability: OutOfNetwork
+        serviceType: MajorCoinsurance
+        coinsuranceAmount: 15
+      - networkApplicability: InNetwork
+        serviceType: MajorCoinsurance
+        coinsuranceAmount: 10

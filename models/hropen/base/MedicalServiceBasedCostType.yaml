@@ -1,4 +1,6 @@
 type: object
+x-stoplight:
+  id: abe35579c70bb
 x-examples:
   example-1:
     deductibles:
@@ -179,3 +181,4 @@ properties:
           type: string
         serviceType:
           type: string
+title: ''

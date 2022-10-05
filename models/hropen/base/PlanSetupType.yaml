@@ -2,7 +2,7 @@ title: PlanSetupType
 x-stoplight:
   id: ufljupjydtywe
 type: object
-description: 'General plan details.'
+description: General plan details.
 examples:
   - id:
       value: string
@@ -27,11 +27,15 @@ properties:
   effectivePeriod:
     $ref: ./EffectivePeriodType.yaml
   serviceBasedCosts:
-    oneOf
-     - 
+    type: array
+    items:
+      oneOf:
+        - $ref: ./MedicalServiceBasedCostType.yaml
+        - $ref: ./DentalServiceBasedCostType.yaml
 required:
   - id
   - productCode
   - displayPlanName
   - carrierOrganization
   - effectivePeriod
+  - serviceBasedCosts
