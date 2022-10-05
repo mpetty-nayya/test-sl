@@ -1,0 +1,29 @@
+type: object
+x-stoplight:
+  id: ut7uszax40clh
+x-examples:
+  example-1:
+    volumeAmount:
+      value: 500
+    volumeRateAmount:
+      value: 2
+    volumeRateUnit: DollarsPer1000CoveredVolume
+    eligibleVolumeCode: minimum
+title: ''
+properties:
+  volumeAmount:
+    type: object
+    properties:
+      value:
+        type: integer
+  volumeRateAmount:
+    type: object
+    properties:
+      value:
+        type: integer
+  volumeRateUnit:
+    $ref: ./VolumeRateUnitType.yaml
+  eligibleVolumeCode:
+    type: string
+    enum:
+      - increment

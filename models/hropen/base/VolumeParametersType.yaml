@@ -8,6 +8,8 @@ x-tags:
   - hropen/base
 minItems: 3
 maxItems: 3
-items:
-  $ref: ./VolumeParameterType.yaml
 description: 'Parameters that can be used to calculate all volumes and rates available to an employee - must contain exactly 3 elements, one each for eligibleVolumeCode minimum, maximum, and increment.  volumeRateUnit should be the same enum for all 3 elements.'
+items:
+  allOf:
+    - $ref: ./MinimumVolumeParameterType.yaml
+    - $ref: ''
