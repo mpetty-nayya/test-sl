@@ -1,0 +1,11 @@
+title: PlanCreateParams
+x-stoplight:
+  id: m0o9n1q3xkyao
+type: object
+properties:
+  planSetup:
+    allOf:
+      - $ref: ./base/PlanSetupType.yaml
+examples:
+x-tags:
+  - hropen

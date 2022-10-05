@@ -1,0 +1,37 @@
+title: PlanSetupType
+x-stoplight:
+  id: ufljupjydtywe
+type: object
+description: 'General plan details.'
+examples:
+  - id:
+      value: string
+    displayPlanName: string
+x-tags:
+  - hropen/base
+properties:
+  id:
+    $ref: ./IdentifierType.yaml
+  productCode:
+    type: string
+    enum:
+      - Medical
+      - Dental
+      - Vision
+    description: Plan type
+  displayPlanName:
+    type: string
+    description: Consumer-facing name for plan.
+  carrierOrganization:
+    $ref: ./CarrierOrganizationType.yaml
+  effectivePeriod:
+    $ref: ./EffectivePeriodType.yaml
+  serviceBasedCosts:
+    oneOf
+     - 
+required:
+  - id
+  - productCode
+  - displayPlanName
+  - carrierOrganization
+  - effectivePeriod

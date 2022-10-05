@@ -1,0 +1,15 @@
+title: CarrierOrganizationType
+x-stoplight:
+  id: 3x2qm66s1t7ik
+type: object
+description: 'A description of a carrier organization with a name.'
+properties:
+  name:
+    type: string
+    description: Name of the carrier organization.
+required:
+  - name
+examples:
+    name: string
+x-tags:
+  - hropen/base
