@@ -1,22 +1,21 @@
 title: EffectivePeriodType
 x-stoplight:
-  id: b8i080hwrss2m
+  id: zusiapv4k8foc
 type: object
-description: 'Effective period details for a plan.'
+description: Dates for which plan is effective
+examples:
+  - validFrom:
+      value: string
+    validTo: string
+x-tags:
+  - hropen/base
 properties:
   validFrom:
     type: string
     format: date
   validTo:
     type: string
-    format: dateon which
-    fovalidFromat: dvalidTo    descriptionvalidFrom
-  - validTo on which 
-  - validFrom: "2022-01-01T05:00:00.000+0000"
-    validTo: "2023-01-01T05:00:00.000+0000"lidFrom
+    format: date
+required:
+  - validFrom
   - validTo
-examples:
-  - validFrom: string
-    validTo: string
-x-tags:
-  - hropen/base
