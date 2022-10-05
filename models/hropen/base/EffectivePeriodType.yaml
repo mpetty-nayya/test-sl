@@ -4,8 +4,7 @@ x-stoplight:
 type: object
 description: Dates for which plan is effective
 examples:
-  - validFrom:
-      value: string
+  - validFrom: string
     validTo: string
 x-tags:
   - hropen/base
