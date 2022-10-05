@@ -12,4 +12,5 @@ description: 'Parameters that can be used to calculate all volumes and rates ava
 items:
   allOf:
     - $ref: ./MinimumVolumeParameterType.yaml
-    - $ref: ''
+    - $ref: ./MaximumVolumeParameterType.yaml
+    - $ref: ./IncrementVolumeParameterType.yaml
