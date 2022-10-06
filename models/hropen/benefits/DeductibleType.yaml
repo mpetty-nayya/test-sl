@@ -5,7 +5,7 @@ type: object
 description: 'The type defining a single deductible for a plan.  The deductible refers to a particular service type (e.g., individual in-network) and a deductible amount associated with the service type.'
 properties:
   deductibleAmount:
-    type: number
+    $ref: ''
   serviceType:
     $ref: ./codelist/DeductibleServiceType.yaml
   networkApplicability:

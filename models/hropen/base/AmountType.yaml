@@ -1,0 +1,15 @@
+title: AmountType
+x-stoplight:
+  id: 4mwuqnxot6fpu
+type: object
+description: An amount is a number of monetary units specified in a currency.
+properties:
+  value:
+    type: number
+    description: The value of the amount.
+  currency:
+    $ref: ../codelist/CurrencyCodeList.yaml
+    description: The currency of the amount.
+required:
+  - value
+  - currency

@@ -1,0 +1,6 @@
+type: string
+title: CurrencyCodeList
+x-stoplight:
+  id: 09o8tluse2hz0
+enum:
+  - USD
