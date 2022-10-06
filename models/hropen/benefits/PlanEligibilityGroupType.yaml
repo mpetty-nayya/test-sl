@@ -1,0 +1,23 @@
+title: PlanEligibilityGroupType
+x-stoplight:
+  id: 3f9nusktym8kq
+description: Information pertaining to a plan eligibility group.
+type: object
+properties:
+  id:
+    $ref: ../base/IdentifierType.yaml
+    description: Unique alphanumeric identifier for the Eligibility Group.
+  eligibilityGroupName:
+    type: string
+    description: The Eligibility Group name.
+  effectivePeriod:
+    $ref: ../base/EffectiveTimePeriodType.yaml
+  coverageTiers:
+    type: array
+    description: The type defining values specific to a given coverage tier of a plan.
+    items:
+      $ref: ''
+required:
+  - id
+  - eligibilityGroupName
+  - effectivePeriod

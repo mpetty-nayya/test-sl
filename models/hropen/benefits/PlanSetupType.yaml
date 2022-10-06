@@ -20,17 +20,8 @@ properties:
     type: string
   carrierOrganization:
     $ref: ../organization/OrganizationType.yaml
-  effectivePeriod:
-    $ref: ../base/EffectiveTimePeriodType.yaml
-  serviceBasedCosts:
-    type: array
-    items:
-      oneOf:
-        - $ref: ../extension/DentalServiceBasedCostType.yaml
 required:
   - id
   - productCode
   - displayPlanName
   - carrierOrganization
-  - effectivePeriod
-  - serviceBasedCosts
