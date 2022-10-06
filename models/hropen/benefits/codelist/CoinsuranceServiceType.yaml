@@ -1,0 +1,10 @@
+type: string
+title: CoinsuranceServiceType
+x-stoplight:
+  id: lx5lr2uijciqu
+description: ''
+enum:
+  - Orthodontics
+  - EndodonticsBasic
+  - PreventativeCare
+  - MajorCoinsurance

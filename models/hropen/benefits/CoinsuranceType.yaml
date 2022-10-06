@@ -1,0 +1,10 @@
+title: CoinsuranceType
+x-stoplight:
+  id: mcdovlnxlv14p
+type: object
+description: 'The type defining a single coinsurance for a plan.  The coinsurance refers to a particular service type (e.g., in-network) and a coinsurance percentage associated with the service type.'
+properties:
+  coinsuranceAmount:
+    $ref: ../base/PercentType.yaml
+  serviceType:
+    $ref: ''

@@ -20,6 +20,10 @@ properties:
     type: string
   carrierOrganization:
     $ref: ../organization/OrganizationType.yaml
+  planEligibilityGroups:
+    type: array
+    items:
+      $ref: ./PlanEligibilityGroupType.yaml
 required:
   - id
   - productCode

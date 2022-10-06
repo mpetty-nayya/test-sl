@@ -6,3 +6,9 @@ description: 'The fields defining non-premium costs for specific services (for e
 properties:
   deductibles:
     $ref: ./DeductibleType.yaml
+  outOfPocketMaximums:
+    type: array
+    items:
+      $ref: ./OutOfPocketMaximumType.yaml
+  coinsurance:
+    $ref: ''
