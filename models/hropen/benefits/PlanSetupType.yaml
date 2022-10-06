@@ -13,13 +13,13 @@ properties:
   id:
     $ref: ../base/IdentifierType.yaml
   productCode:
-    $ref: ''
+    $ref: ./codelist/ProductCodeList.yaml
     description: Plan type
   displayPlanName:
+    description: Display name for plan.
     type: string
-    description: Consumer-facing name for plan.
   carrierOrganization:
-    $ref: ./CarrierOrganizationType.yaml
+    $ref: ../../Carrier.yaml
   effectivePeriod:
     $ref: ./EffectivePeriodType.yaml
   serviceBasedCosts:

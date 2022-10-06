@@ -1,0 +1,13 @@
+title: OrganizationType
+x-stoplight:
+  id: k0vouxft3z45y
+type: object
+description: Information to identify and reference a specific organization.
+properties:
+  id:
+    $ref: ../base/IdentifierType.yaml
+  name:
+    type: string
+required:
+  - id
+  - name
