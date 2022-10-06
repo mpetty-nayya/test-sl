@@ -2,7 +2,7 @@ title: PlanSetupType
 x-stoplight:
   id: ufljupjydtywe
 type: object
-description: General plan details.
+description: General plan details regarding plan setup
 examples:
   - id:
       value: string
@@ -11,13 +11,9 @@ x-tags:
   - hropen/base
 properties:
   id:
-    $ref: ./IdentifierType.yaml
+    $ref: ../base/IdentifierType.yaml
   productCode:
-    type: string
-    enum:
-      - Medical
-      - Dental
-      - Vision
+    $ref: ''
     description: Plan type
   displayPlanName:
     type: string
