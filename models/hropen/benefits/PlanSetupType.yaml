@@ -19,7 +19,7 @@ properties:
     description: Display name for plan.
     type: string
   carrierOrganization:
-    $ref: ../../Carrier.yaml
+    $ref: ../organization/OrganizationType.yaml
   effectivePeriod:
     $ref: ./EffectivePeriodType.yaml
   serviceBasedCosts:

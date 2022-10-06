@@ -1,8 +1,8 @@
-title: EffectivePeriodType
+title: EffectiveTimePeriodType
 x-stoplight:
   id: zusiapv4k8foc
 type: object
-description: Dates for which plan is effective
+description: A time period in which an associated object is effective.
 examples:
   - validFrom: string
     validTo: string
@@ -10,11 +10,9 @@ x-tags:
   - hropen/base
 properties:
   validFrom:
-    type: string
-    format: date
+    $ref: ./DateType.yaml
   validTo:
-    type: string
-    format: date
+    $ref: ./DateType.yaml
 required:
   - validFrom
   - validTo
