@@ -21,12 +21,11 @@ properties:
   carrierOrganization:
     $ref: ../organization/OrganizationType.yaml
   effectivePeriod:
-    $ref: ./EffectivePeriodType.yaml
+    $ref: ../base/EffectiveTimePeriodType.yaml
   serviceBasedCosts:
     type: array
     items:
       oneOf:
-        - $ref: ./MedicalServiceBasedCostType.yaml
         - $ref: ./DentalServiceBasedCostType.yaml
 required:
   - id

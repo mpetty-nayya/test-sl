@@ -1,7 +1,7 @@
 type: string
-title: VolumeRateUnitType
 x-stoplight:
   id: pzp17svj6xxns
+title: VolumeRateUnitType
 examples:
   - value: string
 x-tags:

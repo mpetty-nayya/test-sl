@@ -1,7 +1,7 @@
 type: array
-title: VolumeParametersType
 x-stoplight:
   id: gmtz88ly1blo5
+title: VolumeParametersType
 examples:
   - - volumeTypeCode: Requested
       volumeAmount:

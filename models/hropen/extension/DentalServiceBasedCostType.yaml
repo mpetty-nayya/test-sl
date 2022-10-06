@@ -1,4 +1,6 @@
 type: object
+x-stoplight:
+  id: 72102ba40a955
 properties:
   outOfPocketMaximums:
     type: array
