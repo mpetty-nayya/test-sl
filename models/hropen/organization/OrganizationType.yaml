@@ -1,6 +1,6 @@
 title: OrganizationType
 x-stoplight:
   id: k0vouxft3z45y
-description: Information to identify and reference a specific organization.
+description: Information about a specific organization.
 allOf:
   - $ref: ../base/EntityType.yaml

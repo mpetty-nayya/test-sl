@@ -1,0 +1,8 @@
+title: ServiceBasedCostType
+x-stoplight:
+  id: zn1nbltny21iw
+type: object
+description: 'The fields defining non-premium costs for specific services (for example, out-of-network outpatient hospital care) useful for decision support but not directly affecting employee or employer premiums or rules governing enrollment.'
+properties:
+  deductibles:
+    $ref: ./DeductibleType.yaml
