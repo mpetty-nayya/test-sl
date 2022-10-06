@@ -1,11 +1,14 @@
 title: PlanCreateParams
 x-stoplight:
-  id: m0o9n1q3xkyao
+  id: eeye2484m8793
 type: object
-properties:
-  planSetup:
-    - $ref: ./base/PlanSetupType.yaml
-examples: null
+examples:
+  - id:
+      value: string
+    name: string
 x-tags:
   - hropen
-description: Create a plan for a given employer
+properties:
+  planSetup:
+    $ref: ./benefits/PlanSetupType.yaml
+description: ''

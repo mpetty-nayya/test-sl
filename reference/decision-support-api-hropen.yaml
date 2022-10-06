@@ -42,7 +42,7 @@ components:
 paths:
   '/hr_open/employers/{employer_id}/plans':
     post:
-      summary: Add a plan
+      summary: Add an employer
       tags:
         - Employers
       operationId: post-plan
@@ -80,7 +80,7 @@ paths:
             application/json:
               schema:
                 $ref: ../models/common/ApiError422Response.yaml
-      description: Add a plan
+      description: Add an employer
       requestBody:
         content:
           application/json:
@@ -98,10 +98,10 @@ paths:
       - schema:
           type: string
         name: employer_id
-        description: client unique identifier for employer
         in: path
         required: true
-  /hr_open/employers:
+        description: Unique client identifier for employer
+  /hr_open/employers - copy:
     post:
       summary: Add an employer
       tags:
