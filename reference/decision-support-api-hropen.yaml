@@ -26,7 +26,7 @@ servers:
   - url: 'https://qa.app.nayya.com'
     description: QA
   - url: 'http://localhost:3000'
-    description: Development  
+    description: Development
 components:
   securitySchemes:
     bearerAuth:
@@ -40,6 +40,67 @@ components:
         type: string
       example: 123e4567-e89b-12d3-a456-426614174000
 paths:
+  '/hr_open/employers/{employer_id}/plans':
+    post:
+      summary: Add a plan
+      tags:
+        - Employers
+      operationId: post-plan
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    schema:
+                      $ref: ../models/hropen/EmployerCreateResponse.yaml
+              examples:
+                '201':
+                  value:
+                    id:
+                      value: string
+                    name: string
+                    taxId:
+                      value: string
+          headers:
+            Request-Id:
+              $ref: '#/components/headers/Request-Id'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError409Response.yaml
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
+      description: Add a plan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/hropen/PlanCreateParams.yaml
+            examples:
+              Simple:
+                value:
+                  employerOrganization:
+                    id:
+                      value: string
+                    name: string
+        description: ''
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        description: client unique identifier for employer
+        in: path
+        required: true
   /hr_open/employers:
     post:
       summary: Add an employer

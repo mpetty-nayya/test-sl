@@ -4,8 +4,8 @@ x-stoplight:
 type: object
 properties:
   planSetup:
-    allOf:
-      - $ref: ./base/PlanSetupType.yaml
-examples:
+    - $ref: ./base/PlanSetupType.yaml
+examples: null
 x-tags:
   - hropen
+description: Create a plan for a given employer
