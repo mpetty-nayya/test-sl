@@ -7,4 +7,10 @@ properties:
   coinsuranceAmount:
     $ref: ../base/PercentType.yaml
   serviceType:
-    $ref: ''
+    $ref: ./codelist/CoinsuranceServiceType.yaml
+  networkApplicability:
+    $ref: ./codelist/NetworkApplicabilityType.yaml
+required:
+  - coinsuranceAmount
+  - serviceType
+  - networkApplicability
