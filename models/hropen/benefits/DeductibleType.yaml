@@ -9,7 +9,8 @@ properties:
   serviceType:
     $ref: ./codelist/DeductibleServiceType.yaml
   networkApplicability:
-    $ref: ''
+    $ref: ./codelist/NetworkApplicabilityType.yaml
 required:
   - deductibleAmount
   - serviceType
+  - networkApplicability
