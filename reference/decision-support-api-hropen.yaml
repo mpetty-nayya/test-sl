@@ -42,7 +42,7 @@ components:
 paths:
   '/hr_open/employers/{employer_id}/plans':
     post:
-      summary: Add an employer
+      summary: Add a plan
       tags:
         - Employers
       operationId: post-plan
@@ -80,7 +80,7 @@ paths:
             application/json:
               schema:
                 $ref: ../models/common/ApiError422Response.yaml
-      description: Add an employer
+      description: Add a plan for a given employer
       requestBody:
         content:
           application/json:
