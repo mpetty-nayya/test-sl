@@ -19,3 +19,4 @@ required:
   - id
   - electedEligibilityGroupId
   - coverageLevelTierTypeCode
+  - deductionInstruction

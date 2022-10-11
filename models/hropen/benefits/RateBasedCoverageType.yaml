@@ -1,0 +1,9 @@
+title: RateBasedCoverageType
+x-stoplight:
+  id: gt4wmroazpyb5
+type: object
+properties:
+  volumes:
+    type: array
+    items:
+      $ref: ''

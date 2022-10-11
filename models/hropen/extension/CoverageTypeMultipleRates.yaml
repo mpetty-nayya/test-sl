@@ -15,10 +15,13 @@ properties:
     description: 'The number of dependents included in the coverageLevelTierType Employee+[X].  Required if coverageLevelTierTypeCode == ''Employee+[X]'''
   elections:
     type: array
-    items: {}
+    items:
+      type: string
   rateDetail:
-    type: object
+    $ref: ''
 required:
   - id
   - electedEligibilityGroupId
   - coverageLevelTierTypeCode
+  - elections
+  - rateDetail
