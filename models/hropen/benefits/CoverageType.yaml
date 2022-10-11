@@ -8,3 +8,14 @@ properties:
     description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
   electedEligibilityGroupId:
     $ref: ../base/IdentifierType.yaml
+  coverageLevelTierTypeCode:
+    $ref: ./codelist/CoverageLevelTierTypeCodeList.yaml
+  coverageLevelTierTypeValue:
+    type: integer
+    description: 'The number of dependents included in the coverageLevelTierType Employee+[X].  Required if coverageLevelTierTypeCode == ''Employee+[X]'''
+  deductionInstruction:
+    $ref: ''
+required:
+  - id
+  - electedEligibilityGroupId
+  - coverageLevelTierTypeCode

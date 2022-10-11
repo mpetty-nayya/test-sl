@@ -1,0 +1,9 @@
+title: PayRateIntervalCodeList
+x-stoplight:
+  id: hpn9dw1o3u3tb
+type: object
+properties:
+  id:
+    type: string
+    enum:
+      - Month
