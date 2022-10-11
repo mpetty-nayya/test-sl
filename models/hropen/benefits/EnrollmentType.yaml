@@ -2,12 +2,18 @@ title: EnrollmentType
 x-stoplight:
   id: 2ujeyasyna7w6
 type: object
+description: ''
 properties:
   documentId:
     type: string
     enum:
       - QualifiedLifeEvent
   coverages:
-    $ref: ''
+    type: array
+    items:
+      oneOf:
+        - $ref: ../extension/CoverageTypeSingleRateType.yaml
+        - $ref: ../extension/CoverageTypeMultipleRatesType.yaml
 required:
   - documentId
+  - coverages
