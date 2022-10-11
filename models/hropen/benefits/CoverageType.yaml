@@ -1,0 +1,10 @@
+title: CoverageType
+x-stoplight:
+  id: jguiyhkll2v06
+type: object
+properties:
+  id:
+    $ref: ../base/IdentifierType.yaml
+    description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
+  electedEligibilityGroupId:
+    $ref: ../base/IdentifierType.yaml
