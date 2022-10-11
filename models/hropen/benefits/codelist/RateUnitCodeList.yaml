@@ -1,0 +1,7 @@
+type: string
+title: RateUnitCodeList
+x-stoplight:
+  id: kqieboi2r6vs9
+enum:
+  - Dollars
+  - DollarsPer1000CoveredVolume

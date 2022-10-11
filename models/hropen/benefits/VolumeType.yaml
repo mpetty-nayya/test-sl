@@ -1,0 +1,12 @@
+title: VolumeType
+x-stoplight:
+  id: hkupg4qel5iab
+type: object
+description: Information pertaining to the volumes elected for the coverage.
+properties:
+  volumeAmount:
+    $ref: ../base/AmountType.yaml
+  volumeRateAmount:
+    $ref: ../base/AmountType.yaml
+  volumeRateUnit:
+    $ref: ''
