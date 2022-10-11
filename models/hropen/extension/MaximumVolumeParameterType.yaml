@@ -12,17 +12,11 @@ x-examples:
 title: ''
 properties:
   volumeAmount:
-    type: object
-    properties:
-      value:
-        type: integer
+    $ref: ../base/AmountType.yaml
   volumeRateAmount:
-    type: object
-    properties:
-      value:
-        type: integer
+    $ref: ../base/AmountType.yaml
   volumeRateUnit:
-    $ref: ./VolumeRateUnitType.yaml
+    $ref: ../benefits/codelist/RateUnitCodeList.yaml
   eligibleVolumeCode:
     type: string
     enum:

@@ -9,4 +9,4 @@ x-tags:
 minItems: 1
 description: Volumes and rates for which an employee is eligible
 items:
-  $ref: ./volumeType.yaml
+  $ref: ../benefits/VolumeType.yaml

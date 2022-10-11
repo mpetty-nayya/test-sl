@@ -9,4 +9,4 @@ properties:
   volumeRateAmount:
     $ref: ../base/AmountType.yaml
   volumeRateUnit:
-    $ref: ''
+    $ref: ./codelist/RateUnitCodeList.yaml
