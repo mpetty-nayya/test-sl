@@ -4,6 +4,4 @@ x-stoplight:
 type: object
 properties:
   volumes:
-    type: array
-    items:
-      $ref: ''
+    $ref: ../extension/VolumesType.yaml
