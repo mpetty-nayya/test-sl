@@ -101,7 +101,7 @@ paths:
         in: path
         required: true
         description: Unique client identifier for employer
-  /hr_open/employers - copy:
+  /hr_open/employers:
     post:
       summary: Add an employer
       tags:

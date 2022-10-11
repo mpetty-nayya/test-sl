@@ -10,7 +10,7 @@ properties:
     $ref: ../base/AmountType.yaml
     description: 'The amount the employer contributes to the deduction type. For example, $10 for certification dues.'
   intervalCode:
-    $ref: ''
+    $ref: ../codelist/PayRateIntervalCodeList.yaml
     description: The frequency at which an earning is 'earned'. E.g. how often the worker is paid the associated earning.
 required:
   - actualAmount

@@ -1,6 +1,6 @@
-title: CoverageTypeBasicRate
+title: CoverageType
 x-stoplight:
-  id: jguiyhkll2v06
+  id: wnwzsib155k7z
 type: object
 properties:
   id:
@@ -13,10 +13,12 @@ properties:
   coverageLevelTierTypeValue:
     type: integer
     description: 'The number of dependents included in the coverageLevelTierType Employee+[X].  Required if coverageLevelTierTypeCode == ''Employee+[X]'''
-  deductionInstruction:
-    $ref: ../pay/RemunerationOrDeductionType.yaml
+  elections:
+    type: array
+    items: {}
+  rateDetail:
+    type: object
 required:
   - id
   - electedEligibilityGroupId
   - coverageLevelTierTypeCode
-  - deductionInstruction

@@ -1,6 +1,6 @@
-title: CoverageTypeBasicRate
+title: CoverageTypeSingleRateType
 x-stoplight:
-  id: jguiyhkll2v06
+  id: 1zg4qkz8ukyv0
 type: object
 properties:
   id:
@@ -19,4 +19,3 @@ required:
   - id
   - electedEligibilityGroupId
   - coverageLevelTierTypeCode
-  - deductionInstruction
