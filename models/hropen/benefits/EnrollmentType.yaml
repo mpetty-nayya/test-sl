@@ -12,8 +12,8 @@ properties:
     type: array
     items:
       oneOf:
-        - $ref: ../extension/CoverageTypeSingleRateType.yaml
-        - $ref: ../extension/CoverageTypeMultipleRatesType.yaml
+        - $ref: ../extension/CoverageTypeSingleRate.yaml
+        - $ref: ../extension/CoverageTypeMultipleRates.yaml
+
 required:
   - documentId
-  - coverages

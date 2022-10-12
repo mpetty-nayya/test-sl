@@ -9,7 +9,7 @@ properties:
   electedEligibilityGroupId:
     $ref: ../base/IdentifierType.yaml
   coverageLevelTierTypeCode:
-    $ref: ./codelist/CoverageLevelTierTypeCodeList.yaml
+    $ref: ../benefits/codelist/CoverageLevelTierTypeCodeList.yaml
   coverageLevelTierTypeValue:
     type: integer
     description: 'The number of dependents included in the coverageLevelTierType Employee+[X].  Required if coverageLevelTierTypeCode == ''Employee+[X]'''
