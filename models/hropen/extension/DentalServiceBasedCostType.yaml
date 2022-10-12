@@ -1,52 +1,6 @@
 type: object
 x-stoplight:
   id: 72102ba40a955
-properties:
-  outOfPocketMaximums:
-    type: array
-    items:
-      type: object
-      properties:
-        outOfPocketMaximumAmount:
-          type: object
-          properties:
-            currency:
-              type: string
-            value:
-              type: string
-        networkApplicability:
-          type: string
-        serviceApplicability:
-          type: string
-        unitTime:
-          type: string
-  deductibles:
-    type: array
-    items:
-      type: object
-      properties:
-        deductibleAmount:
-          type: object
-          properties:
-            currency:
-              type: string
-            value:
-              type: string
-        networkApplicability:
-          type: string
-        serviceType:
-          type: string
-  coinsurance:
-    type: array
-    items:
-      type: object
-      properties:
-        networkApplicability:
-          type: string
-        serviceType:
-          type: string
-        coinsuranceAmount:
-          type: integer
 x-examples:
   example-1:
     outOfPocketMaximums:
@@ -110,3 +64,51 @@ x-examples:
       - networkApplicability: InNetwork
         serviceType: MajorCoinsurance
         coinsuranceAmount: 10
+properties:
+  deductibles:
+    type: array
+    items:
+      type: object
+      properties:
+        deductibleAmount:
+          type: object
+          properties:
+            currency:
+              type: string
+            value:
+              type: string
+        networkApplicability:
+          type: string
+        serviceType:
+          type: string
+  outOfPocketMaximums:
+    type: array
+    items:
+      type: object
+      properties:
+        outOfPocketMaximumAmount:
+          type: object
+          properties:
+            currency:
+              type: string
+            value:
+              type: string
+        networkApplicability:
+          type: string
+        serviceApplicability:
+          type: string
+        unitTime:
+          type: string
+        '':
+          type: string
+  coinsurance:
+    type: array
+    items:
+      type: object
+      properties:
+        networkApplicability:
+          type: string
+        serviceType:
+          type: string
+        coinsuranceAmount:
+          type: integer
