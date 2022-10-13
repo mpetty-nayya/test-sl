@@ -2,13 +2,14 @@ title: PlanCreateParams
 x-stoplight:
   id: eeye2484m8793
 type: object
-examples:
-  - id:
-      value: string
-    name: string
+examples: []
 x-tags:
   - hropen
+description: ''
 properties:
   planSetup:
-    $ref: ./benefits/PlanSetupType.yaml
-description: ''
+    type: array
+    minItems: 1
+    items:
+      anyOf:
+        - $ref: ./extension/PlanSetupType/DentalPlanSetupType.yaml

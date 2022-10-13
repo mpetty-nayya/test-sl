@@ -1,8 +1,0 @@
-type: string
-x-stoplight:
-  id: 5xzie9fa17by6
-title: NetworkApplicabilityType
-description: The collection of network definitions a given service cost could be applicable to.
-enum:
-  - InNetwork
-  - OutOfNetwork

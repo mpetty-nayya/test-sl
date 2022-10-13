@@ -1,7 +1,0 @@
-type: string
-title: ProductCodeList
-x-stoplight:
-  id: 75x17b1yt0b19
-enum:
-  - Dental
-description: The code classifying the type of product.
