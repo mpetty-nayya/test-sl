@@ -1,0 +1,13 @@
+title: DentalBasicInNetworkCoinsuranceType
+x-stoplight:
+  id: hjcpawl9bq6nk
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - EndodonticsBasic
+  coinsuranceAmount:
+    type: integer

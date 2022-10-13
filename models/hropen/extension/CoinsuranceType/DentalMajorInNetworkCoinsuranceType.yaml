@@ -1,0 +1,13 @@
+title: DentalMajorInNetworkCoinsuranceType
+x-stoplight:
+  id: 4tekvm8kg7zda
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - MajorCoinsurance
+  coinsuranceAmount:
+    type: integer
