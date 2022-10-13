@@ -65,50 +65,30 @@ x-examples:
         serviceType: MajorCoinsurance
         coinsuranceAmount: 10
 properties:
-  deductibles:
-    type: array
-    items:
-      type: object
-      properties:
-        deductibleAmount:
-          type: object
-          properties:
-            currency:
-              type: string
-            value:
-              type: string
-        networkApplicability:
-          type: string
-        serviceType:
-          type: string
   outOfPocketMaximums:
     type: array
+    minItems: 1
     items:
-      type: object
-      properties:
-        outOfPocketMaximumAmount:
-          type: object
-          properties:
-            currency:
-              type: string
-            value:
-              type: string
-        networkApplicability:
-          type: string
-        serviceApplicability:
-          type: string
-        unitTime:
-          type: string
-        '':
-          type: string
-  coinsurance:
+      $ref: ./OutOfPocketMaximumType/DentalInNetworkOutOfPocketMaximumType.yaml
+  deductibles:
     type: array
+    minItems: 1
     items:
-      type: object
-      properties:
-        networkApplicability:
-          type: string
-        serviceType:
-          type: string
-        coinsuranceAmount:
-          type: integer
+      $ref: ./DeductibleType/DentalInNetworkDeductibleType.yaml
+required:
+  - outOfPocketMaximums
+examples:
+  - outOfPocketMaximums:
+      - outOfPocketMaximumAmount:
+          value: 0
+          currency: USD
+        networkApplicability: InNetwork
+        unitTime: Annual
+        serviceApplicability: Orthodontics
+    deductibles:
+      - deductibleAmount:
+          value: 0
+          currency: USD
+        serviceType: DentalPreventativeCare
+        networkApplicability: InNetwork
+description: ''

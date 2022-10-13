@@ -1,0 +1,25 @@
+title: DentalPlanEligibilityGroupType
+x-stoplight:
+  id: kuu45ht4q79c8
+description: Information pertaining to a plan eligibility group.
+type: object
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+    description: Unique alphanumeric identifier for the Eligibility Group.
+  eligibilityGroupName:
+    type: string
+    description: The Eligibility Group name.
+  effectivePeriod:
+    $ref: ../../base/EffectiveTimePeriodType.yaml
+  serviceBasedCosts:
+    type: array
+    minItems: 1
+    maxItems: 1
+    items:
+      $ref: ../ServiceBasedCostType/DentalServiceBasedCostType.yaml
+required:
+  - id
+  - eligibilityGroupName
+  - effectivePeriod
+  - serviceBasedCosts

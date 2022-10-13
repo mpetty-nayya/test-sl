@@ -1,0 +1,19 @@
+title: DentalServiceBasedCostType
+x-stoplight:
+  id: pfdiiw371dtn6
+type: object
+description: 'The fields defining non-premium costs for specific services (for example, out-of-network outpatient hospital care) useful for decision support but not directly affecting employee or employer premiums or rules governing enrollment.'
+properties:
+  deductibles:
+    type: array
+    minItems: 1
+    items:
+      $ref: ../DeductibleType/DentalInNetworkDeductibleType.yaml
+  outOfPocketMaximums:
+    type: array
+    minItems: 1
+    items:
+      $ref: ../OutOfPocketMaximumType/DentalInNetworkOutOfPocketMaximumType.yaml
+required:
+  - deductibles
+  - outOfPocketMaximums
