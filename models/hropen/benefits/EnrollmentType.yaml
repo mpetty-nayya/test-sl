@@ -10,10 +10,11 @@ properties:
       - QualifiedLifeEvent
   coverages:
     type: array
+    minItems: 1
     items:
       oneOf:
         - $ref: ../extension/CoverageTypeSingleRate.yaml
         - $ref: ../extension/CoverageTypeMultipleRates.yaml
-
 required:
   - documentId
+  - coverages

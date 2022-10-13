@@ -1,0 +1,11 @@
+title: EligibilityParams
+x-stoplight:
+  id: e5wnsrbslygod
+type: object
+examples: []
+x-tags:
+  - hropen
+description: 'Payload sent when an employee is ready to being the Nayya Choose experience - it contains employee and dependent details, plan and account eligibility, and rate and volume amounts associated with each benefit option.'
+properties:
+  enrollment:
+    $ref: ./benefits/EnrollmentType.yaml
