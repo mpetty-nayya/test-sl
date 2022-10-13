@@ -1,0 +1,35 @@
+title: PlanSetupType
+x-stoplight:
+  id: lonplu2elr5ms
+type: object
+description: General plan details regarding plan setup
+examples:
+  - id:
+      value: string
+    displayPlanName: string
+x-tags:
+  - hropen/base
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  productCode:
+    type: string
+    description: Plan type
+    enum:
+      - Dental
+  displayPlanName:
+    type: string
+    description: Display name for plan.
+  carrierOrganization:
+    $ref: ../../organization/OrganizationType.yaml
+  planEligibilityGroups:
+    type: array
+    minItems: 1
+    items:
+      $ref: ../PlanEligibilityGroupType/DentalPlanEligibilityGroupType.yaml
+required:
+  - id
+  - productCode
+  - displayPlanName
+  - carrierOrganization
+  - planEligibilityGroups
