@@ -18,12 +18,10 @@ properties:
     type: array
     items:
       anyOf:
-        - $ref: ./MinimumVolumeParameterType.yaml
-        - $ref: ./MinimumVolumeParameterType.yaml
-        - $ref: ./MinimumVolumeParameterType.yaml
-        - $ref: ./MinimumVolumeParameterType.yaml
-  '':
-    $ref: ''
+        - $ref: ../CoinsuranceType/DentalBasicInNetworkCoinsuranceType.yaml
+        - $ref: ../CoinsuranceType/DentalMajorInNetworkCoinsuranceType.yaml
+        - $ref: ../CoinsuranceType/DentalOrthodonticsInNetworkCoinsuranceType.yaml
+        - $ref: ../CoinsuranceType/DentalPreventativeInNetworkCoinsuranceType.yaml
 required:
   - deductibles
   - outOfPocketMaximums
