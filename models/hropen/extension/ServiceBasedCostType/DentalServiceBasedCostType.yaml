@@ -26,4 +26,3 @@ properties:
         - $ref: ../CoinsuranceType/DentalPreventativeInNetworkCoinsuranceType.yaml
 required:
   - deductibles
-  - outOfPocketMaximums
