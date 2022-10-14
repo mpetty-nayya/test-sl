@@ -126,6 +126,26 @@
           "type": "item",
           "title": "IdentifierType",
           "uri": "models/hropen/base/IdentifierType.yaml"
+        },
+        {
+          "type": "item",
+          "title": "AmountType",
+          "uri": "models/hropen/base/AmountType.yaml"
+        },
+        {
+          "type": "item",
+          "title": "DateType",
+          "uri": "models/hropen/base/DateType.yaml"
+        },
+        {
+          "type": "item",
+          "title": "PercentType",
+          "uri": "models/hropen/base/PercentType.yaml"
+        },
+        {
+          "type": "item",
+          "title": "EffectiveTimePeriodType",
+          "uri": "models/hropen/base/EffectiveTimePeriodType.yaml"
         }
       ]
     },
