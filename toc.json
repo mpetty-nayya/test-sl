@@ -104,6 +104,11 @@
           "type": "item",
           "title": "EmployerRetrieveResponse",
           "uri": "models/hropen/EmployerRetrieveResponse.yaml"
+        },
+        {
+          "type": "item",
+          "title": "PlanCreateParams",
+          "uri": "models/hropen/PlanCreateParams.yaml"
         }
       ]
     },
