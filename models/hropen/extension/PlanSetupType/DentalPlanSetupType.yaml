@@ -3,10 +3,7 @@ x-stoplight:
   id: lonplu2elr5ms
 type: object
 description: General plan details regarding plan setup
-examples:
-  - id:
-      value: string
-    displayPlanName: string
+examples: []
 x-tags:
   - hropen/base
 properties:
