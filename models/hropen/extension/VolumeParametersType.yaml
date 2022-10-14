@@ -2,35 +2,14 @@ type: array
 x-stoplight:
   id: gmtz88ly1blo5
 title: VolumeParametersType
-examples:
-  - - volumeTypeCode: Requested
-      volumeAmount:
-        value: 500
-      volumeRateAmount:
-        value: 2
-      volumeRateUnit: Dollars
-      eligibleVolumeCode: increment
-    - volumeTypeCode: Requested
-      volumeAmount:
-        value: 500
-      volumeRateAmount:
-        value: 2
-      volumeRateUnit: Dollars
-      eligibleVolumeCode: minimum
-    - volumeTypeCode: Requested
-      volumeAmount:
-        value: 1000
-      volumeRateAmount:
-        value: 2
-      volumeRateUnit: Dollars
-      eligibleVolumeCode: maximum
+examples: []
 x-tags:
   - hropen/base
 minItems: 3
 maxItems: 3
 description: 'Parameters that can be used to calculate all volumes and rates available to an employee - must contain exactly 3 elements, one each for eligibleVolumeCode minimum, maximum, and increment.  volumeRateUnit should be the same enum for all 3 elements.'
 items:
-  allOf:
+  anyOf:
     - $ref: ./MinimumVolumeParameterType.yaml
     - $ref: ./MaximumVolumeParameterType.yaml
     - $ref: ./IncrementVolumeParameterType.yaml
