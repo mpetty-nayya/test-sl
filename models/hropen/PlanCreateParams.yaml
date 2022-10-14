@@ -2,7 +2,11 @@ title: PlanCreateParams
 x-stoplight:
   id: eeye2484m8793
 type: object
-examples: []
+examples:
+  - planSetup:
+      - id:
+          value: string
+        displayPlanName: string
 x-tags:
   - hropen
 description: ''
