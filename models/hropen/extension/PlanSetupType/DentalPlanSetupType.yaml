@@ -27,3 +27,5 @@ properties:
 required:
   - id
   - productCode
+  - displayPlanName
+  - carrierOrganization
