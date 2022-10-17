@@ -19,10 +19,11 @@ properties:
   coinsurance:
     type: array
     items:
-      anyOf:
+      oneOf:
         - $ref: ../CoinsuranceType/DentalBasicInNetworkCoinsuranceType.yaml
         - $ref: ../CoinsuranceType/DentalMajorInNetworkCoinsuranceType.yaml
         - $ref: ../CoinsuranceType/DentalOrthodonticsInNetworkCoinsuranceType.yaml
         - $ref: ../CoinsuranceType/DentalPreventativeInNetworkCoinsuranceType.yaml
 required:
   - deductibles
+  - outOfPocketMaximums

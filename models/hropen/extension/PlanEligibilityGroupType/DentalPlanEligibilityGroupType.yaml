@@ -23,3 +23,28 @@ required:
   - eligibilityGroupName
   - effectivePeriod
   - serviceBasedCosts
+examples:
+  - id:
+      value: string
+    eligibilityGroupName: string
+    effectivePeriod:
+      validFrom: string
+      validTo: string
+    serviceBasedCosts:
+      - deductibles:
+          - deductibleAmount:
+              value: 0
+              currency: USD
+            serviceType: DentalPreventativeCare
+            networkApplicability: InNetwork
+        outOfPocketMaximums:
+          - outOfPocketMaximumAmount:
+              value: 0
+              currency: USD
+            networkApplicability: InNetwork
+            unitTime: Annual
+            serviceApplicability: Orthodontics
+        coinsurance:
+          - networkApplicability: InNetwork
+            serviceType: EndodonticsBasic
+            coinsuranceAmount: 0

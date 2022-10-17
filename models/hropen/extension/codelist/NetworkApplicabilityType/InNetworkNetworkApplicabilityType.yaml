@@ -1,6 +1,6 @@
 type: string
 x-stoplight:
   id: 4l25l7gs8pczt
-title: NetworkApplicabilityTypeInNetwork
+title: InNetworkNetworkApplicabilityType
 enum:
   - InNetwork
