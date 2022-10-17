@@ -3,7 +3,17 @@ x-stoplight:
   id: f9fz89zyunejf
 type: object
 description: General plan details regarding plan setup
-examples: []
+examples:
+  - id:
+      value: string
+    productCode: Dental
+    displayPlanName: string
+    carrierOrganization:
+      id:
+        value: string
+      name: string
+    planEligibilityGroups:
+      - string
 x-tags:
   - hropen/base
 properties:
@@ -13,7 +23,7 @@ properties:
     type: string
     description: Plan type
     enum:
-      - Dental
+      - Medical
   displayPlanName:
     type: string
     description: Display name for plan.
