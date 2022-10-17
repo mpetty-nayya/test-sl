@@ -45,5 +45,3 @@ properties:
       $ref: ../ServiceBasedCostType/DentalServiceBasedCostType.yaml
 required:
   - id
-  - eligibilityGroupName
-  - effectivePeriod
