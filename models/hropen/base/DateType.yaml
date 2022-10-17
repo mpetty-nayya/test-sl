@@ -4,3 +4,5 @@ x-stoplight:
 title: DateType
 format: date
 description: Date representation according ISO 8601 standard.
+examples:
+  - '2019-08-24'

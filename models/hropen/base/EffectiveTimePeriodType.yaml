@@ -4,8 +4,8 @@ x-stoplight:
 type: object
 description: A time period in which an associated object is effective.
 examples:
-  - validFrom: string
-    validTo: string
+  - validFrom: '2019-08-01'
+    validTo: '2020-01-01'
 x-tags:
   - hropen/base
 properties:
