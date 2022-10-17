@@ -59,4 +59,5 @@ properties:
       $ref: ../PlanEligibilityGroupType/DentalPlanEligibilityGroupType.yaml
 required:
   - id
+  - productCode
   - displayPlanName
