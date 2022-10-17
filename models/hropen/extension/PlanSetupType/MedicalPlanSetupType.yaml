@@ -6,7 +6,7 @@ description: General plan details regarding plan setup
 examples:
   - id:
       value: string
-    productCode: Dental
+    productCode: Medical
     displayPlanName: string
     carrierOrganization:
       id:
