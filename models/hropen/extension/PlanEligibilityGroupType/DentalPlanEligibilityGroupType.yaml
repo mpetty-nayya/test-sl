@@ -8,8 +8,8 @@ examples:
       value: string
     eligibilityGroupName: string
     effectivePeriod:
-      validFrom: string
-      validTo: string
+      validFrom: '2019-08-24'
+      validTo: '2019-08-24'
     serviceBasedCosts:
       - deductibles:
           - deductibleAmount:
