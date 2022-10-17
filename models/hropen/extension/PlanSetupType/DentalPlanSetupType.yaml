@@ -61,3 +61,4 @@ required:
   - id
   - productCode
   - displayPlanName
+  - carrierOrganization
