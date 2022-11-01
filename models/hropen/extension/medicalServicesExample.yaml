@@ -1,0 +1,91 @@
+type: object
+properties:
+  networkLevelAttributes:
+    type: array
+    items:
+      type: object
+      properties:
+        networkApplicability:
+          type: string
+        deductibles:
+          type: object
+          properties:
+            family:
+              type: object
+              properties:
+                currency:
+                  type: string
+                value:
+                  type: integer
+            individual:
+              type: object
+              properties:
+                currency:
+                  type: string
+                value:
+                  type: integer
+        outOfPocketMaximums:
+          type: object
+          properties:
+            family:
+              type: object
+              properties:
+                currency:
+                  type: string
+                value:
+                  type: integer
+            individual:
+              type: object
+              properties:
+                currency:
+                  type: string
+                value:
+                  type: integer
+        services:
+          type: object
+          properties:
+            urgentCare:
+              type: object
+              properties:
+                paymentType:
+                  type: string
+                currency:
+                  type: string
+                value:
+                  type: integer
+            specialistVisit:
+              type: object
+              properties:
+                paymentType:
+                  type: string
+                currency:
+                  type: string
+                value:
+                  type: integer
+x-examples:
+  Example 1:
+    networkLevelAttributes:
+      - networkApplicability: inNetwork
+        deductibles:
+          family:
+            currency: USD
+            value: 2500
+          individual:
+            currency: USD
+            value: 1500
+        outOfPocketMaximums:
+          family:
+            currency: USD
+            value: 8000
+          individual:
+            currency: USD
+            value: 4000
+        services:
+          urgentCare:
+            paymentType: coinsurance
+            currency: USD
+            value: 30
+          specialistVisit:
+            paymentType: copay
+            currency: USD
+            value: 100
