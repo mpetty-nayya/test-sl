@@ -1,4 +1,37 @@
 type: object
+x-examples:
+  Example 1:
+    networkLevelAttributes:
+      inNetwork:
+        deductibles:
+          family:
+            currency: USD
+            value: 2500
+          individual:
+            currency: USD
+            value: 1500
+          'individual+[X]':
+            coverageLevelValueCode: 1
+            currency: USD
+            value: 1500
+        outOfPocketMaximums:
+          family:
+            currency: USD
+            value: 8000
+          individual:
+            currency: USD
+            value: 4000
+        services:
+          urgentCare:
+            payments:
+              - paymentType: coinsurance
+                currency: USD
+                value: 30
+          specialistVisit:
+            payments:
+              - paymentType: copay
+                currency: USD
+                value: 100
 properties:
   networkLevelAttributes:
     type: object
@@ -32,7 +65,7 @@ properties:
                     type: string
                   value:
                     type: integer
-          outOfPocketMaximums:
+          outOfPocketLimits:
             type: object
             properties:
               family:
@@ -80,36 +113,3 @@ properties:
                           type: string
                         value:
                           type: integer
-x-examples:
-  Example 1:
-    networkLevelAttributes:
-      inNetwork:
-        deductibles:
-          family:
-            currency: USD
-            value: 2500
-          individual:
-            currency: USD
-            value: 1500
-          'individual+[X]':
-            coverageLevelValueCode: 1
-            currency: USD
-            value: 1500
-        outOfPocketMaximums:
-          family:
-            currency: USD
-            value: 8000
-          individual:
-            currency: USD
-            value: 4000
-        services:
-          urgentCare:
-            payments:
-              - paymentType: coinsurance
-                currency: USD
-                value: 30
-          specialistVisit:
-            payments:
-              - paymentType: copay
-                currency: USD
-                value: 100
