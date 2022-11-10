@@ -45,3 +45,4 @@ properties:
     oneOf:
       - $ref: ./extension/PlanSetupType/DentalPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/MedicalPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/VisionPlanSetupType.yaml
