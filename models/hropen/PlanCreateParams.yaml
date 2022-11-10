@@ -39,6 +39,7 @@ examples:
                   coinsuranceAmount: 0
 x-tags:
   - hropen
+description: ''
 properties:
   planSetup:
     oneOf:
