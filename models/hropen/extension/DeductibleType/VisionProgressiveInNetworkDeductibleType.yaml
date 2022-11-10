@@ -1,0 +1,13 @@
+title: VisionProgressiveInNetworkDeductibleType
+x-stoplight:
+  id: 6y9lxsvcs9xw4
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - ProgressiveLenses
+  deductibleAmount:
+    type: integer

@@ -39,9 +39,9 @@ examples:
                   coinsuranceAmount: 0
 x-tags:
   - hropen
-description: ''
 properties:
   planSetup:
     oneOf:
       - $ref: ./extension/PlanSetupType/DentalPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/MedicalPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/VisionPlanSetupType.yaml

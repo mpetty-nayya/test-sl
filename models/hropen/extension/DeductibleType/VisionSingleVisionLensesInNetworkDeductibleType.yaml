@@ -1,0 +1,13 @@
+title: VisionSingleVisionLensesInNetworkDeductibleType
+x-stoplight:
+  id: wnw30i6vud8vd
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - SingleVisionLenses
+  deductibleAmount:
+    type: integer

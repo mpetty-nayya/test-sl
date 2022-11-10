@@ -1,0 +1,16 @@
+title: VisionInNetworkDeductibleType
+x-stoplight:
+  id: biftjb5peyumh
+type: object
+description: 'The type defining a single deductible for a plan.  The deductible refers to a particular service type (e.g., individual in-network) and a deductible amount associated with the service type.'
+properties:
+  deductibleAmount:
+    $ref: ../../base/AmountType.yaml
+  serviceType:
+    $ref: ../codelist/DeductibleServiceType/DentalPreventativeCareDeductibleServiceType.yaml
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+required:
+  - deductibleAmount
+  - serviceType
+  - networkApplicability

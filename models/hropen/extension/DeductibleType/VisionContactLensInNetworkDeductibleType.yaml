@@ -1,0 +1,13 @@
+title: VisionContactLensInNetworkDeductibleType
+x-stoplight:
+  id: bhw8cibli19k3
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - ContactLensesMedicallyNecessary
+  deductibleAmount:
+    type: integer
