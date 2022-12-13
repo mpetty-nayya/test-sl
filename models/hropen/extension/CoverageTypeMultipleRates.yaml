@@ -1,4 +1,4 @@
-title: CoverageTypeMultipleRates
+title: CoverageTypeVolumeRates
 x-stoplight:
   id: wnwzsib155k7z
 type: object
@@ -9,7 +9,7 @@ properties:
   electedEligibilityGroupId:
     $ref: ../base/IdentifierType.yaml
   coverageLevelTierTypeCode:
-    $ref: ../benefits/codelist/CoverageLevelTierTypeCodeList.yaml
+    $ref: ./codelist/CoverageLevelTierType/CoverageLevelTierTypeIndividualCodeList.yaml
   coverageLevelTierTypeValue:
     type: integer
     description: 'The number of dependents included in the coverageLevelTierType Employee+[X].  Required if coverageLevelTierTypeCode == ''Employee+[X]'''

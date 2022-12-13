@@ -1,15 +1,8 @@
 type: string
 x-stoplight:
-  id: gxmmq67xx68sb
+  id: 9u68tvx28c5n9
 title: CoverageLevelTierTypeCodeList
 description: Coverage Level Tier Type Codes.
 enum:
   - Employee
-  - EmployeeSpouse
-  - EmployeeChild
-  - EmployeeChildren
-  - EmployeeFamily
-  - Spouse
-  - Child
   - Children
-  - 'Employee+[X]'

@@ -2,19 +2,20 @@ title: EnrollmentType
 x-stoplight:
   id: 2ujeyasyna7w6
 type: object
-description: ''
 properties:
   documentId:
     type: string
     enum:
-      - QualifiedLifeEvent
+      - OpenEnrollment
+      - NewHire
+      - QualifyingLifeEvent
   coverages:
     type: array
     minItems: 1
     items:
       oneOf:
         - $ref: ../extension/CoverageTypeSingleRate.yaml
-        - $ref: ../extension/CoverageTypeMultipleRates.yaml
+        - $ref: ../extension/CoverageTypeVolumeRates.yaml
 required:
   - documentId
   - coverages
