@@ -8,13 +8,13 @@ properties:
     enum:
       - OpenEnrollment
       - NewHire
-      - QualifyingLifeEvent
+      - QualifiedLifeEvent
   coverages:
     type: array
     minItems: 1
     items:
       oneOf:
-        - $ref: ../extension/CoverageTypeSingleRate.yaml
+        - $ref: ../extension/CoverageTypeFamilyGroupRate.yaml
         - $ref: ../extension/CoverageTypeVolumeRates.yaml
 required:
   - documentId
