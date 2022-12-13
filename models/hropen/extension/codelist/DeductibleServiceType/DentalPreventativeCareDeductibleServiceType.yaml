@@ -1,7 +1,0 @@
-type: string
-x-stoplight:
-  id: 6jkmpzdu8kijr
-title: DentalPreventativeCareDeductibleServiceType
-description: The collection of service types applicable to plan deductible amounts.
-enum:
-  - DentalPreventativeCare

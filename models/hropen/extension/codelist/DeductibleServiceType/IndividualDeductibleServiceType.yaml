@@ -1,7 +1,0 @@
-type: string
-x-stoplight:
-  id: bflwx7kumsctl
-title: IndividualDeductibleServiceType
-description: The collection of service types applicable to plan deductible amounts.
-enum:
-  - Individual

@@ -1,5 +1,0 @@
-oneOf:
-  - $ref: ./VolumeParametersType.yaml
-  - $ref: ./ExactVolumesType.yaml
-x-stoplight:
-  id: 6b2eb37f4aef8
