@@ -1,6 +1,6 @@
 title: CoverageTypeVolumeRates
 x-stoplight:
-  id: wnwzsib155k7z
+  id: vd2sfwwzknpbj
 type: object
 properties:
   id:
@@ -16,9 +16,18 @@ properties:
   elections:
     type: array
     items:
-      type: string
+      oneOf:
+        - properties:
+            '':
+              type: string
+        - {}
+      type: object
   rateDetail:
-    $ref: ''
+    type: array
+    items:
+      oneOf:
+        - $ref: ./ExactVolumesType.yaml
+        - $ref: ./VolumeParametersType.yaml
 required:
   - id
   - electedEligibilityGroupId
