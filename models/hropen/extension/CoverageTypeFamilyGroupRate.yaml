@@ -15,6 +15,12 @@ properties:
     description: 'The number of dependents included in the coverageLevelTierType Employee+[X].  Required if coverageLevelTierTypeCode == ''Employee+[X]'''
   deductionInstruction:
     $ref: ../pay/RemunerationOrDeductionType.yaml
+  productCode:
+    type: string
+    enum:
+      - Medical
+      - Vision
+      - Dental
 required:
   - id
   - electedEligibilityGroupId

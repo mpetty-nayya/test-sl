@@ -1,0 +1,67 @@
+title: CoverageTypeHSA
+x-stoplight:
+  id: acrwgveaf6nov
+type: object
+properties:
+  id:
+    $ref: ../base/IdentifierType.yaml
+    description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
+  electedEligibilityGroupId:
+    $ref: ../base/IdentifierType.yaml
+  coverageLevelTierTypeCode:
+    type: string
+    enum:
+      - Employee
+      - EmployeeFamily
+  productCode:
+    type: string
+    enum:
+      - HSA
+  dependency:
+    type: object
+    required:
+      - mustEnrollInSomeOf
+    properties:
+      mustEnrollInSomeOf:
+        type: array
+        minItems: 1
+        uniqueItems: true
+        items:
+          type: object
+          properties:
+            dependentPlanIdentifier:
+              type: object
+              required:
+                - value
+              properties:
+                value:
+                  type: string
+            dependentEligibilityGroupId:
+              type: object
+              required:
+                - value
+              properties:
+                value:
+                  type: string
+          required:
+            - dependentPlanIdentifier
+            - dependentEligibilityGroupId
+  accountDetails:
+    type: object
+    required:
+      - contributionTypeCode
+      - maximumContribution
+    properties:
+      contributionTypeCode:
+        type: string
+        enum:
+          - Employee
+      maximumContribution:
+        $ref: ../base/AmountType.yaml
+required:
+  - id
+  - electedEligibilityGroupId
+  - coverageLevelTierTypeCode
+  - productCode
+  - dependency
+  - accountDetails

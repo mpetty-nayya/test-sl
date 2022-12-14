@@ -6,3 +6,4 @@ description: Coverage Level Tier Type Codes.
 enum:
   - Employee
   - Children
+  - Spouse
