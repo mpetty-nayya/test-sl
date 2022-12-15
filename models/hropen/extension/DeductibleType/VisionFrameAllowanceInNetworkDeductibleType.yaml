@@ -1,0 +1,13 @@
+title: VisionFrameAllowanceInNetworkDeductibleType
+x-stoplight:
+  id: 80qgbepkf2ec0
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - Frames
+  deductibleAmount:
+    type: integer

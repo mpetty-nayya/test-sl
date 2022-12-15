@@ -1,0 +1,13 @@
+title: VisionPolycarbonateInNetworkDeductibleType
+x-stoplight:
+  id: arvk5ko47d6se
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - PolycarbonateLenses
+  deductibleAmount:
+    type: integer
