@@ -1,0 +1,43 @@
+title: MedicalServiceBasedCostType
+x-stoplight:
+  id: t1d2p3qjwc9cj
+type: object
+description: 'The fields defining non-premium costs for specific services (for example, out-of-network outpatient hospital care) useful for decision support but not directly affecting employee or employer premiums or rules governing enrollment.'
+examples:
+  - deductibles:
+      - deductibleAmount:
+          value: 0
+          currency: USD
+        serviceType: DentalPreventativeCare
+        networkApplicability: InNetwork
+    outOfPocketMaximums:
+      - outOfPocketMaximumAmount:
+          value: 0
+          currency: USD
+        networkApplicability: InNetwork
+        unitTime: Annual
+        serviceApplicability: Orthodontics
+    coinsurance:
+      - networkApplicability: InNetwork
+        serviceType: EndodonticsBasic
+        coinsuranceAmount: 0
+properties:
+  deductibles:
+    type: array
+    minItems: 1
+    maxItems: 1
+    items:
+      $ref: ../DeductibleType/MedicalInNetworkDeductibleType.yaml
+  outOfPocketMaximums:
+    type: array
+    minItems: 1
+    maxItems: 1
+    items:
+      $ref: ../OutOfPocketMaximumType/MedicalInNetworkOutOfPocketMaximumType.yaml
+  copays:
+    type: array
+    items:
+      $ref: ../CopayType/MedicalInNetworkCopayType.yaml
+required:
+  - deductibles
+  - outOfPocketMaximums

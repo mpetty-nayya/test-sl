@@ -1,0 +1,21 @@
+title: MedicalInNetworkCopayType
+x-stoplight:
+  id: s5v3fm338kz4j
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - specialistVisitCopay
+      - primaryCareProvider
+      - urgentCareCopay
+      - emergencyRoomCopay
+      - Outpatient
+      - Inpatient
+  copayAmount:
+    type: object
+    properties:
+      value:
+        type: number

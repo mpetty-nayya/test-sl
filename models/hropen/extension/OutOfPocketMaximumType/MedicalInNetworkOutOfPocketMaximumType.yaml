@@ -1,0 +1,14 @@
+title: MedicalInNetworkOutOfPocketMaximumType
+x-stoplight:
+  id: q0uymodf5qna1
+type: object
+properties:
+  outOfPocketMaximumAmount:
+    $ref: ../../base/AmountType.yaml
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - annualMaximum individual
+      - annualMaximum family
