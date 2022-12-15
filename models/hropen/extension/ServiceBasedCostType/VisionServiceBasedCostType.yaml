@@ -2,7 +2,7 @@ title: VisionServiceBasedCostType
 x-stoplight:
   id: njqi5k474zvnz
 type: object
-description: 'The fields defining non-premium costs for specific services (for example, out-of-network outpatient hospital care) useful for decision support but not directly affecting employee or employer premiums or rules governing enrollment.'
+description: 'Deductible with serviceType "EyeExams" required.  The fields defining non-premium costs for specific services (for example, out-of-network outpatient hospital care) useful for decision support but not directly affecting employee or employer premiums or rules governing enrollment.'
 examples:
   - deductibles:
       - deductibleAmount:
@@ -14,16 +14,9 @@ properties:
   deductibles:
     type: array
     minItems: 1
-    maxItems: 1
+    maxItems: ''
+    uniqueItems: true
     items:
-      anyOf:
-        - $ref: ../DeductibleType/VisionSingleVisionLensesInNetworkDeductibleType.yaml
-        - $ref: ../DeductibleType/VisionContactLensInNetworkDeductibleType.yaml
-        - $ref: ../DeductibleType/VisionBifocalLensesInNetworkDeductibleType.yaml
-        - $ref: ../DeductibleType/VisionTrifocalLensesInNetworkDeductibleType.yaml
-        - $ref: ../DeductibleType/VisionPolycarbonateInNetworkDeductibleType.yaml
-        - $ref: ../DeductibleType/VisionProgressiveInNetworkDeductibleType.yaml
-        - $ref: ../DeductibleType/VisionFrameAllowanceInNetworkDeductibleType.yaml
-        - $ref: ../DeductibleType/VisionElectiveContactLensesInNetworkDeductibleType.yaml
+      $ref: ../DeductibleType/VisionInNetworkDeductibleType.yaml
 required:
   - deductibles

@@ -7,7 +7,17 @@ properties:
   deductibleAmount:
     $ref: ../../base/AmountType.yaml
   serviceType:
-    $ref: ../codelist/DeductibleServiceType/DentalPreventativeCareDeductibleServiceType.yaml
+    type: string
+    enum:
+      - EyeExams
+      - ContactLensesMedicallyNecessary
+      - SingleVisionLenses
+      - LinedBifocalLenses
+      - LinedTrifocalLenses
+      - PolycarbonateLenses
+      - ProgressiveLenses
+      - Frames
+      - ContactLensesElective
   networkApplicability:
     $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
 required:
