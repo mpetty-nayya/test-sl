@@ -45,3 +45,5 @@ properties:
       - $ref: ./extension/PlanSetupType/DentalPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/MedicalPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/VisionPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/AccidentPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/CriticalIllnessPlanSetupType.yaml

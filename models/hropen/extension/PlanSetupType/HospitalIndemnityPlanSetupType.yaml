@@ -1,8 +1,8 @@
-title: CriticalIllnessPlanSetupType
+title: HospitalIndemnityPlanSetupType
 x-stoplight:
-  id: p9r53vyhl1moa
+  id: 1vywqei0ta9sj
 type: object
-description: There are no required plan details for critical illness plans - benefit amounts are parsed from the volumes array on the eligibility payload.
+description: General plan details regarding plan setup
 examples:
   - id:
       value: string
@@ -46,14 +46,20 @@ properties:
     type: string
     description: Plan type
     enum:
-      - Critical Illness
+      - Hospital Indemnity
   displayPlanName:
     type: string
     description: Display name for plan.
   carrierOrganization:
     $ref: ../../organization/OrganizationType.yaml
+  planEligibilityGroups:
+    type: array
+    minItems: 1
+    items:
+      $ref: ../PlanEligibilityGroupType/AccidentPlanEligibilityGroupType.yaml
 required:
   - id
   - productCode
   - displayPlanName
   - carrierOrganization
+  - planEligibilityGroups
