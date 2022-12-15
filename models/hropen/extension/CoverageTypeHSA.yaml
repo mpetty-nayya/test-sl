@@ -58,6 +58,10 @@ properties:
           - Employee
       maximumContribution:
         $ref: ../base/AmountType.yaml
+      contributionFrequencyCode:
+        type: string
+        enum:
+          - Annually
 required:
   - id
   - electedEligibilityGroupId
