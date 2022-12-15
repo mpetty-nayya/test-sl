@@ -47,3 +47,4 @@ properties:
       - $ref: ./extension/PlanSetupType/VisionPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/AccidentPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/CriticalIllnessPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/HospitalIndemnityPlanSetupType.yaml
