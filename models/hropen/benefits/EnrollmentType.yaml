@@ -16,6 +16,14 @@ properties:
       oneOf:
         - $ref: ../extension/CoverageTypeFamilyGroupRate.yaml
         - $ref: ../extension/CoverageTypeVolumeRates.yaml
+        - $ref: ../extension/CoverageTypeHSA.yaml
+  dependents:
+    type: array
+    items: {}
+  person:
+    type: object
 required:
   - documentId
   - coverages
+  - dependents
+  - person
