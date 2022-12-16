@@ -40,9 +40,18 @@ properties:
       oneOf:
         - $ref: ./ExactVolumesType.yaml
         - $ref: ./VolumeParametersType.yaml
+  productCode:
+    type: string
+    enum:
+      - STD
+      - LTD
+      - Basic Life
+      - Supplemental Life
+      - Critical Illness
 required:
   - id
   - electedEligibilityGroupId
   - coverageLevelTierTypeCode
   - elections
   - rateDetail
+  - productCode

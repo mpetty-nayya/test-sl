@@ -21,8 +21,11 @@ properties:
       - Medical
       - Vision
       - Dental
+      - Accident
+      - Hospital Indemnity
 required:
   - id
   - electedEligibilityGroupId
   - coverageLevelTierTypeCode
   - deductionInstruction
+description: ''
