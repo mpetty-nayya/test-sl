@@ -1,4 +1,4 @@
-title: CoverageTypeVolumeRates
+title: VolumeRatesCoverageType
 x-stoplight:
   id: vd2sfwwzknpbj
 type: object
@@ -55,3 +55,4 @@ required:
   - elections
   - rateDetail
   - productCode
+description: ''

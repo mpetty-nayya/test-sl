@@ -14,9 +14,9 @@ properties:
     minItems: 1
     items:
       oneOf:
-        - $ref: ../extension/CoverageTypeFamilyGroupRate.yaml
-        - $ref: ../extension/CoverageTypeVolumeRates.yaml
-        - $ref: ../extension/CoverageTypeHSA.yaml
+        - $ref: ../extension/CoverageType/FamilyGroupRateCoverageType.yaml
+        - $ref: ../extension/CoverageType/VolumeRatesCoverageType.yaml
+        - $ref: ../extension/CoverageType/HSACoverageType.yaml
   dependents:
     type: array
     items: {}
