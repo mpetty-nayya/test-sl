@@ -6,7 +6,7 @@ examples:
   - {}
 properties:
   id:
-    $ref: ../base/IdentifierType.yaml
+    $ref: ../../base/IdentifierType.yaml
     description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
   coverageLevelTierTypeCode:
     type: string

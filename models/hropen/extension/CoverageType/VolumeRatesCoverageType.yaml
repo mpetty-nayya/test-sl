@@ -4,12 +4,12 @@ x-stoplight:
 type: object
 properties:
   id:
-    $ref: ../base/IdentifierType.yaml
+    $ref: ../../base/IdentifierType.yaml
     description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
   electedEligibilityGroupId:
-    $ref: ../base/IdentifierType.yaml
+    $ref: ../../base/IdentifierType.yaml
   coverageLevelTierTypeCode:
-    $ref: ./codelist/CoverageLevelTierType/CoverageLevelTierTypeIndividualCodeList.yaml
+    $ref: ../codelist/CoverageLevelTierType/CoverageLevelTierTypeIndividualCodeList.yaml
   elections:
     type: array
     minItems: 1
@@ -38,8 +38,8 @@ properties:
     type: array
     items:
       oneOf:
-        - $ref: ./ExactVolumesType.yaml
-        - $ref: ./VolumeParametersType.yaml
+        - $ref: ../ExactVolumesType.yaml
+        - $ref: ../VolumeParametersType.yaml
   productCode:
     type: string
     enum:
@@ -55,4 +55,3 @@ required:
   - elections
   - rateDetail
   - productCode
-description: ''

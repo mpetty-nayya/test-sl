@@ -4,10 +4,10 @@ x-stoplight:
 type: object
 properties:
   id:
-    $ref: ../base/IdentifierType.yaml
+    $ref: ../../base/IdentifierType.yaml
     description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
   electedEligibilityGroupId:
-    $ref: ../base/IdentifierType.yaml
+    $ref: ../../base/IdentifierType.yaml
   coverageLevelTierTypeCode:
     type: string
     enum:
@@ -57,7 +57,7 @@ properties:
         enum:
           - Employee
       maximumContribution:
-        $ref: ../base/AmountType.yaml
+        $ref: ../../base/AmountType.yaml
       contributionFrequencyCode:
         type: string
         enum:

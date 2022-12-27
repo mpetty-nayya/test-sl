@@ -21,7 +21,7 @@ properties:
     type: array
     items: {}
   person:
-    type: object
+    $ref: ../extension/PersonType/PersonType.yaml
 required:
   - documentId
   - coverages
