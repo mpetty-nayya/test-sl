@@ -9,3 +9,8 @@ description: 'Payload sent when an employee is ready to begin the Nayya Choose e
 properties:
   enrollment:
     $ref: ./benefits/EnrollmentType.yaml
+  employerOrganization:
+    type: object
+    properties:
+      id:
+        $ref: ./base/IdentifierType.yaml

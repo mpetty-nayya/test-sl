@@ -1,0 +1,37 @@
+title: PersonType
+x-stoplight:
+  id: 4p80b3ajqrqb7
+type: object
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  name:
+    type: object
+  gender:
+    type: string
+  birthDate:
+    type: string
+    format: date
+  communication:
+    type: object
+    properties:
+      address:
+        type: array
+        items:
+          type: object
+          properties:
+            city:
+              type: string
+            line:
+              type: string
+            postalCode:
+              type: string
+            countryCode:
+              type: string
+  primaryLanguage:
+    type: string
+    enum:
+      - en
+      - en-US
+      - es
+      - es-US
