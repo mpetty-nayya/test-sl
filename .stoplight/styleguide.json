@@ -2,6 +2,9 @@
   "name": "Test Sl",
   "description": "",
   "spectralExtends": [],
+  "extends": [
+    "cHJqOjEyMzU4Ng@35"
+  ],
   "formats": [
     "oas2",
     "oas3",
@@ -10,9 +13,6 @@
   ],
   "aliases": {},
   "rules": {},
-  "extends": [
-    "cHJqOjEyMzU4Ng@35"
-  ],
   "extendedStyleguides": [
     {
       "id": "cHJqOjEyMzU4Ng",
