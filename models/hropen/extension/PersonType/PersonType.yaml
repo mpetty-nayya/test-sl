@@ -7,8 +7,27 @@ properties:
     $ref: ../../base/IdentifierType.yaml
   name:
     type: object
+    properties:
+      legal:
+        type: string
+      formattedName:
+        type: string
+      given:
+        type: string
+      family:
+        type: string
+      preferred:
+        type: string
+    required:
+      - formattedName
+      - given
+      - family
   gender:
     type: string
+    enum:
+      - Male
+      - Female
+      - X
   birthDate:
     type: string
     format: date
@@ -35,3 +54,8 @@ properties:
       - en-US
       - es
       - es-US
+  tobaccoUserIndicator:
+    type: boolean
+required:
+  - gender
+  - birthDate

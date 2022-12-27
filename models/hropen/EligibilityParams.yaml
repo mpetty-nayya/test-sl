@@ -14,3 +14,16 @@ properties:
     properties:
       id:
         $ref: ./base/IdentifierType.yaml
+  census:
+    type: object
+    properties:
+      deployment:
+        type: array
+        items:
+          type: object
+          properties:
+            salary:
+              type: object
+              properties:
+                salaryAmount:
+                  $ref: ./base/AmountType.yaml

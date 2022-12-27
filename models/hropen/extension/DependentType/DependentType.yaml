@@ -1,0 +1,17 @@
+title: DependentType
+x-stoplight:
+  id: wz49ej2zizjni
+type: object
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  relationshipCode:
+    type: string
+    enum:
+      - AdoptedChild
+      - Child
+      - Spouse
+      - LifePartner
+      - ChildOfDomesticPartner
+  person:
+    $ref: ../PersonType/PersonType.yaml
