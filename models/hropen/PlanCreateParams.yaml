@@ -51,3 +51,4 @@ properties:
       - $ref: ./extension/PlanSetupType/STDPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/LTDPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/BasicLifePlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/SupplementalLifePlanSetupType.yaml
