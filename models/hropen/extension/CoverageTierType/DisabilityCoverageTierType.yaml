@@ -1,4 +1,4 @@
-title: LTDCoverageTierType
+title: DisabilityCoverageTierType
 x-stoplight:
   id: 60nhik6un4o3b
 type: object
@@ -50,6 +50,8 @@ properties:
                     properties:
                       eliminationDays:
                         type: integer
+                  stddurationWeeks:
+                    type: integer
             buyup:
               type: boolean
           required:

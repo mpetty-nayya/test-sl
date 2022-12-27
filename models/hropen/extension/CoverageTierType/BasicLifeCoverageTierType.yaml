@@ -1,0 +1,41 @@
+title: BasicLifeCoverageTierType
+x-stoplight:
+  id: czqa6hsqkz6bs
+type: object
+examples:
+  - {}
+properties:
+  coverageLevelTierTypeCode:
+    type: string
+    enum:
+      - Employee
+      - Spouse
+      - Children
+  rateDetail:
+    type: object
+    required:
+      - rateType
+    properties:
+      rateType:
+        type: array
+        items:
+          type: object
+          properties:
+            insuranceDetailType:
+              type: array
+              items:
+                type: object
+                properties:
+                  baseMultipleOfEarnings:
+                    type: number
+                  baseDollarMinimum:
+                    $ref: ../../base/AmountType.yaml
+                  baseDollarMaximum:
+                    $ref: ../../base/AmountType.yaml
+                  baseDollarAmount:
+                    $ref: ../../base/AmountType.yaml
+          required:
+            - insuranceDetailType
+required:
+  - coverageLevelTierTypeCode
+  - rateDetail

@@ -48,3 +48,6 @@ properties:
       - $ref: ./extension/PlanSetupType/AccidentPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/CriticalIllnessPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/HospitalIndemnityPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/STDPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/LTDPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/BasicLifePlanSetupType.yaml
