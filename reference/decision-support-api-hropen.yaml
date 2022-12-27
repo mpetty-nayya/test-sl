@@ -57,14 +57,7 @@ paths:
                   data:
                     schema:
                       $ref: ../models/hropen/EmployerCreateResponse.yaml
-              examples:
-                '201':
-                  value:
-                    id:
-                      value: string
-                    name: string
-                    taxId:
-                      value: string
+              examples: {}
           headers:
             Request-Id:
               $ref: '#/components/headers/Request-Id'
@@ -86,13 +79,7 @@ paths:
           application/json:
             schema:
               $ref: ../models/hropen/PlanCreateParams.yaml
-            examples:
-              Simple:
-                value:
-                  employerOrganization:
-                    id:
-                      value: string
-                    name: string
+            examples: {}
         description: ''
     parameters:
       - schema:
@@ -227,6 +214,20 @@ paths:
             Request-Id:
               $ref: '#/components/headers/Request-Id'
       description: Remove an employee and all PII.
+  /hr_open/eligibility:
+    post:
+      summary: POST Eligibility
+      operationId: post-hr_open-eligibility
+      responses:
+        '200':
+          description: OK
+      description: 'ENDPOINT NOT EXPOSED - payload represented here is posted via iFrame - contains all data pertinent to an employee about to go through decision support by Nayya.  Inlucdes employee, dependent, and coverage details (including employee-specific premiums, volumes for which employee is eligibile for voluntary benefits, and associations between Health Savings Accounts and medical plans for which the employee is eligible.  '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/hropen/EligibilityParams.yaml
+        description: The eligibility payload relevant to the employee
 tags:
   - name: Employees
     description: Entity for an employee
