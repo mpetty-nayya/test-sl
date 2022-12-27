@@ -56,7 +56,7 @@ properties:
     type: array
     minItems: 1
     items:
-      $ref: ../PlanEligibilityGroupType/AccidentPlanEligibilityGroupType.yaml
+      $ref: ../PlanEligibilityGroupType/LTDPlanEligibilityGroupType.yaml
 required:
   - id
   - productCode

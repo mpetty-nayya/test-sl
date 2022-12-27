@@ -37,12 +37,10 @@ properties:
     description: The Eligibility Group name.
   effectivePeriod:
     $ref: ../../base/EffectiveTimePeriodType.yaml
-  serviceBasedCosts:
+  coverageTiers:
     type: array
-    minItems: 1
-    maxItems: 1
     items:
-      $ref: ../ServiceBasedCostType/AccidentServiceBasedCostType.yaml
+      $ref: ../CoverageTierType/LTDCoverageTierType.yaml
 required:
   - id
   - eligibilityGroupName

@@ -1,0 +1,60 @@
+title: LTDCoverageTierType
+x-stoplight:
+  id: 60nhik6un4o3b
+type: object
+examples:
+  - {}
+properties:
+  id:
+    $ref: ../base/IdentifierType.yaml
+    description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
+  coverageLevelTierTypeCode:
+    type: string
+    enum:
+      - Employee
+  rateDetail:
+    type: object
+    required:
+      - rateType
+    properties:
+      rateType:
+        type: array
+        items:
+          type: object
+          properties:
+            disabilityDetailType:
+              type: array
+              items:
+                type: object
+                properties:
+                  baseWeeklyPercentageOfEarnings:
+                    type: number
+                  baseWeeklyMaximumDollarBenefit:
+                    $ref: ../../base/AmountType.yaml
+                  buyupOptionType:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        buyupWeeklyPercentageIncrease:
+                          type: integer
+                        buyupWeeklyMaximumDollarBenefit:
+                          $ref: ../../base/AmountType.yaml
+                  ltddurationType:
+                    type: object
+                    properties:
+                      ltddurationTypeCode:
+                        type: string
+                  eliminationPeriodType:
+                    type: object
+                    properties:
+                      eliminationDays:
+                        type: integer
+            buyup:
+              type: boolean
+          required:
+            - disabilityDetailType
+required:
+  - id
+  - coverageLevelTierTypeCode
+  - rateDetail
