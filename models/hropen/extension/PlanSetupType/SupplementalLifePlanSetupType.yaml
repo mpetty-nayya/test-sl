@@ -3,7 +3,50 @@ x-stoplight:
   id: so087qpvismu5
 type: object
 description: General plan details regarding plan setup
-examples: []
+examples:
+  - id:
+      value: string
+    productCode: Supplemental Life
+    displayPlanName: string
+    carrierOrganization:
+      id:
+        value: string
+      name: string
+    planEligibilityGroups:
+      - id:
+          value: string
+        eligibilityGroupName: string
+        effectivePeriod:
+          validFrom: '2019-08-01'
+          validTo: '2020-01-01'
+        coverageTiers:
+          - coverageLevelTierTypeCode: Employee
+            rateDetail:
+              rateType:
+                - guaranteedIssueType:
+                    guaranteedIssueDollarAmount:
+                      value: 50000
+                    guaranteedIssueMultipleOfEarnings:
+                      value: 2
+  - id:
+      value: string
+    productCode: Supplemental Life
+    displayPlanName: string
+    carrierOrganization:
+      id:
+        value: string
+      name: string
+    planEligibilityGroups:
+      - id:
+          value: string
+        eligibilityGroupName: string
+        effectivePeriod:
+          validFrom: '2019-08-01'
+          validTo: '2020-01-01'
+        coverageTiers:
+          - coverageLevelTierTypeCode: Children
+            rateDetail:
+              rateType: []
 x-tags:
   - hropen/base
 properties:
