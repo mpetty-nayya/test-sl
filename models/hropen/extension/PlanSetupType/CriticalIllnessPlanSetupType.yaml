@@ -36,3 +36,4 @@ required:
   - productCode
   - displayPlanName
   - carrierOrganization
+  - planEligibilityGroups
