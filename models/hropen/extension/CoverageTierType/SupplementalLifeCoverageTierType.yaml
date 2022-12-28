@@ -2,8 +2,7 @@ title: SupplementalLifeCoverageTierType
 x-stoplight:
   id: 7kh9rx5xvefao
 type: object
-examples:
-  - {}
+examples: []
 properties:
   coverageLevelTierTypeCode:
     type: string
