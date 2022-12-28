@@ -37,3 +37,4 @@ properties:
 required:
   - coverageLevelTierTypeCode
   - rateDetail
+description: 'For employee coverage, guaranteed issue can be a flat amount (guaranteedIssueDollarAmount), a multiple of earnings (guaranteedIssueMultipleOfEarnings), or a multiple of earnings with an upper limit (guaranteedIssueMultipleOfEarnings capped at guaranteedIssueDollarAmount).  For spouse coverage, guarnteed issue can be a flat amount.  For children coverage, guaranteed issue is not supported.  '
