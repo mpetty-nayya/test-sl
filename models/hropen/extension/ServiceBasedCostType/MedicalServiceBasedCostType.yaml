@@ -2,25 +2,39 @@ title: MedicalServiceBasedCostType
 x-stoplight:
   id: t1d2p3qjwc9cj
 type: object
-description: 'The fields defining non-premium costs for specific services (for example, out-of-network outpatient hospital care) useful for decision support but not directly affecting employee or employer premiums or rules governing enrollment.'
+description: 'The fields defining non-premium costs for specific medical services.  Individual in-network deductible, family in-network deductible, Individual in-network out-of-pocket-maximum and Family in-network out-of-pocket-maximum are required.'
 examples:
   - deductibles:
       - deductibleAmount:
-          value: 0
+          value: 1500
           currency: USD
-        serviceType: DentalPreventativeCare
+        serviceType: Individual
+        networkApplicability: InNetwork
+      - deductibleAmount:
+          value: 3000
+          currency: USD
+        serviceType: Family
         networkApplicability: InNetwork
     outOfPocketMaximums:
       - outOfPocketMaximumAmount:
-          value: 0
+          value: 5000
           currency: USD
         networkApplicability: InNetwork
-        unitTime: Annual
-        serviceApplicability: Orthodontics
-    coinsurance:
+        serviceType: annualMaximum individual
+      - outOfPocketMaximumAmount:
+          value: 10000
+          currency: USD
+        networkApplicability: InNetwork
+        serviceType: annualMaximum family
+    copays:
       - networkApplicability: InNetwork
-        serviceType: EndodonticsBasic
-        coinsuranceAmount: 0
+        serviceType: specialistVisitCopay
+        copayAmount:
+          value: 75
+      - networkApplicability: InNetwork
+        serviceType: emergencyRoomCopay
+        copayAmount:
+          value: 200
 properties:
   deductibles:
     type: array
@@ -41,4 +55,3 @@ properties:
 required:
   - deductibles
   - outOfPocketMaximums
-  - copays

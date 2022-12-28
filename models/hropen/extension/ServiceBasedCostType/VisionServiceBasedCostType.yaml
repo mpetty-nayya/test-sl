@@ -2,13 +2,18 @@ title: VisionServiceBasedCostType
 x-stoplight:
   id: njqi5k474zvnz
 type: object
-description: 'Deductible with serviceType "EyeExams" required.  The fields defining non-premium costs for specific services (for example, out-of-network outpatient hospital care) useful for decision support but not directly affecting employee or employer premiums or rules governing enrollment.'
+description: 'The fields defining non-premium costs for specific vision services. Deductible with serviceType "EyeExams" required. '
 examples:
   - deductibles:
       - deductibleAmount:
           value: 0
           currency: USD
         serviceType: EyeExams
+        networkApplicability: InNetwork
+      - deductibleAmount:
+          value: 0
+          currency: USD
+        serviceType: Frames
         networkApplicability: InNetwork
 properties:
   deductibles:
