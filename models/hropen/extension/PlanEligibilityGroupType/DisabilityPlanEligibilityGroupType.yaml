@@ -3,7 +3,31 @@ x-stoplight:
   id: 2kjivuftcwc7w
 description: Information pertaining to a plan eligibility group.
 type: object
-examples: []
+examples:
+  - id:
+      value: string
+    eligibilityGroupName: string
+    effectivePeriod:
+      validFrom: '2019-08-01'
+      validTo: '2020-01-01'
+    coverageTiers:
+      - coverageLevelTierTypeCode: Employee
+        rateDetail:
+          rateType:
+            - disabilityDetailType:
+                - baseWeeklyPercentageOfEarnings: 50
+                  baseWeeklyMaximumDollarBenefit:
+                    value: 1500
+                    currency: USD
+                  buyupOptionType:
+                    - buyupWeeklyPercentageIncrease: 5
+                      buyupWeeklyMaximumDollarBenefit:
+                        value: 1750
+                        currency: USD
+                    - buyupWeeklyPercentageIncrease: 10
+                      buyupWeeklyMaximumDollarBenefit:
+                        value: 2000
+                        currency: USD
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
