@@ -39,3 +39,4 @@ properties:
 required:
   - coverageLevelTierTypeCode
   - rateDetail
+description: 'Basic life plans support individual coverage tiers only (employee, spouse, children).  Coverage can be configured as a single plan with multiple coverage tiers or as multiple plans with one coverage tier on each plan.  Employee coverage requires either baseDollarAmount or both baseMultipleOfEarnings and baseDollarAmount.  Spouse and children coverage require baseDollarAmount. baseMultipleOfEarnings is not supported for spouse or children coverage.'
