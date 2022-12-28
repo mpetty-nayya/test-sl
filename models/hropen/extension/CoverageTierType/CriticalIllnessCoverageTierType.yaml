@@ -4,6 +4,8 @@ x-stoplight:
 type: object
 examples:
   - coverageLevelTierTypeCode: Employee
+  - coverageLevelTierTypeCode: Spouse
+  - coverageLevelTierTypeCode: Children
 properties:
   coverageLevelTierTypeCode:
     type: string

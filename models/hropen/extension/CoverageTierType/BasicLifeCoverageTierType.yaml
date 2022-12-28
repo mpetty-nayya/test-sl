@@ -59,11 +59,6 @@ properties:
                     $ref: ../../base/AmountType.yaml
                   baseDollarAmount:
                     $ref: ../../base/AmountType.yaml
-                required:
-                  - baseMultipleOfEarnings
-                  - baseDollarMaximum
-          required:
-            - insuranceDetailType
 required:
   - coverageLevelTierTypeCode
   - rateDetail

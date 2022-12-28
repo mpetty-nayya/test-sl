@@ -3,7 +3,24 @@ x-stoplight:
   id: 60nhik6un4o3b
 type: object
 examples:
-  - {}
+  - coverageLevelTierTypeCode: Employee
+    rateDetail:
+      rateType:
+        - disabilityDetailType:
+            - baseWeeklyPercentageOfEarnings: 50
+              baseWeeklyMaximumDollarBenefit:
+                value: 1500
+                currency: USD
+              buyupOptionType:
+                - buyupWeeklyPercentageIncrease: 5
+                  buyupWeeklyMaximumDollarBenefit:
+                    value: 1750
+                    currency: USD
+                - buyupWeeklyPercentageIncrease: 10
+                  buyupWeeklyMaximumDollarBenefit:
+                    value: 2000
+                    currency: USD
+description: 'baseWeeklyPercentageOfEarnings and baseWeeklyMaximumDollarBenefit are required for LTD and STD and represent the "base" coverage.  For LTD, baseWeeklyMaximumDollarBenefit is interpreted as a monthly value, as displayed as "up to [value] monthly."  Buyup percentages can be inclulded in buyupOptionType.  When constructing the volumes payload, include all calculated base and buyup options in the same volumes array with associated premiums.  '
 properties:
   coverageLevelTierTypeCode:
     type: string
@@ -37,21 +54,34 @@ properties:
                           type: integer
                         buyupWeeklyMaximumDollarBenefit:
                           $ref: ../../base/AmountType.yaml
+                      required:
+                        - buyupWeeklyPercentageIncrease
+                        - buyupWeeklyMaximumDollarBenefit
                   ltddurationType:
                     type: object
+                    required:
+                      - ltddurationTypeCode
                     properties:
                       ltddurationTypeCode:
                         type: string
                   eliminationPeriodType:
                     type: object
+                    required:
+                      - eliminationDays
                     properties:
                       eliminationDays:
                         type: integer
                   stddurationWeeks:
                     type: integer
+                required:
+                  - baseWeeklyPercentageOfEarnings
+                  - baseWeeklyMaximumDollarBenefit
+                  - buyupOptionType
+                  - ltddurationType
+                  - eliminationPeriodType
+                  - stddurationWeeks
           required:
             - disabilityDetailType
 required:
   - coverageLevelTierTypeCode
   - rateDetail
-description: 'baseWeeklyPercentageOfEarnings and baseWeeklyMaximumDollarBenefit are required for LTD and STD and represent the "base" coverage.  For LTD, baseWeeklyMaximumDollarBenefit is interpreted as a monthly value, as displayed as "up to [value] monthly."  Buyup percentages can be inclulded in buyupOptionType.  When constructing the volumes payload, include all calculated base and buyup options in the same volumes array with associated premiums.  '
