@@ -156,6 +156,19 @@
     },
     {
       "type": "group",
+      "title": "HrOpen / Plan Setup",
+      "uri":"docs/HrOpen.md",
+      "items": [
+        {
+              "type": "item",
+              "title": "BasicLifeCoverageTierType",
+              "uri": "models/hropen/extension/BasicLifeCoverageTierType.yaml"
+            }
+
+          ]
+    },
+    {
+      "type": "group",
       "title": "Standard",
       "uri": "docs/Standard.md",
       "items": [
