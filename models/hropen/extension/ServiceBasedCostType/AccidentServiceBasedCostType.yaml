@@ -2,13 +2,13 @@ title: AccidentServiceBasedCostType
 x-stoplight:
   id: bkj2p88cgmi90
 type: object
-description: 'The fields defining non-premium costs for specific services (for example, out-of-network outpatient hospital care) useful for decision support but not directly affecting employee or employer premiums or rules governing enrollment.'
+description: The fields defining non-premium costs for specific hospital services. HospitalAdmission required. AccidentBenefitAmount is required.
 examples:
   - deductibles:
       - deductibleAmount:
           value: 0
           currency: USD
-        serviceType: DentalPreventativeCare
+        serviceType: AccidentBenefitAmount
         networkApplicability: InNetwork
 properties:
   deductibles:
