@@ -3,17 +3,7 @@ x-stoplight:
   id: f9fz89zyunejf
 type: object
 description: General plan details regarding plan setup
-examples:
-  - id:
-      value: string
-    productCode: Medical
-    displayPlanName: string
-    carrierOrganization:
-      id:
-        value: string
-      name: string
-    planEligibilityGroups:
-      - string
+examples: []
 x-tags:
   - hropen/base
 properties:
