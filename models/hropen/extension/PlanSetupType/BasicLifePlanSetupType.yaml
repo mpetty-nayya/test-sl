@@ -53,7 +53,9 @@ properties:
   carrierOrganization:
     $ref: ../../organization/OrganizationType.yaml
   planEligibilityGroups:
-    $ref: ../PlanEligibilityGroupType/BasicLifePlanEligibilityGroupType.yaml
+    type: array
+    items:
+      $ref: ../PlanEligibilityGroupType/BasicLifePlanEligibilityGroupType.yaml
 required:
   - id
   - productCode

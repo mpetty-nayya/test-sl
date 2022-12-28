@@ -5,9 +5,6 @@ type: object
 examples:
   - {}
 properties:
-  id:
-    $ref: ../../base/IdentifierType.yaml
-    description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
   coverageLevelTierTypeCode:
     type: string
     enum:
@@ -52,11 +49,9 @@ properties:
                         type: integer
                   stddurationWeeks:
                     type: integer
-            buyup:
-              type: boolean
           required:
             - disabilityDetailType
 required:
-  - id
   - coverageLevelTierTypeCode
   - rateDetail
+description: 'baseWeeklyPercentageOfEarnings and baseWeeklyMaximumDollarBenefit are required for LTD and STD and represent the "base" coverage.  For LTD, baseWeeklyMaximumDollarBenefit is interpreted as a monthly value, as displayed as "up to [value] monthly."  Buyup percentages can be inclulded in buyupOptionType.  When constructing the volumes payload, include all calculated base and buyup options in the same volumes array with associated premiums.  '

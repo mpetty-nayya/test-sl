@@ -2,7 +2,7 @@ title: AccidentServiceBasedCostType
 x-stoplight:
   id: bkj2p88cgmi90
 type: object
-description: The fields defining non-premium costs for specific hospital services. HospitalAdmission required. AccidentBenefitAmount is required.
+description: The fields defining non-premium costs for specific accident benefit services. AccidentBenefitAmount is required.
 examples:
   - deductibles:
       - deductibleAmount:
