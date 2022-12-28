@@ -54,34 +54,18 @@ properties:
                           type: integer
                         buyupWeeklyMaximumDollarBenefit:
                           $ref: ../../base/AmountType.yaml
-                      required:
-                        - buyupWeeklyPercentageIncrease
-                        - buyupWeeklyMaximumDollarBenefit
                   ltddurationType:
                     type: object
-                    required:
-                      - ltddurationTypeCode
                     properties:
                       ltddurationTypeCode:
                         type: string
                   eliminationPeriodType:
                     type: object
-                    required:
-                      - eliminationDays
                     properties:
                       eliminationDays:
                         type: integer
                   stddurationWeeks:
                     type: integer
-                required:
-                  - baseWeeklyPercentageOfEarnings
-                  - baseWeeklyMaximumDollarBenefit
-                  - buyupOptionType
-                  - ltddurationType
-                  - eliminationPeriodType
-                  - stddurationWeeks
-          required:
-            - disabilityDetailType
 required:
   - coverageLevelTierTypeCode
   - rateDetail
