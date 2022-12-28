@@ -30,6 +30,8 @@ properties:
       - Children
   rateDetail:
     type: object
+    required:
+      - rateType
     properties:
       rateType:
         type: array
