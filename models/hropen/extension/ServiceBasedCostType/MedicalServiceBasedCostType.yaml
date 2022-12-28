@@ -41,3 +41,4 @@ properties:
 required:
   - deductibles
   - outOfPocketMaximums
+  - copays

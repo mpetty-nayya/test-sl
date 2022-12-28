@@ -42,7 +42,7 @@ properties:
     minItems: 1
     maxItems: 1
     items:
-      $ref: ../ServiceBasedCostType/DentalServiceBasedCostType.yaml
+      $ref: ../ServiceBasedCostType/MedicalServiceBasedCostType.yaml
 required:
   - id
   - eligibilityGroupName
