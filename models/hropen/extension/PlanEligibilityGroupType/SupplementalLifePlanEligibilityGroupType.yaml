@@ -3,15 +3,7 @@ x-stoplight:
   id: bxj4sk7k98skx
 description: 'Information pertaining to a plan eligibility group.  coverageDependency defines the maximum percentage constraint for spouse volume selection based on employee selection (i.e. spouse can select up to 50% of employee selection).  In order for this constraint to be enforced, both spouse and employee coverage tiers must be present within the same plan (as defined by a plan eligibility group).'
 type: object
-examples:
-  - id:
-      value: string
-    eligibilityGroupName: string
-    effectivePeriod:
-      validFrom: '2019-08-01'
-      validTo: '2020-01-01'
-    coverageTiers:
-      - {}
+examples: []
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml

@@ -8,26 +8,15 @@ examples:
       value: string
     eligibilityGroupName: string
     effectivePeriod:
-      validFrom: '2019-08-24'
-      validTo: '2019-08-24'
+      validFrom: '2019-08-01'
+      validTo: '2020-01-01'
     serviceBasedCosts:
       - deductibles:
           - deductibleAmount:
               value: 0
               currency: USD
-            serviceType: DentalPreventativeCare
+            serviceType: AccidentBenefitAmount
             networkApplicability: InNetwork
-        outOfPocketMaximums:
-          - outOfPocketMaximumAmount:
-              value: 0
-              currency: USD
-            networkApplicability: InNetwork
-            unitTime: Annual
-            serviceApplicability: Orthodontics
-        coinsurance:
-          - networkApplicability: InNetwork
-            serviceType: EndodonticsBasic
-            coinsuranceAmount: 0
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml

@@ -3,31 +3,7 @@ x-stoplight:
   id: n73e05n28znlj
 description: Information pertaining to a plan eligibility group.
 type: object
-examples:
-  - id:
-      value: string
-    eligibilityGroupName: string
-    effectivePeriod:
-      validFrom: '2019-08-24'
-      validTo: '2019-08-24'
-    serviceBasedCosts:
-      - deductibles:
-          - deductibleAmount:
-              value: 0
-              currency: USD
-            serviceType: DentalPreventativeCare
-            networkApplicability: InNetwork
-        outOfPocketMaximums:
-          - outOfPocketMaximumAmount:
-              value: 0
-              currency: USD
-            networkApplicability: InNetwork
-            unitTime: Annual
-            serviceApplicability: Orthodontics
-        coinsurance:
-          - networkApplicability: InNetwork
-            serviceType: EndodonticsBasic
-            coinsuranceAmount: 0
+examples: []
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
