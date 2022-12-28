@@ -20,6 +20,7 @@ examples:
   - coverageLevelTierTypeCode: Children
     rateDetail:
       rateType: []
+description: 'For employee coverage, guaranteed issue can be a flat amount (guaranteedIssueDollarAmount), a multiple of earnings (guaranteedIssueMultipleOfEarnings), or a multiple of earnings with an upper limit (guaranteedIssueMultipleOfEarnings capped at guaranteedIssueDollarAmount).  For spouse coverage, guarnteed issue can be a flat amount.  For children coverage, guaranteed issue is not supported.  '
 properties:
   coverageLevelTierTypeCode:
     type: string
@@ -29,8 +30,6 @@ properties:
       - Children
   rateDetail:
     type: object
-    required:
-      - rateType
     properties:
       rateType:
         type: array
@@ -53,4 +52,3 @@ properties:
 required:
   - coverageLevelTierTypeCode
   - rateDetail
-description: 'For employee coverage, guaranteed issue can be a flat amount (guaranteedIssueDollarAmount), a multiple of earnings (guaranteedIssueMultipleOfEarnings), or a multiple of earnings with an upper limit (guaranteedIssueMultipleOfEarnings capped at guaranteedIssueDollarAmount).  For spouse coverage, guarnteed issue can be a flat amount.  For children coverage, guaranteed issue is not supported.  '
