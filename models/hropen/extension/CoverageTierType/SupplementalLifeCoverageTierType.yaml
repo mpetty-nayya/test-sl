@@ -2,7 +2,24 @@ title: SupplementalLifeCoverageTierType
 x-stoplight:
   id: 7kh9rx5xvefao
 type: object
-examples: []
+examples:
+  - coverageLevelTierTypeCode: Employee
+    rateDetail:
+      rateType:
+        - guaranteedIssueType:
+            guaranteedIssueDollarAmount:
+              value: 50000
+            guaranteedIssueMultipleOfEarnings:
+              value: 2
+  - coverageLevelTierTypeCode: Spouse
+    rateDetail:
+      rateType:
+        - guaranteedIssueType:
+            guaranteedIssueDollarAmount:
+              value: 25000
+  - coverageLevelTierTypeCode: Children
+    rateDetail:
+      rateType: []
 properties:
   coverageLevelTierTypeCode:
     type: string
