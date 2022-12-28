@@ -2,41 +2,16 @@ title: CriticalIllnessPlanSetupType
 x-stoplight:
   id: p9r53vyhl1moa
 type: object
-description: There are no required plan details for critical illness plans - benefit amounts are parsed from the volumes array on the eligibility payload.
+description: 'There are no required plan details for critical illness plans - benefit amounts are parsed from the volumes array on the eligibility payload. Critical illness plans are supported for individual coverage tiers only, i.e. employee, spouse, and children.  Family-coverage is not currently supported (employee + spouse, employee + family, etc).  Plans can be posted as a single plan with multiple coverage tiers available or mulitple plans (one for each coverage tier).  '
 examples:
   - id:
       value: string
-    productCode: Dental
+    productCode: Critical Illness
     displayPlanName: string
     carrierOrganization:
       id:
         value: string
       name: string
-    planEligibilityGroups:
-      - id:
-          value: string
-        eligibilityGroupName: string
-        effectivePeriod:
-          validFrom: string
-          validTo: string
-        serviceBasedCosts:
-          - deductibles:
-              - deductibleAmount:
-                  value: 0
-                  currency: USD
-                serviceType: DentalPreventativeCare
-                networkApplicability: InNetwork
-            outOfPocketMaximums:
-              - outOfPocketMaximumAmount:
-                  value: 0
-                  currency: USD
-                networkApplicability: InNetwork
-                unitTime: Annual
-                serviceApplicability: Orthodontics
-            coinsurance:
-              - networkApplicability: InNetwork
-                serviceType: EndodonticsBasic
-                coinsuranceAmount: 0
 x-tags:
   - hropen/base
 properties:
@@ -52,6 +27,8 @@ properties:
     description: Display name for plan.
   carrierOrganization:
     $ref: ../../organization/OrganizationType.yaml
+  '':
+    type: string
 required:
   - id
   - productCode

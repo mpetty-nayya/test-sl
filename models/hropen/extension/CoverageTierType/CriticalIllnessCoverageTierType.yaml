@@ -1,0 +1,14 @@
+title: CriticalIllnessCoverageTierType
+x-stoplight:
+  id: eo6si6o9co8fg
+type: object
+examples: []
+properties:
+  coverageLevelTierTypeCode:
+    type: string
+    enum:
+      - Employee
+      - Spouse
+      - Children
+required:
+  - coverageLevelTierTypeCode

@@ -1,6 +1,6 @@
-title: DisabilityPlanEligibilityGroupType
+title: CriticalIllnessPlanEligibilityGroupType
 x-stoplight:
-  id: 2kjivuftcwc7w
+  id: 92dcbfds6ujez
 description: Information pertaining to a plan eligibility group.
 type: object
 examples:
@@ -24,7 +24,7 @@ properties:
   coverageTiers:
     type: array
     items:
-      $ref: ../CoverageTierType/DisabilityCoverageTierType.yaml
+      $ref: ../CoverageTierType/CriticalIllnessCoverageTierType.yaml
 required:
   - id
   - eligibilityGroupName
