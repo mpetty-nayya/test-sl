@@ -12,3 +12,14 @@ properties:
     enum:
       - annualMaximum individual
       - annualMaximum family
+examples:
+  - outOfPocketMaximumAmount:
+      value: 0
+      currency: USD
+    networkApplicability: InNetwork
+    serviceType: annualMaximum individual
+  - outOfPocketMaximumAmount:
+      value: 0
+      currency: USD
+    networkApplicability: InNetwork
+    serviceType: annualMaximum family

@@ -16,3 +16,10 @@ properties:
     type: string
     enum:
       - Orthodontics
+examples:
+  - outOfPocketMaximumAmount:
+      value: 0
+      currency: USD
+    networkApplicability: InNetwork
+    unitTime: Annual
+    serviceApplicability: Orthodontics
