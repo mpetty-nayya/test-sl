@@ -26,8 +26,6 @@ examples:
                   currency: USD
                 serviceType: HospitalAdmission
                 networkApplicability: InNetwork
-x-tags:
-  - hropen/base
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml

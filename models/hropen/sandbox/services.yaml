@@ -1,0 +1,14 @@
+title: services
+x-stoplight:
+  id: riv9z5xghrcmc
+type: object
+properties:
+  urgentCare:
+    $ref: ./payments.yaml
+  specialist:
+    $ref: ./payments.yaml
+  emergencyRoom:
+    $ref: ./payments.yaml
+required:
+  - specialist
+  - emergencyRoom

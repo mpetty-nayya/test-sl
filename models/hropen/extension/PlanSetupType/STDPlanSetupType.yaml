@@ -37,8 +37,6 @@ examples:
                           buyupWeeklyMaximumDollarBenefit:
                             value: 2000
                             currency: USD
-x-tags:
-  - hropen/base
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml

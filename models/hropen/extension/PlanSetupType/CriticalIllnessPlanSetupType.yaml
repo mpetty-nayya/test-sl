@@ -38,8 +38,6 @@ examples:
           validTo: '2020-01-01'
         coverageTiers:
           - coverageLevelTierTypeCode: Spouse
-x-tags:
-  - hropen/base
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
@@ -63,3 +61,5 @@ required:
   - displayPlanName
   - carrierOrganization
   - planEligibilityGroups
+x-tags:
+  - plan setup

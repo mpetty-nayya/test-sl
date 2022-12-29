@@ -37,8 +37,6 @@ examples:
               - networkApplicability: InNetwork
                 serviceType: EndodonticsBasic
                 coinsuranceAmount: 0
-x-tags:
-  - hropen/base
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml

@@ -51,8 +51,6 @@ examples:
                 serviceType: emergencyRoomCopay
                 copayAmount:
                   value: 200
-x-tags:
-  - hropen/base
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml

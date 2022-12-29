@@ -1,0 +1,12 @@
+title: payment
+x-stoplight:
+  id: g797w9a6ddrx7
+type: object
+properties:
+  copay:
+    $ref: ../base/AmountType.yaml
+  coinsurance:
+    $ref: ./coinsurance.yaml
+required:
+  - copay
+  - coinsurance

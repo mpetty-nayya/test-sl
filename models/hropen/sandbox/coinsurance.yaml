@@ -1,0 +1,9 @@
+title: coinsurance
+x-stoplight:
+  id: 6cn5zgka84z1d
+type: object
+properties:
+  value:
+    type: integer
+  towardsDeductible:
+    type: boolean
