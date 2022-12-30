@@ -18,4 +18,4 @@ properties:
     $ref: ../base/AmountType.yaml
     description: total premimum associated with volume amount
   volumeRateUnit:
-    $ref: ./codelist/RateUnitCodeList.yaml
+    $ref: ../benefits/codelist/RateUnitCodeList.yaml

@@ -53,4 +53,31 @@ required:
   - rateDetail
   - productCode
   - elections
-examples: []
+examples:
+  - id:
+      value: string
+    electedEligibilityGroupId:
+      value: string
+    coverageLevelTierTypeCode: Employee
+    rateDetail:
+      - - volumeAmount:
+            value: 5000
+            currency: USD
+          volumeRateAmount:
+            value: 1.23
+            currency: USD
+          volumeRateUnit: Dollars
+        - volumeAmount:
+            value: 10000
+            currency: USD
+          volumeRateAmount:
+            value: 2.46
+            currency: USD
+          volumeRateUnit: Dollars
+    productCode: STD
+    elections:
+      - amount:
+          value: 25
+          currency: USD
+        contributorCode: Employer
+        amountTypeCode: Percent
