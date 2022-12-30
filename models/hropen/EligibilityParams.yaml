@@ -7,23 +7,7 @@ x-tags:
   - hropen
 description: 'Payload sent when an employee is ready to begin the Nayya Choose experience - it contains employee and dependent details, plan and account eligibility, and rate and volume amounts associated with each benefit option.'
 properties:
-  enrollment:
-    $ref: ./benefits/EnrollmentType.yaml
-  employerOrganization:
-    type: object
-    properties:
-      id:
-        $ref: ./base/IdentifierType.yaml
-  census:
-    type: object
-    properties:
-      deployment:
-        type: array
-        items:
-          type: object
-          properties:
-            salary:
-              type: object
-              properties:
-                salaryAmount:
-                  $ref: ./base/AmountType.yaml
+  data:
+    $ref: ./EligibilityData.yaml
+required:
+  - data
