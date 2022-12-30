@@ -6,26 +6,26 @@ x-stoplight:
 description: 'Description of the volumes for which an employee is eligible to select for a specific benefit.  Can consist of an array of specific volumes (i.e. for critical illness, volumes might be explicitly defined as $5000, $10000, $15000, $20000) or an array of volume parameters (i.e. for voluntary life, volumes might be defined as a min of $100000, max of $500000, increments of $10000).  Only can be used for supplemental life, critical illness, STD, and LTD product codes.   For volume parameters, volumes array must consist of exaclty 3 elements and eligibleVolumeCodes "minimum" "maximum" and "increment" must be present.  '
 examples:
   - - volumeAmount:
-        value: 0
+        value: 100000
         currency: USD
       volumeRateAmount:
-        value: 0
+        value: 1.23
         currency: USD
-      volumeRateUnit: Dollars
+      volumeRateUnit: DollarsPer1000CoveredVolume
       eligibleVolumeCode: minimum
     - volumeAmount:
-        value: 0
+        value: 500000
         currency: USD
       volumeRateAmount:
-        value: 0
+        value: 1.23
         currency: USD
-      volumeRateUnit: Dollars
-      eligibleVolumeCode: minimum
+      volumeRateUnit: DollarsPer1000CoveredVolume
+      eligibleVolumeCode: maximum
     - volumeAmount:
-        value: 0
+        value: 5000
         currency: USD
       volumeRateAmount:
-        value: 0
+        value: 1.23
         currency: USD
       volumeRateUnit: Dollars
-      eligibleVolumeCode: minimum
+      eligibleVolumeCode: increment
