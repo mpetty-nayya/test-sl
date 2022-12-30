@@ -19,3 +19,5 @@ properties:
     properties:
       value:
         type: number
+x-tags:
+  - hropen/nayya

@@ -81,3 +81,5 @@ examples:
           currency: USD
         contributorCode: Employer
         amountTypeCode: Percent
+x-tags:
+  - hropen/nayya

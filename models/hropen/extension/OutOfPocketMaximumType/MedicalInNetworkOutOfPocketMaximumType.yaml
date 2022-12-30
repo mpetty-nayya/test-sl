@@ -23,3 +23,5 @@ examples:
       currency: USD
     networkApplicability: InNetwork
     serviceType: annualMaximum family
+x-tags:
+  - hropen/nayya

@@ -29,3 +29,5 @@ examples:
         currency: USD
       volumeRateUnit: Dollars
       eligibleVolumeCode: increment
+x-tags:
+  - hropen/nayya

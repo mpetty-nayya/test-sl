@@ -21,3 +21,5 @@ properties:
     type: string
     enum:
       - minimum
+x-tags:
+  - hropen/nayya

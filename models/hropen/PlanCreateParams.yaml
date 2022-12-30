@@ -37,8 +37,6 @@ examples:
                 - networkApplicability: InNetwork
                   serviceType: EndodonticsBasic
                   coinsuranceAmount: 0
-x-tags:
-  - hropen
 properties:
   planSetup:
     oneOf:
@@ -52,3 +50,5 @@ properties:
       - $ref: ./extension/PlanSetupType/LTDPlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/BasicLifePlanSetupType.yaml
       - $ref: ./extension/PlanSetupType/SupplementalLifePlanSetupType.yaml
+x-tags:
+  - hropen/nayya

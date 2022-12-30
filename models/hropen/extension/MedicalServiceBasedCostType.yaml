@@ -182,3 +182,5 @@ properties:
         serviceType:
           type: string
 title: ''
+x-tags:
+  - hropen/nayya

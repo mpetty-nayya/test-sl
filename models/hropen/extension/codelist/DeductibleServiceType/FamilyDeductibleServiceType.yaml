@@ -5,3 +5,5 @@ title: FamilyDeductibleServiceType
 description: The collection of service types applicable to plan deductible amounts.
 enum:
   - Family
+x-tags:
+  - hropen/nayya

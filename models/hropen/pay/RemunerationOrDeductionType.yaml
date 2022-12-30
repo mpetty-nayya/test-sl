@@ -25,3 +25,5 @@ examples:
     intervalCode:
       id: Month
 description: ''
+x-tags:
+  - hropen/nayya

@@ -11,3 +11,5 @@ properties:
       - ContactLensesMedicallyNecessary
   deductibleAmount:
     type: integer
+x-tags:
+  - hropen/nayya

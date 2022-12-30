@@ -19,3 +19,5 @@ properties:
       $ref: ../DeductibleType/AccidentInNetworkDeductibleType.yaml
 required:
   - deductibles
+x-tags:
+  - hropen/nayya

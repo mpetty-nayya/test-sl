@@ -11,3 +11,5 @@ properties:
       - LinedBifocalLenses
   deductibleAmount:
     type: integer
+x-tags:
+  - hropen/nayya

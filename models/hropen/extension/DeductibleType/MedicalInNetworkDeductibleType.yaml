@@ -17,3 +17,5 @@ required:
   - deductibleAmount
   - serviceType
   - networkApplicability
+x-tags:
+  - hropen/nayya

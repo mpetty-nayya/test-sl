@@ -36,3 +36,5 @@ required:
   - id
   - eligibilityGroupName
   - serviceBasedCosts
+x-tags:
+  - hropen/nayya

@@ -96,3 +96,5 @@ required:
   - productCode
   - dependency
   - accountDetails
+x-tags:
+  - hropen/nayya

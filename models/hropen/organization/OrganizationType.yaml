@@ -4,3 +4,5 @@ x-stoplight:
 description: Information about a specific organization.
 allOf:
   - $ref: ../base/EntityType.yaml
+x-tags:
+  - hropen/nayya

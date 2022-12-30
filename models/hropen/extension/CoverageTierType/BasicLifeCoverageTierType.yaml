@@ -62,3 +62,5 @@ properties:
 required:
   - coverageLevelTierTypeCode
   - rateDetail
+x-tags:
+  - hropen/nayya

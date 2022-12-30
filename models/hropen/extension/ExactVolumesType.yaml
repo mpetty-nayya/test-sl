@@ -17,9 +17,9 @@ examples:
         value: 2.46
         currency: USD
       volumeRateUnit: Dollars
-x-tags:
-  - hropen/base
 minItems: 1
 description: Volumes and rates for which an employee is eligible
 items:
   $ref: ./VolumeType.yaml
+x-tags:
+  - hropen/nayya

@@ -11,3 +11,5 @@ properties:
       - Orthodontics
   coinsuranceAmount:
     type: integer
+x-tags:
+  - hropen/nayya

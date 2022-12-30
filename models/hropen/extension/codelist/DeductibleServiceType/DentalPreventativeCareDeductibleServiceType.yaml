@@ -5,3 +5,5 @@ title: DentalPreventativeCareDeductibleServiceType
 description: The collection of service types applicable to plan deductible amounts.
 enum:
   - DentalPreventativeCare
+x-tags:
+  - hropen/nayya

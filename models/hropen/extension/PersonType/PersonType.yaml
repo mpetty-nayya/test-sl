@@ -78,3 +78,5 @@ examples:
           countryCode: string
     primaryLanguage: en
     tobaccoUserIndicator: true
+x-tags:
+  - hropen/nayya

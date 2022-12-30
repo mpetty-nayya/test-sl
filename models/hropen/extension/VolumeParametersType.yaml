@@ -27,8 +27,6 @@ examples:
         currency: USD
       volumeRateUnit: Dollars
       eligibleVolumeCode: increment
-x-tags:
-  - hropen/base
 minItems: 3
 maxItems: 3
 description: 'Parameters that can be used to calculate all volumes and rates available to an employee - must contain exactly 3 elements, one each for eligibleVolumeCode minimum, maximum, and increment.  volumeRateUnit and volumeRateAmount should be the same for all 3 elements.'
@@ -37,3 +35,5 @@ items:
     - $ref: ./MinimumVolumeParameterType.yaml
     - $ref: ./MaximumVolumeParameterType.yaml
     - $ref: ./IncrementVolumeParameterType.yaml
+x-tags:
+  - hropen/nayya

@@ -11,3 +11,5 @@ properties:
       - Frames
   deductibleAmount:
     type: integer
+x-tags:
+  - hropen/nayya

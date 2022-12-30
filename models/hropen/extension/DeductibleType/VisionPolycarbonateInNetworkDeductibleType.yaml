@@ -11,3 +11,5 @@ properties:
       - PolycarbonateLenses
   deductibleAmount:
     type: integer
+x-tags:
+  - hropen/nayya

@@ -5,3 +5,5 @@ x-stoplight:
 enum:
   - Dollars
   - DollarsPer1000CoveredVolume
+x-tags:
+  - hropen/benefits/codelist

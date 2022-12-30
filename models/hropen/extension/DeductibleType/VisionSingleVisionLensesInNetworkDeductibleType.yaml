@@ -11,3 +11,5 @@ properties:
       - SingleVisionLenses
   deductibleAmount:
     type: integer
+x-tags:
+  - hropen/nayya

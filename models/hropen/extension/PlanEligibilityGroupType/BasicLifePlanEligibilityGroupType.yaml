@@ -40,3 +40,5 @@ required:
   - id
   - eligibilityGroupName
   - coverageTiers
+x-tags:
+  - hropen/nayya

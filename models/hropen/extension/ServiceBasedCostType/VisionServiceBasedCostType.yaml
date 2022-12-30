@@ -25,3 +25,5 @@ properties:
       $ref: ../DeductibleType/VisionInNetworkDeductibleType.yaml
 required:
   - deductibles
+x-tags:
+  - hropen/nayya

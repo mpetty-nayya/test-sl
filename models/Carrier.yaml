@@ -13,3 +13,5 @@ properties:
 required:
   - id
   - name
+x-tags:
+  - hropen/nayya

@@ -13,3 +13,5 @@ properties:
 required:
   - value
   - currency
+x-tags:
+  - hropen/base

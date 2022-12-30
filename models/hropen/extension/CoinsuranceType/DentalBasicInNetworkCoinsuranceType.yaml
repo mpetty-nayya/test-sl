@@ -11,3 +11,5 @@ properties:
       - EndodonticsBasic
   coinsuranceAmount:
     type: integer
+x-tags:
+  - hropen/nayya

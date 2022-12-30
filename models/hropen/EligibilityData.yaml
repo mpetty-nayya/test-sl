@@ -73,8 +73,6 @@ examples:
             salaryAmount:
               value: 0
               currency: USD
-x-tags:
-  - hropen
 description: 'Payload sent when an employee is ready to begin the Nayya Choose experience - it contains employee and dependent details, plan and account eligibility, and rate and volume amounts associated with each benefit option.'
 properties:
   enrollment:
@@ -108,3 +106,5 @@ properties:
 required:
   - enrollment
   - employerOrganization
+x-tags:
+  - hropen/nayya

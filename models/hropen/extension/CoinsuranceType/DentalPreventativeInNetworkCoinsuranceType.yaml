@@ -11,3 +11,5 @@ properties:
       - PreventativeCare
   coinsuranceAmount:
     type: integer
+x-tags:
+  - hropen/nayya

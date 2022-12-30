@@ -11,3 +11,5 @@ properties:
       - MajorCoinsurance
   coinsuranceAmount:
     type: integer
+x-tags:
+  - hropen/nayya

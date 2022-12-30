@@ -19,3 +19,5 @@ properties:
       $ref: ../DeductibleType/HospitalIndemnityInNetworkDeductibleType.yaml
 required:
   - deductibles
+x-tags:
+  - hropen/nayya

@@ -19,3 +19,5 @@ properties:
     description: total premimum associated with volume amount
   volumeRateUnit:
     $ref: ../benefits/codelist/RateUnitCodeList.yaml
+x-tags:
+  - hropen/nayya

@@ -22,3 +22,5 @@ examples:
       currency: USD
     serviceType: AccidentBenefitAmount
     networkApplicability: InNetwork
+x-tags:
+  - hropen/nayya

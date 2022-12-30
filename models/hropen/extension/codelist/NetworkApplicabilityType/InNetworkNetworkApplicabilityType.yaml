@@ -4,3 +4,5 @@ x-stoplight:
 title: InNetworkNetworkApplicabilityType
 enum:
   - InNetwork
+x-tags:
+  - hropen/nayya

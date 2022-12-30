@@ -52,4 +52,4 @@ required:
   - carrierOrganization
   - planEligibilityGroups
 x-tags:
-  - plan setup
+  - hropen/nayya

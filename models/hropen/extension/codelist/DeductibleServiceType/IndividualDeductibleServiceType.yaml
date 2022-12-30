@@ -5,3 +5,5 @@ title: IndividualDeductibleServiceType
 description: The collection of service types applicable to plan deductible amounts.
 enum:
   - Individual
+x-tags:
+  - hropen/nayya
