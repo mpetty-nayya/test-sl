@@ -2,6 +2,7 @@ title: HSACoverageType
 x-stoplight:
   id: acrwgveaf6nov
 type: object
+examples: []
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
@@ -47,21 +48,24 @@ properties:
             - dependentPlanIdentifier
             - dependentEligibilityGroupId
   accountDetails:
-    type: object
-    required:
-      - contributionTypeCode
-      - maximumContribution
-    properties:
-      contributionTypeCode:
-        type: string
-        enum:
-          - Employee
-      maximumContribution:
-        $ref: ../../base/AmountType.yaml
-      contributionFrequencyCode:
-        type: string
-        enum:
-          - Annually
+    type: array
+    items:
+      type: object
+      properties:
+        contributionTypeCode:
+          type: string
+          enum:
+            - Employee
+        maximumContribution:
+          $ref: ../../base/AmountType.yaml
+        contributionFrequencyCode:
+          type: string
+          enum:
+            - Annually
+      required:
+        - contributionTypeCode
+        - maximumContribution
+        - contributionFrequencyCode
 required:
   - id
   - electedEligibilityGroupId
