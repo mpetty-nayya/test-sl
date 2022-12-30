@@ -20,6 +20,22 @@ examples:
       intervalCode:
         id: Month
     productCode: Medical
+  - id:
+      value: string
+    electedEligibilityGroupId:
+      value: string
+    coverageLevelTierTypeCode: EmployeeFamily
+    coverageLevelTierTypeValue: 0
+    deductionInstruction:
+      actualAmount:
+        value: 200.23
+        currency: USD
+      employerAmount:
+        value: 75.63
+        currency: USD
+      intervalCode:
+        id: Month
+    productCode: Medical
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml

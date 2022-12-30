@@ -3,10 +3,23 @@ x-stoplight:
   id: ftvb030bps4h5
 title: ExactVolumesType
 examples:
-  - value: string
+  - - volumeAmount:
+        value: 5000
+        currency: USD
+      volumeRateAmount:
+        value: 1.23
+        currency: USD
+      volumeRateUnit: Dollars
+    - volumeAmount:
+        value: 10000
+        currency: USD
+      volumeRateAmount:
+        value: 2.46
+        currency: USD
+      volumeRateUnit: Dollars
 x-tags:
   - hropen/base
 minItems: 1
 description: Volumes and rates for which an employee is eligible
 items:
-  $ref: ../benefits/VolumeType.yaml
+  $ref: ./VolumeType.yaml

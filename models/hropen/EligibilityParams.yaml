@@ -76,7 +76,7 @@ examples:
                 currency: USD
 x-tags:
   - hropen
-description: 'Payload sent when an employee is ready to begin the Nayya Choose experience - it contains employee and dependent details, plan and account eligibility, and rate and volume amounts associated with each benefit option.'
+description: 'Payload sent when an employee is ready to begin the Nayya Choose experience - it contains employee and dependent details, plan and account eligibility, employee premimum, and optionally the volume amounts or parameters used to generate volumes associated with each benefit option.'
 properties:
   data:
     $ref: ./EligibilityData.yaml

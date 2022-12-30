@@ -8,7 +8,7 @@ x-tags:
 description: 'Payload sent when an employee is ready to begin the Nayya Choose experience - it contains employee and dependent details, plan and account eligibility, and rate and volume amounts associated with each benefit option.'
 properties:
   enrollment:
-    $ref: ./benefits/EnrollmentType.yaml
+    $ref: ./extension/EnrollmentType.yaml
   employerOrganization:
     type: object
     required:
