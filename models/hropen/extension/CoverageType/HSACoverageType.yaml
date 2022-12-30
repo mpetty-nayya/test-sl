@@ -2,7 +2,30 @@ title: HSACoverageType
 x-stoplight:
   id: acrwgveaf6nov
 type: object
-examples: []
+examples:
+  - id:
+      value: string
+    electedEligibilityGroupId:
+      value: string
+    coverageLevelTierTypeCode: Employee
+    productCode: HSA
+    dependency:
+      mustEnrollInSomeOf:
+        - dependentPlanIdentifier:
+            value: string
+          dependentEligibilityGroupId:
+            value: string
+    accountDetails:
+      - contributionTypeCode: Employee
+        maximumContribution:
+          value: 3600
+          currency: USD
+        contributionFrequencyCode: Annually
+      - contributionTypeCode: EmployeeFamily
+        maximumContribution:
+          value: 7200
+          currency: USD
+        contributionFrequencyCode: Annually
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
