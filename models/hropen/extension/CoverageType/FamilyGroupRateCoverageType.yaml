@@ -2,6 +2,24 @@ title: FamilyGroupRateCoverageType
 x-stoplight:
   id: 1zg4qkz8ukyv0
 type: object
+description: 'Specifies the premium details the for a specific family grouping coverage for a benefit defined for a plan eligibility group.  Used for medical, dental, vision, accident, and hospitcal indemnity plans.  '
+examples:
+  - id:
+      value: string
+    electedEligibilityGroupId:
+      value: string
+    coverageLevelTierTypeCode: Employee
+    coverageLevelTierTypeValue: 0
+    deductionInstruction:
+      actualAmount:
+        value: 100.23
+        currency: USD
+      employerAmount:
+        value: 54.63
+        currency: USD
+      intervalCode:
+        id: Month
+    productCode: Medical
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
@@ -28,3 +46,4 @@ required:
   - electedEligibilityGroupId
   - coverageLevelTierTypeCode
   - deductionInstruction
+  - productCode
