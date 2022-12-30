@@ -53,18 +53,4 @@ required:
   - rateDetail
   - productCode
   - elections
-examples:
-  - id:
-      value: string
-    electedEligibilityGroupId:
-      value: string
-    coverageLevelTierTypeCode: Employee
-    rateDetail:
-      - value: string
-    productCode: STD
-    elections:
-      - amount:
-          value: 0
-          currency: USD
-        contributorCode: Employer
-        amountTypeCode: Percent
+examples: []
