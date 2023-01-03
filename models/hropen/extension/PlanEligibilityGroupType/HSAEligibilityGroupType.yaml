@@ -1,0 +1,33 @@
+title: HSAEligibilityGroupType
+x-stoplight:
+  id: hnri87mi84fyf
+description: Information pertaining to a plan eligibility group.
+type: object
+examples:
+  - id:
+      value: string
+    eligibilityGroupName: string
+    effectivePeriod:
+      validFrom: '2019-08-01'
+      validTo: '2020-01-01'
+    coverageTiers:
+      - coverageLevelTierTypeCode: Employee
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+    description: Unique alphanumeric identifier for the Eligibility Group.
+  eligibilityGroupName:
+    type: string
+    description: The Eligibility Group name.
+  effectivePeriod:
+    $ref: ../../base/EffectiveTimePeriodType.yaml
+  coverageTiers:
+    type: array
+    items:
+      $ref: ../CoverageTierType/CriticalIllnessCoverageTierType.yaml
+required:
+  - id
+  - eligibilityGroupName
+  - coverageTiers
+x-tags:
+  - hropen/nayya

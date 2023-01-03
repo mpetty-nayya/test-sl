@@ -1,0 +1,31 @@
+title: HSACoverageTierType
+x-stoplight:
+  id: pkfb2aehdoea7
+type: object
+examples: []
+x-tags:
+  - hropen/nayya
+properties:
+  coverageLevelTierTypeCode:
+    type: string
+    enum:
+      - Employee
+      - Spouse
+      - Children
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  accountDetails:
+    type: array
+    items:
+      type: object
+      properties:
+        contributionTypeCode:
+          type: string
+        contributionAmount:
+          $ref: ../../base/AmountType.yaml
+      required:
+        - contributionTypeCode
+required:
+  - coverageLevelTierTypeCode
+  - id
+  - accountDetails

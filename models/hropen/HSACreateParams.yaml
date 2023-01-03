@@ -1,0 +1,55 @@
+title: HSACreateParams
+x-stoplight:
+  id: lmrhx846j3pmd
+type: object
+examples:
+  - planSetup:
+      id:
+        value: string
+      productCode: Dental
+      displayPlanName: string
+      carrierOrganization:
+        id:
+          value: string
+        name: string
+      planEligibilityGroups:
+        - id:
+            value: string
+          eligibilityGroupName: string
+          effectivePeriod:
+            validFrom: '2019-08-24'
+            validTo: '2020-08-24'
+          serviceBasedCosts:
+            - deductibles:
+                - deductibleAmount:
+                    value: 0
+                    currency: USD
+                  serviceType: DentalPreventativeCare
+                  networkApplicability: InNetwork
+              outOfPocketMaximums:
+                - outOfPocketMaximumAmount:
+                    value: 0
+                    currency: USD
+                  networkApplicability: InNetwork
+                  unitTime: Annual
+                  serviceApplicability: Orthodontics
+              coinsurance:
+                - networkApplicability: InNetwork
+                  serviceType: EndodonticsBasic
+                  coinsuranceAmount: 0
+properties:
+  planSetup:
+    oneOf:
+      - $ref: ./extension/PlanSetupType/DentalPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/MedicalPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/VisionPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/AccidentPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/CriticalIllnessPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/HospitalIndemnityPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/STDPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/LTDPlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/BasicLifePlanSetupType.yaml
+      - $ref: ./extension/PlanSetupType/SupplementalLifePlanSetupType.yaml
+x-tags:
+  - hropen/nayya
+description: ''
