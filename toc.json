@@ -116,6 +116,11 @@
           "title": "PlanCreateParams",
           "uri": "/models/hropen/PlanCreateParams.yaml"
         },
+                {
+          "type": "item",
+          "title": "HSACreateParams",
+          "uri": "/models/hropen/HSACreateParams.yaml"
+        },
         {
           "type": "item",
           "title": "EligibilityData",
@@ -316,6 +321,11 @@
           "title": "CriticalIllnessPlanEligibilityGroupType",
           "uri": "/models/hropen/extension/PlanEligibilityGroupType/CriticalIllnessPlanEligibilityGroupType.yaml"
         },
+                {
+          "type": "item",
+          "title": "HSAEligibilityGroupType",
+          "uri": "/models/hropen/extension/PlanEligibilityGroupType/HSAEligibilityGroupType.yaml"
+        },
         {
           "type": "item",
           "title": "DentalPlanSetupType",
@@ -365,6 +375,11 @@
           "type": "item",
           "title": "STDPlanSetupType",
           "uri": "/models/hropen/extension/PlanSetupType/STDPlanSetupType.yaml"
+        },
+                {
+          "type": "item",
+          "title": "HSASetupType",
+          "uri": "/models/hropen/extension/PlanSetupType/HSASetupType.yaml"
         },
         {
           "type": "item",
@@ -430,6 +445,11 @@
           "type": "item",
           "title": "CriticalIllnessCoverageTierType",
           "uri": "/models/hropen/extension/CoverageTierType/CriticalIllnessCoverageTierType.yaml"
+        },
+                {
+          "type": "item",
+          "title": "HSACoverageTierType",
+          "uri": "/models/hropen/extension/CoverageTierType/HSACoverageTierType.yaml"
         },
         {
           "type": "item",
