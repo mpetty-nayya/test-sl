@@ -83,6 +83,75 @@ paths:
         in: path
         required: true
         description: Unique client identifier for employer
+  '/hr_open/employers/{employer_id}/hsa_accounts':
+    post:
+      summary: Add an HSA
+      tags:
+        - Employers
+      operationId: post-hsa-account
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+              examples: {}
+          headers:
+            Request-Id:
+              $ref: '#/components/headers/Request-Id'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError409Response.yaml
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
+        '':
+          description: ''
+      description: Add an hsa account for a given employer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/hropen/HSACreateParams.yaml
+            examples:
+              Example 1:
+                value:
+                  planSetup:
+                    id:
+                      value: string
+                    productCode: HSA
+                    displayPlanName: string
+                    carrierOrganization:
+                      id:
+                        value: string
+                      name: string
+                    planEligibilityGroups:
+                      - id:
+                          value: string
+                        coverageTiers:
+                          - coverageLevelTierTypeCode: Employee
+                            id:
+                              value: string
+                            accountDetails:
+                              - contributionTypeCode: string
+                                contributionAmount:
+                                  value: 0
+                                  currency: USD
+        description: ''
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        in: path
+        required: true
+        description: Unique client identifier for employer
   /hr_open/employers:
     post:
       summary: Add an employer
