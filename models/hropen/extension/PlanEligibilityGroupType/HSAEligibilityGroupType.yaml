@@ -3,7 +3,18 @@ x-stoplight:
   id: hnri87mi84fyf
 description: Information pertaining to a plan eligibility group.
 type: object
-examples: []
+examples:
+  - id:
+      value: string
+    coverageTiers:
+      - coverageLevelTierTypeCode: Employee
+        id:
+          value: string
+        accountDetails:
+          - contributionTypeCode: string
+            contributionAmount:
+              value: 0
+              currency: USD
 x-tags:
   - hropen/nayya
 properties:

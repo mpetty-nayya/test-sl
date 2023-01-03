@@ -18,8 +18,7 @@ properties:
     type: string
     enum:
       - Employee
-      - Spouse
-      - Children
+      - EmployeeFamily
   id:
     $ref: ../../base/IdentifierType.yaml
   accountDetails:
