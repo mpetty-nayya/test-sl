@@ -1,0 +1,54 @@
+title: HospitalIndemnityPlanSetupType
+x-stoplight:
+  id: 1vywqei0ta9sj
+type: object
+description: General plan details regarding plan setup
+examples:
+  - id:
+      value: string
+    productCode: Hospital Indemnity
+    displayPlanName: string
+    carrierOrganization:
+      id:
+        value: string
+      name: string
+    planEligibilityGroups:
+      - id:
+          value: string
+        eligibilityGroupName: string
+        effectivePeriod:
+          validFrom: '2019-08-01'
+          validTo: '2020-01-01'
+        serviceBasedCosts:
+          - deductibles:
+              - deductibleAmount:
+                  value: 0
+                  currency: USD
+                serviceType: HospitalAdmission
+                networkApplicability: InNetwork
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  productCode:
+    type: string
+    description: Plan type
+    enum:
+      - Hospital Indemnity
+  displayPlanName:
+    type: string
+    description: Display name for plan.
+  carrierOrganization:
+    $ref: ../../organization/OrganizationType.yaml
+  planEligibilityGroups:
+    type: array
+    minItems: 1
+    items:
+      $ref: ../PlanEligibilityGroupType/HospitalIndemnityPlanEligibilityGroupType.yaml
+required:
+  - id
+  - productCode
+  - displayPlanName
+  - carrierOrganization
+  - planEligibilityGroups
+x-tags:
+  - hropen/nayya

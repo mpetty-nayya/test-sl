@@ -1,0 +1,54 @@
+title: AccidentPlanSetupType
+x-stoplight:
+  id: 33ih1l1yz1hfi
+type: object
+description: General plan details regarding plan setup
+examples:
+  - id:
+      value: string
+    productCode: Accident
+    displayPlanName: string
+    carrierOrganization:
+      id:
+        value: string
+      name: string
+    planEligibilityGroups:
+      - id:
+          value: string
+        eligibilityGroupName: string
+        effectivePeriod:
+          validFrom: '2019-08-01'
+          validTo: '2020-01-01'
+        serviceBasedCosts:
+          - deductibles:
+              - deductibleAmount:
+                  value: 0
+                  currency: USD
+                serviceType: AccidentBenefitAmount
+                networkApplicability: InNetwork
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  productCode:
+    type: string
+    description: Plan type
+    enum:
+      - Accident
+  displayPlanName:
+    type: string
+    description: Display name for plan.
+  carrierOrganization:
+    $ref: ../../organization/OrganizationType.yaml
+  planEligibilityGroups:
+    type: array
+    minItems: 1
+    items:
+      $ref: ../PlanEligibilityGroupType/AccidentPlanEligibilityGroupType.yaml
+required:
+  - id
+  - productCode
+  - displayPlanName
+  - carrierOrganization
+  - planEligibilityGroups
+x-tags:
+  - hropen/nayya

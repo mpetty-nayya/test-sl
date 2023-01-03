@@ -1,0 +1,23 @@
+title: AccidentServiceBasedCostType
+x-stoplight:
+  id: bkj2p88cgmi90
+type: object
+description: The fields defining non-premium costs for specific accident benefit services. AccidentBenefitAmount is required.
+examples:
+  - deductibles:
+      - deductibleAmount:
+          value: 0
+          currency: USD
+        serviceType: AccidentBenefitAmount
+        networkApplicability: InNetwork
+properties:
+  deductibles:
+    type: array
+    minItems: 1
+    maxItems: 1
+    items:
+      $ref: ../DeductibleType/AccidentInNetworkDeductibleType.yaml
+required:
+  - deductibles
+x-tags:
+  - hropen/nayya

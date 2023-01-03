@@ -1,0 +1,8 @@
+type: string
+x-stoplight:
+  id: 4l25l7gs8pczt
+title: InNetworkNetworkApplicabilityType
+enum:
+  - InNetwork
+x-tags:
+  - hropen/nayya

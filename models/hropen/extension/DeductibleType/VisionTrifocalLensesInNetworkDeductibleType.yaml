@@ -1,0 +1,15 @@
+title: VisionTrifocalLensesInNetworkDeductibleType
+x-stoplight:
+  id: tm9u3wb2i15da
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - LinedTrifocalLenses
+  deductibleAmount:
+    type: integer
+x-tags:
+  - hropen/nayya

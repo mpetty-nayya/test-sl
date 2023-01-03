@@ -1,0 +1,10 @@
+type: string
+x-stoplight:
+  id: 8ibi4v084eab7
+title: DateType
+format: date
+description: Date representation according ISO 8601 standard.
+examples:
+  - '2019-08-24'
+x-tags:
+  - hropen/base

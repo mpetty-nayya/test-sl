@@ -1,0 +1,186 @@
+type: object
+x-stoplight:
+  id: abe35579c70bb
+x-examples:
+  example-1:
+    deductibles:
+      - deductibleAmount:
+          currency: USD
+          value: '5000'
+        serviceType: Family
+        networkApplicability: InNetwork
+      - deductibleAmount:
+          currency: USD
+          value: '6000'
+        serviceType: Family
+        networkApplicability: OutOfNetwork
+      - deductibleAmount:
+          currency: USD
+          value: '2500'
+        serviceType: Individual
+        networkApplicability: InNetwork
+      - deductibleAmount:
+          currency: USD
+          value: '3000'
+        serviceType: Individual
+        networkApplicability: OutOfNetwork
+    coinsurance:
+      - networkApplicability: InNetwork
+        serviceType: coinsurance
+        coinsuranceAmount:
+          currency: USD
+          value: '35'
+      - networkApplicability: OutOfNetwork
+        serviceType: coinsurance
+        coinsuranceAmount:
+          currency: USD
+          value: '34'
+    copays:
+      - copayAmount:
+          currency: USD
+          value: '65.6'
+        networkApplicability: InNetwork
+        serviceType: urgentCareCopay
+      - copayAmount:
+          currency: USD
+          value: '150.6'
+        networkApplicability: OutOfNetwork
+        serviceType: urgentCareCopay
+      - copayAmount:
+          currency: USD
+          value: '50'
+        networkApplicability: InNetwork
+        serviceType: virtualVisitsOrTelehealth
+      - copayAmount:
+          currency: USD
+          value: '83.4'
+        networkApplicability: OutOfNetwork
+        serviceType: virtualVisitsOrTelehealth
+      - copayAmount:
+          currency: USD
+          value: '90'
+        networkApplicability: InNetwork
+        serviceType: specialistVistCopay
+      - copayAmount:
+          currency: USD
+          value: '140'
+        networkApplicability: OutOfNetwork
+        serviceType: specialistVistCopay
+      - copayAmount:
+          currency: USD
+          value: '60'
+        networkApplicability: InNetwork
+        serviceType: primaryCareProvider
+      - copayAmount:
+          currency: USD
+          value: '50'
+        networkApplicability: OutOfNetwork
+        serviceType: primaryCareProvider
+      - copayAmount:
+          currency: USD
+          value: '230'
+        networkApplicability: OutOfNetwork
+        serviceType: emergencyRoomCopay
+      - copayAmount:
+          currency: USD
+          value: '100'
+        networkApplicability: InNetwork
+        serviceType: emergencyRoomCopay
+    outOfPocketMaximums:
+      - outOfPocketMaximumAmount:
+          currency: USD
+          value: '8000'
+        networkApplicability: InNetwork
+        serviceType: annualMaximum family
+      - outOfPocketMaximumAmount:
+          currency: USD
+          value: '12000'
+        networkApplicability: OutOfNetwork
+        serviceType: annualMaximum family
+      - outOfPocketMaximumAmount:
+          currency: USD
+          value: '6000'
+        networkApplicability: InNetwork
+        serviceType: annualMaximum individual
+      - outOfPocketMaximumAmount:
+          currency: USD
+          value: '8000'
+        networkApplicability: OutOfNetwork
+        serviceType: annualMaximum individual
+    others:
+      - networkApplicability: InNetwork
+        serviceType: preventiveCare
+        amount:
+          currency: USD
+          value: '15'
+      - networkApplicability: OutOfNetwork
+        serviceType: preventiveCare
+        amount:
+          currency: USD
+          value: '45'
+properties:
+  deductibles:
+    type: array
+    items:
+      type: object
+      properties:
+        deductibleAmount:
+          type: object
+          properties:
+            currency:
+              type: string
+            value:
+              type: string
+        serviceType:
+          type: string
+  coinsurance:
+    type: array
+    items:
+      type: object
+      properties:
+        networkApplicability:
+          type: string
+        serviceType:
+          type: string
+        coinsuranceAmount:
+          type: object
+          properties:
+            currency:
+              type: string
+            value:
+              type: string
+  copays:
+    type: array
+    items:
+      type: object
+      properties:
+        copayAmount:
+          type: object
+          properties:
+            currency:
+              type: string
+            value:
+              type: string
+        networkApplicability:
+          type: string
+        serviceType:
+          type: string
+  outOfPocketMaximums:
+    type: array
+    items:
+      type: object
+      properties:
+        outOfPocketMaximumAmount:
+          type: object
+          properties:
+            currency:
+              type: string
+            value:
+              type: string
+        networkApplicability:
+          type: string
+        serviceType:
+          type: string
+title: ''
+x-tags:
+  - hropen/nayya

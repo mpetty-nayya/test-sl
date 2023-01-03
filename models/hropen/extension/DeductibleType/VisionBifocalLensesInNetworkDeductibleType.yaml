@@ -1,0 +1,15 @@
+title: VisionBifocalLensesInNetworkDeductibleType
+x-stoplight:
+  id: aapyogzovsznz
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - LinedBifocalLenses
+  deductibleAmount:
+    type: integer
+x-tags:
+  - hropen/nayya

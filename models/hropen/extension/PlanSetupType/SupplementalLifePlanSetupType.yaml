@@ -1,0 +1,75 @@
+title: SupplementalLifePlanSetupType
+x-stoplight:
+  id: so087qpvismu5
+type: object
+description: General plan details regarding plan setup
+examples:
+  - id:
+      value: string
+    productCode: Supplemental Life
+    displayPlanName: string
+    carrierOrganization:
+      id:
+        value: string
+      name: string
+    planEligibilityGroups:
+      - id:
+          value: string
+        eligibilityGroupName: string
+        effectivePeriod:
+          validFrom: '2019-08-01'
+          validTo: '2020-01-01'
+        coverageTiers:
+          - coverageLevelTierTypeCode: Employee
+            rateDetail:
+              rateType:
+                - guaranteedIssueType:
+                    guaranteedIssueDollarAmount:
+                      value: 50000
+                    guaranteedIssueMultipleOfEarnings:
+                      value: 2
+  - id:
+      value: string
+    productCode: Supplemental Life
+    displayPlanName: string
+    carrierOrganization:
+      id:
+        value: string
+      name: string
+    planEligibilityGroups:
+      - id:
+          value: string
+        eligibilityGroupName: string
+        effectivePeriod:
+          validFrom: '2019-08-01'
+          validTo: '2020-01-01'
+        coverageTiers:
+          - coverageLevelTierTypeCode: Children
+            rateDetail:
+              rateType: []
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  productCode:
+    type: string
+    description: Plan type
+    enum:
+      - Supplemental Life
+  displayPlanName:
+    type: string
+    description: Display name for plan.
+  carrierOrganization:
+    $ref: ../../organization/OrganizationType.yaml
+  planEligibilityGroups:
+    type: array
+    minItems: 1
+    items:
+      $ref: ../PlanEligibilityGroupType/SupplementalLifePlanEligibilityGroupType.yaml
+required:
+  - id
+  - productCode
+  - displayPlanName
+  - carrierOrganization
+  - planEligibilityGroups
+x-tags:
+  - hropen/nayya

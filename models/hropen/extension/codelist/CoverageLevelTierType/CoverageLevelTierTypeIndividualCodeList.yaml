@@ -1,0 +1,11 @@
+type: string
+x-stoplight:
+  id: 9u68tvx28c5n9
+title: CoverageLevelTierTypeCodeList
+description: Coverage Level Tier Type Codes.
+enum:
+  - Employee
+  - Children
+  - Spouse
+x-tags:
+  - hropen/nayya

@@ -1,0 +1,58 @@
+title: SupplementalLifeCoverageTierType
+x-stoplight:
+  id: 7kh9rx5xvefao
+type: object
+examples:
+  - coverageLevelTierTypeCode: Employee
+    rateDetail:
+      rateType:
+        - guaranteedIssueType:
+            guaranteedIssueDollarAmount:
+              value: 50000
+            guaranteedIssueMultipleOfEarnings:
+              value: 2
+  - coverageLevelTierTypeCode: Spouse
+    rateDetail:
+      rateType:
+        - guaranteedIssueType:
+            guaranteedIssueDollarAmount:
+              value: 25000
+  - coverageLevelTierTypeCode: Children
+    rateDetail:
+      rateType: []
+description: 'For employee coverage, guaranteed issue can be a flat amount (guaranteedIssueDollarAmount), a multiple of earnings (guaranteedIssueMultipleOfEarnings), or a multiple of earnings with an upper limit (guaranteedIssueMultipleOfEarnings capped at guaranteedIssueDollarAmount).  For spouse coverage, guarnteed issue can be a flat amount.  For children coverage, guaranteed issue is not supported.  '
+properties:
+  coverageLevelTierTypeCode:
+    type: string
+    enum:
+      - Employee
+      - Spouse
+      - Children
+  rateDetail:
+    type: object
+    required:
+      - rateType
+    properties:
+      rateType:
+        type: array
+        items:
+          type: object
+          properties:
+            guaranteedIssueType:
+              type: object
+              properties:
+                guaranteedIssueDollarAmount:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                guaranteedIssueMultipleOfEarnings:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+required:
+  - coverageLevelTierTypeCode
+  - rateDetail
+x-tags:
+  - hropen/nayya

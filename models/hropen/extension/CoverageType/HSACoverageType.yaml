@@ -1,0 +1,100 @@
+title: HSACoverageType
+x-stoplight:
+  id: acrwgveaf6nov
+type: object
+examples:
+  - id:
+      value: string
+    electedEligibilityGroupId:
+      value: string
+    coverageLevelTierTypeCode: Employee
+    productCode: HSA
+    dependency:
+      mustEnrollInSomeOf:
+        - dependentPlanIdentifier:
+            value: string
+          dependentEligibilityGroupId:
+            value: string
+    accountDetails:
+      - contributionTypeCode: Employee
+        maximumContribution:
+          value: 3600
+          currency: USD
+        contributionFrequencyCode: Annually
+      - contributionTypeCode: EmployeeFamily
+        maximumContribution:
+          value: 7200
+          currency: USD
+        contributionFrequencyCode: Annually
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+    description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
+  electedEligibilityGroupId:
+    $ref: ../../base/IdentifierType.yaml
+  coverageLevelTierTypeCode:
+    type: string
+    enum:
+      - Employee
+      - EmployeeFamily
+  productCode:
+    type: string
+    enum:
+      - HSA
+  dependency:
+    type: object
+    required:
+      - mustEnrollInSomeOf
+    properties:
+      mustEnrollInSomeOf:
+        type: array
+        minItems: 1
+        uniqueItems: true
+        items:
+          type: object
+          properties:
+            dependentPlanIdentifier:
+              type: object
+              required:
+                - value
+              properties:
+                value:
+                  type: string
+            dependentEligibilityGroupId:
+              type: object
+              required:
+                - value
+              properties:
+                value:
+                  type: string
+          required:
+            - dependentPlanIdentifier
+            - dependentEligibilityGroupId
+  accountDetails:
+    type: array
+    items:
+      type: object
+      properties:
+        contributionTypeCode:
+          type: string
+          enum:
+            - Employee
+        maximumContribution:
+          $ref: ../../base/AmountType.yaml
+        contributionFrequencyCode:
+          type: string
+          enum:
+            - Annually
+      required:
+        - contributionTypeCode
+        - maximumContribution
+        - contributionFrequencyCode
+required:
+  - id
+  - electedEligibilityGroupId
+  - coverageLevelTierTypeCode
+  - productCode
+  - dependency
+  - accountDetails
+x-tags:
+  - hropen/nayya

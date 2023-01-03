@@ -1,0 +1,15 @@
+title: VisionElectiveContactLensesInNetworkDeductibleType
+x-stoplight:
+  id: z9yy628r0nj8a
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - ContactLensesElective
+  deductibleAmount:
+    type: integer
+x-tags:
+  - hropen/nayya

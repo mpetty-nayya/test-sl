@@ -1,0 +1,15 @@
+title: networkLevelAttributes
+x-stoplight:
+  id: pjeos3behuf8r
+type: object
+properties:
+  services:
+    $ref: ./services.yaml
+  outOfPocketMaximums:
+    $ref: ./coverageTierTypeAmounts.yaml
+  deductibles:
+    $ref: ./coverageTierTypeAmounts.yaml
+required:
+  - services
+  - outOfPocketMaximums
+  - deductibles

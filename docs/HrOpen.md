@@ -4,4 +4,4 @@ stoplight-id: s66nkvr8791un
 
 # HrOpen
 
-The beginning of an awesome article...
+Nayya supports the configuration of employers, employees, plans, and eligibility constrained to a subset of the HR Open Standard.

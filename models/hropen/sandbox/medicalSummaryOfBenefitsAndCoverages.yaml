@@ -1,0 +1,224 @@
+title: medicalSummaryOfBenefitsAndCoverages
+x-stoplight:
+  id: hj8uo1gfokis6
+type: object
+properties:
+  inNetwork:
+    $ref: ./networkLevelAttributes.yaml
+  outOfNetwork:
+    $ref: ./networkLevelAttributes.yaml
+  specialtyNetwork:
+    $ref: ./networkLevelAttributes.yaml
+required:
+  - inNetwork
+examples:
+  - inNetwork:
+      services:
+        urgentCare:
+          firstOccurrence:
+            preDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+            postDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+        specialist:
+          firstOccurrence:
+            preDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+            postDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+        emergencyRoom:
+          firstOccurrence:
+            preDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+            postDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+      outOfPocketMaximums:
+        employee:
+          value: 0
+          currency: USD
+        employeeFamily:
+          value: 0
+          currency: USD
+        employeeChildren:
+          value: 0
+          currency: USD
+      deductibles:
+        employee:
+          value: 0
+          currency: USD
+        employeeFamily:
+          value: 0
+          currency: USD
+        employeeChildren:
+          value: 0
+          currency: USD
+    outOfNetwork:
+      services:
+        urgentCare:
+          firstOccurrence:
+            preDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+            postDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+        specialist:
+          firstOccurrence:
+            preDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+            postDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+        emergencyRoom:
+          firstOccurrence:
+            preDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+            postDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+      outOfPocketMaximums:
+        employee:
+          value: 0
+          currency: USD
+        employeeFamily:
+          value: 0
+          currency: USD
+        employeeChildren:
+          value: 0
+          currency: USD
+      deductibles:
+        employee:
+          value: 0
+          currency: USD
+        employeeFamily:
+          value: 0
+          currency: USD
+        employeeChildren:
+          value: 0
+          currency: USD
+    specialtyNetwork:
+      services:
+        urgentCare:
+          firstOccurrence:
+            preDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+            postDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+        specialist:
+          firstOccurrence:
+            preDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+            postDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+        emergencyRoom:
+          firstOccurrence:
+            preDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+            postDeductible:
+              copay:
+                value: 0
+                currency: USD
+              coinsurance:
+                value: 0
+                towardsDeductible: true
+      outOfPocketMaximums:
+        employee:
+          value: 0
+          currency: USD
+        employeeFamily:
+          value: 0
+          currency: USD
+        employeeChildren:
+          value: 0
+          currency: USD
+      deductibles:
+        employee:
+          value: 0
+          currency: USD
+        employeeFamily:
+          value: 0
+          currency: USD
+        employeeChildren:
+          value: 0
+          currency: USD

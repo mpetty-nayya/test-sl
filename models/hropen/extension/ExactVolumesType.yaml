@@ -1,0 +1,25 @@
+type: array
+x-stoplight:
+  id: ftvb030bps4h5
+title: ExactVolumesType
+examples:
+  - - volumeAmount:
+        value: 5000
+        currency: USD
+      volumeRateAmount:
+        value: 1.23
+        currency: USD
+      volumeRateUnit: Dollars
+    - volumeAmount:
+        value: 10000
+        currency: USD
+      volumeRateAmount:
+        value: 2.46
+        currency: USD
+      volumeRateUnit: Dollars
+minItems: 1
+description: Volumes and rates for which an employee is eligible
+items:
+  $ref: ./VolumeType.yaml
+x-tags:
+  - hropen/nayya

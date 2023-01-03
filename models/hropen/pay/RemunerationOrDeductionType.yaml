@@ -1,0 +1,29 @@
+title: RemunerationOrDeductionType
+x-stoplight:
+  id: bt6cng2ui9rii
+type: object
+properties:
+  actualAmount:
+    $ref: ../base/AmountType.yaml
+    description: The amount actually deducted after processing payroll.
+  employerAmount:
+    $ref: ../base/AmountType.yaml
+    description: 'The amount the employer contributes to the deduction type. For example, $10 for certification dues.'
+  intervalCode:
+    $ref: ../codelist/PayRateIntervalCodeList.yaml
+    description: The frequency at which an earning is 'earned'. E.g. how often the worker is paid the associated earning.
+required:
+  - actualAmount
+  - intervalCode
+examples:
+  - actualAmount:
+      value: 0
+      currency: USD
+    employerAmount:
+      value: 0
+      currency: USD
+    intervalCode:
+      id: Month
+description: ''
+x-tags:
+  - hropen/nayya

@@ -1,0 +1,79 @@
+title: MedicalPlanSetupType
+x-stoplight:
+  id: f9fz89zyunejf
+type: object
+description: General plan details regarding plan setup
+examples:
+  - id:
+      value: string
+    productCode: Medical
+    displayPlanName: string
+    carrierOrganization:
+      id:
+        value: string
+      name: string
+    planEligibilityGroups:
+      - id:
+          value: string
+        eligibilityGroupName: string
+        effectivePeriod:
+          validFrom: '2019-08-01'
+          validTo: '2020-01-01'
+        serviceBasedCosts:
+          - deductibles:
+              - deductibleAmount:
+                  value: 1500
+                  currency: USD
+                serviceType: Individual
+                networkApplicability: InNetwork
+              - deductibleAmount:
+                  value: 3000
+                  currency: USD
+                serviceType: Family
+                networkApplicability: InNetwork
+            outOfPocketMaximums:
+              - outOfPocketMaximumAmount:
+                  value: 5000
+                  currency: USD
+                networkApplicability: InNetwork
+                serviceType: annualMaximum individual
+              - outOfPocketMaximumAmount:
+                  value: 10000
+                  currency: USD
+                networkApplicability: InNetwork
+                serviceType: annualMaximum family
+            copays:
+              - networkApplicability: InNetwork
+                serviceType: specialistVisitCopay
+                copayAmount:
+                  value: 75
+              - networkApplicability: InNetwork
+                serviceType: emergencyRoomCopay
+                copayAmount:
+                  value: 200
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  productCode:
+    type: string
+    description: Plan type
+    enum:
+      - Medical
+  displayPlanName:
+    type: string
+    description: Display name for plan.
+  carrierOrganization:
+    $ref: ../../organization/OrganizationType.yaml
+  planEligibilityGroups:
+    type: array
+    minItems: 1
+    items:
+      $ref: ../PlanEligibilityGroupType/MedicalPlanEligibilityGroupType.yaml
+required:
+  - id
+  - productCode
+  - displayPlanName
+  - carrierOrganization
+  - planEligibilityGroups
+x-tags:
+  - hropen/nayya

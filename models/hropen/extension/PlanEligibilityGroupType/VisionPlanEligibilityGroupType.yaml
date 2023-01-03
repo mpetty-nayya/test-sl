@@ -1,0 +1,39 @@
+title: VisionPlanEligibilityGroupType
+x-stoplight:
+  id: hp3ppnklg4l2i
+description: Information pertaining to a plan eligibility group.
+type: object
+examples:
+  - id:
+      value: string
+    eligibilityGroupName: string
+    effectivePeriod:
+      validFrom: '2019-08-24'
+      validTo: '2019-08-24'
+    serviceBasedCosts:
+      - deductibles:
+          - deductibleAmount:
+              value: 0
+              currency: USD
+            serviceType: EyeExams
+            networkApplicability: InNetwork
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+    description: Unique alphanumeric identifier for the Eligibility Group.
+  eligibilityGroupName:
+    type: string
+    description: The Eligibility Group name.
+  effectivePeriod:
+    $ref: ../../base/EffectiveTimePeriodType.yaml
+  serviceBasedCosts:
+    type: array
+    minItems: 1
+    maxItems: 1
+    items:
+      $ref: ../ServiceBasedCostType/VisionServiceBasedCostType.yaml
+required:
+  - id
+  - eligibilityGroupName
+x-tags:
+  - hropen/nayya

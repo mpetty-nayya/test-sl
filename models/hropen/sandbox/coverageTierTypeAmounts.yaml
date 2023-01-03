@@ -1,0 +1,14 @@
+title: coverageTierTypeAmounts
+x-stoplight:
+  id: jt465iuiltmvo
+type: object
+properties:
+  employee:
+    $ref: ../base/AmountType.yaml
+  employeeFamily:
+    $ref: ../base/AmountType.yaml
+  employeeChildren:
+    $ref: ../base/AmountType.yaml
+required:
+  - employee
+  - employeeFamily

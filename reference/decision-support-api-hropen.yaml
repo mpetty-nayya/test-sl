@@ -26,7 +26,7 @@ servers:
   - url: 'https://qa.app.nayya.com'
     description: QA
   - url: 'http://localhost:3000'
-    description: Development  
+    description: Development
 components:
   securitySchemes:
     bearerAuth:
@@ -40,6 +40,49 @@ components:
         type: string
       example: 123e4567-e89b-12d3-a456-426614174000
 paths:
+  '/hr_open/employers/{employer_id}/plans':
+    post:
+      summary: Add a plan
+      tags:
+        - Employers
+      operationId: post-plan
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+              examples: {}
+          headers:
+            Request-Id:
+              $ref: '#/components/headers/Request-Id'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError409Response.yaml
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ../models/common/ApiError422Response.yaml
+      description: Add a plan for a given employer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/hropen/PlanCreateParams.yaml
+        description: ''
+    parameters:
+      - schema:
+          type: string
+        name: employer_id
+        in: path
+        required: true
+        description: Unique client identifier for employer
   /hr_open/employers:
     post:
       summary: Add an employer
@@ -166,6 +209,20 @@ paths:
             Request-Id:
               $ref: '#/components/headers/Request-Id'
       description: Remove an employee and all PII.
+  /hr_open/eligibility:
+    post:
+      summary: POST Eligibility
+      operationId: post-hr_open-eligibility
+      responses:
+        '200':
+          description: OK
+      description: 'ENDPOINT NOT EXPOSED - payload represented here is posted via iFrame - contains all data pertinent to an employee who is ready to go through decision support by Nayya.  Inlucdes employee, dependent, and benefit coverage details, including benefits for which the employee is eligible, employee-specific premiums, volumes associated with voluntary benefits, and employee-specific associations between Health Savings Accounts and medical plans.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/hropen/EligibilityParams.yaml
+        description: The eligibility payload relevant to the employee
 tags:
   - name: Employees
     description: Entity for an employee

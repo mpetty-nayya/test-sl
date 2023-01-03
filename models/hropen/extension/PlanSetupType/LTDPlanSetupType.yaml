@@ -1,0 +1,65 @@
+title: LTDPlanSetupType
+x-stoplight:
+  id: py76tfio363g7
+type: object
+description: General plan details regarding plan setup
+examples:
+  - id:
+      value: string
+    productCode: LTD
+    displayPlanName: string
+    carrierOrganization:
+      id:
+        value: string
+      name: string
+    planEligibilityGroups:
+      - id:
+          value: string
+        eligibilityGroupName: string
+        effectivePeriod:
+          validFrom: '2019-08-01'
+          validTo: '2020-01-01'
+        coverageTiers:
+          - coverageLevelTierTypeCode: Employee
+            rateDetail:
+              rateType:
+                - disabilityDetailType:
+                    - baseWeeklyPercentageOfEarnings: 50
+                      baseWeeklyMaximumDollarBenefit:
+                        value: 5000
+                        currency: USD
+                      buyupOptionType:
+                        - buyupWeeklyPercentageIncrease: 5
+                          buyupWeeklyMaximumDollarBenefit:
+                            value: 6000
+                            currency: USD
+                        - buyupWeeklyPercentageIncrease: 10
+                          buyupWeeklyMaximumDollarBenefit:
+                            value: 7000
+                            currency: USD
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  productCode:
+    type: string
+    description: Plan type
+    enum:
+      - LTD
+  displayPlanName:
+    type: string
+    description: Display name for plan.
+  carrierOrganization:
+    $ref: ../../organization/OrganizationType.yaml
+  planEligibilityGroups:
+    type: array
+    minItems: 1
+    items:
+      $ref: ../PlanEligibilityGroupType/DisabilityPlanEligibilityGroupType.yaml
+required:
+  - id
+  - productCode
+  - displayPlanName
+  - carrierOrganization
+  - planEligibilityGroups
+x-tags:
+  - hropen/nayya

@@ -1,0 +1,22 @@
+title: payments
+x-stoplight:
+  id: j7j4ens1f3566
+type: object
+properties:
+  payments:
+    type: object
+    required:
+      - firstOccurrence
+    properties:
+      firstOccurrence:
+        type: object
+        required:
+          - predeductible
+          - postDeductible
+        properties:
+          predeductible:
+            $ref: ./payment.yaml
+          postDeductible:
+            $ref: ./payment.yaml
+required:
+  - payments

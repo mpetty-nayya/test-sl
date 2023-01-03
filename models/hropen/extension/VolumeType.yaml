@@ -1,0 +1,23 @@
+title: VolumeType
+x-stoplight:
+  id: hkupg4qel5iab
+type: object
+description: Information pertaining to the volumes elected for the coverage.
+examples:
+  - volumeAmount:
+      value: 0
+      currency: USD
+    volumeRateAmount:
+      value: 0
+      currency: USD
+    volumeRateUnit: Dollars
+properties:
+  volumeAmount:
+    $ref: ../base/AmountType.yaml
+  volumeRateAmount:
+    $ref: ../base/AmountType.yaml
+    description: total premimum associated with volume amount
+  volumeRateUnit:
+    $ref: ../benefits/codelist/RateUnitCodeList.yaml
+x-tags:
+  - hropen/nayya

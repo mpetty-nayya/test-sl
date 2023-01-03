@@ -1,0 +1,9 @@
+type: string
+x-stoplight:
+  id: fh9kfqc1ifhv6
+title: FamilyDeductibleServiceType
+description: The collection of service types applicable to plan deductible amounts.
+enum:
+  - Family
+x-tags:
+  - hropen/nayya

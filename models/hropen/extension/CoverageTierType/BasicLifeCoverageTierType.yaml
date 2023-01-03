@@ -1,0 +1,66 @@
+title: BasicLifeCoverageTierType
+x-stoplight:
+  id: czqa6hsqkz6bs
+type: object
+examples:
+  - coverageLevelTierTypeCode: Employee
+    rateDetail:
+      rateType:
+        - insuranceDetailType:
+            - baseMultipleOfEarnings: 2
+              baseDollarMinimum:
+                value: 25000
+                currency: USD
+              baseDollarMaximum:
+                value: 50000
+                currency: USD
+  - coverageLevelTierTypeCode: Spouse
+    rateDetail:
+      rateType:
+        - insuranceDetailType:
+            - baseDollarAmount:
+                value: 25000
+                currency: USD
+  - coverageLevelTierTypeCode: Children
+    rateDetail:
+      rateType:
+        - insuranceDetailType:
+            - baseDollarAmount:
+                value: 2000
+                currency: USD
+description: 'Basic life plans support individual coverage tiers only (employee, spouse, children).  Coverage can be configured as a single plan with multiple coverage tiers or as multiple plans with one coverage tier on each plan.  Employee coverage requires either baseDollarAmount or both baseMultipleOfEarnings and baseDollarMaximum with optional baseDollarMinimum.  Spouse and children coverage require baseDollarAmount. baseMultipleOfEarnings is not supported for spouse or children coverage.'
+properties:
+  coverageLevelTierTypeCode:
+    type: string
+    enum:
+      - Employee
+      - Spouse
+      - Children
+  rateDetail:
+    type: object
+    required:
+      - rateType
+    properties:
+      rateType:
+        type: array
+        items:
+          type: object
+          properties:
+            insuranceDetailType:
+              type: array
+              items:
+                type: object
+                properties:
+                  baseMultipleOfEarnings:
+                    type: number
+                  baseDollarMinimum:
+                    $ref: ../../base/AmountType.yaml
+                  baseDollarMaximum:
+                    $ref: ../../base/AmountType.yaml
+                  baseDollarAmount:
+                    $ref: ../../base/AmountType.yaml
+required:
+  - coverageLevelTierTypeCode
+  - rateDetail
+x-tags:
+  - hropen/nayya

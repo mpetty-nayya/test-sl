@@ -1,0 +1,7 @@
+title: PercentType
+x-stoplight:
+  id: sidbzi7ktef6w
+type: number
+description: 'A percent is a value representing a fraction of one hundred, expressed as a quotient.'
+x-tags:
+  - hropen/base

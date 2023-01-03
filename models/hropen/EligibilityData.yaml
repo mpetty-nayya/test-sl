@@ -1,0 +1,110 @@
+title: EligibilityData
+x-stoplight:
+  id: 8hrs743o9sur2
+type: object
+examples:
+  - enrollment:
+      documentId: OpenEnrollment
+      coverages:
+        - id:
+            value: string
+          electedEligibilityGroupId:
+            value: string
+          coverageLevelTierTypeCode: Employee
+          coverageLevelTierTypeValue: 0
+          deductionInstruction:
+            actualAmount:
+              value: 0
+              currency: USD
+            employerAmount:
+              value: 0
+              currency: USD
+            intervalCode:
+              id: Month
+          productCode: Medical
+      dependents:
+        - id:
+            value: string
+          relationshipCode: AdoptedChild
+          person:
+            id:
+              value: string
+            name:
+              legal: string
+              formattedName: string
+              given: string
+              family: string
+              preferred: string
+            gender: Male
+            birthDate: '2019-08-24'
+            communication:
+              address:
+                - city: string
+                  line: string
+                  postalCode: string
+                  countryCode: string
+            primaryLanguage: en
+            tobaccoUserIndicator: true
+      person:
+        id:
+          value: string
+        name:
+          legal: string
+          formattedName: string
+          given: string
+          family: string
+          preferred: string
+        gender: Male
+        birthDate: '2019-08-24'
+        communication:
+          address:
+            - city: string
+              line: string
+              postalCode: string
+              countryCode: string
+        primaryLanguage: en
+        tobaccoUserIndicator: true
+    employerOrganization:
+      id:
+        value: string
+    census:
+      deployment:
+        - salary:
+            salaryAmount:
+              value: 0
+              currency: USD
+description: 'Payload sent when an employee is ready to begin the Nayya Choose experience - it contains employee and dependent details, plan and account eligibility, and rate and volume amounts associated with each benefit option.'
+properties:
+  enrollment:
+    $ref: ./extension/EnrollmentType.yaml
+  employerOrganization:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        $ref: ./base/IdentifierType.yaml
+  census:
+    type: object
+    required:
+      - deployment
+    properties:
+      deployment:
+        type: array
+        items:
+          type: object
+          properties:
+            salary:
+              type: object
+              required:
+                - salaryAmount
+              properties:
+                salaryAmount:
+                  $ref: ./base/AmountType.yaml
+          required:
+            - salary
+required:
+  - enrollment
+  - employerOrganization
+x-tags:
+  - hropen/nayya

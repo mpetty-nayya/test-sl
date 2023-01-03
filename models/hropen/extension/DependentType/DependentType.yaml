@@ -1,0 +1,46 @@
+title: DependentType
+x-stoplight:
+  id: wz49ej2zizjni
+type: object
+examples:
+  - id:
+      value: string
+    relationshipCode: AdoptedChild
+    person:
+      id:
+        value: string
+      name:
+        legal: string
+        formattedName: string
+        given: string
+        family: string
+        preferred: string
+      gender: Male
+      birthDate: '2019-08-24'
+      communication:
+        address:
+          - city: string
+            line: string
+            postalCode: string
+            countryCode: string
+      primaryLanguage: en
+      tobaccoUserIndicator: true
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  relationshipCode:
+    type: string
+    enum:
+      - AdoptedChild
+      - Child
+      - Spouse
+      - LifePartner
+      - ChildOfDomesticPartner
+  person:
+    $ref: ../PersonType/PersonType.yaml
+required:
+  - id
+  - relationshipCode
+  - person
+x-tags:
+  - hropen/nayya

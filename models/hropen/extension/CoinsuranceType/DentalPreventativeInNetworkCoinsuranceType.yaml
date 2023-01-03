@@ -1,0 +1,15 @@
+title: DentalPreventativeInNetworkCoinsuranceType
+x-stoplight:
+  id: 9bo63xpxyc4hh
+type: object
+properties:
+  networkApplicability:
+    $ref: ../codelist/NetworkApplicabilityType/InNetworkNetworkApplicabilityType.yaml
+  serviceType:
+    type: string
+    enum:
+      - PreventativeCare
+  coinsuranceAmount:
+    type: integer
+x-tags:
+  - hropen/nayya

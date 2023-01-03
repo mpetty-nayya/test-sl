@@ -1,0 +1,65 @@
+title: BasicLifePlanSetupType
+x-stoplight:
+  id: ihxepegilgfcg
+type: object
+description: General plan details regarding plan setup
+examples:
+  - id:
+      value: string
+    productCode: Basic Life
+    displayPlanName: string
+    carrierOrganization:
+      id:
+        value: string
+      name: string
+    planEligibilityGroups:
+      - id:
+          value: string
+        eligibilityGroupName: string
+        effectivePeriod:
+          validFrom: '2019-08-01'
+          validTo: '2020-01-01'
+        coverageTiers:
+          - coverageLevelTierTypeCode: Employee
+            rateDetail:
+              rateType:
+                - insuranceDetailType:
+                    - baseMultipleOfEarnings: 2
+                      baseDollarMinimum:
+                        value: 25000
+                        currency: USD
+                      baseDollarMaximum:
+                        value: 50000
+                        currency: USD
+          - coverageLevelTierTypeCode: Spouse
+            rateDetail:
+              rateType:
+                - insuranceDetailType:
+                    - baseDollarMaximum:
+                        value: 50000
+                        currency: USD
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+  productCode:
+    type: string
+    description: Plan type
+    enum:
+      - Basic Life
+  displayPlanName:
+    type: string
+    description: Display name for plan.
+  carrierOrganization:
+    $ref: ../../organization/OrganizationType.yaml
+  planEligibilityGroups:
+    type: array
+    items:
+      $ref: ../PlanEligibilityGroupType/BasicLifePlanEligibilityGroupType.yaml
+required:
+  - id
+  - productCode
+  - displayPlanName
+  - carrierOrganization
+  - planEligibilityGroups
+x-tags:
+  - hropen/nayya

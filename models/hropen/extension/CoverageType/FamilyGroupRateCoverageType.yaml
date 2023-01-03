@@ -1,0 +1,67 @@
+title: FamilyGroupRateCoverageType
+x-stoplight:
+  id: 1zg4qkz8ukyv0
+type: object
+description: 'Specifies the premium details the for a specific family grouping coverage for a benefit defined for a plan eligibility group.  Used for medical, dental, vision, accident, and hospitcal indemnity plans.  '
+examples:
+  - id:
+      value: string
+    electedEligibilityGroupId:
+      value: string
+    coverageLevelTierTypeCode: Employee
+    coverageLevelTierTypeValue: 0
+    deductionInstruction:
+      actualAmount:
+        value: 100.23
+        currency: USD
+      employerAmount:
+        value: 54.63
+        currency: USD
+      intervalCode:
+        id: Month
+    productCode: Medical
+  - id:
+      value: string
+    electedEligibilityGroupId:
+      value: string
+    coverageLevelTierTypeCode: EmployeeFamily
+    coverageLevelTierTypeValue: 0
+    deductionInstruction:
+      actualAmount:
+        value: 200.23
+        currency: USD
+      employerAmount:
+        value: 75.63
+        currency: USD
+      intervalCode:
+        id: Month
+    productCode: Medical
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+    description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
+  electedEligibilityGroupId:
+    $ref: ../../base/IdentifierType.yaml
+  coverageLevelTierTypeCode:
+    $ref: ../codelist/CoverageLevelTierType/CoverageLevelTierTypeFamilyGroupCodeList.yaml
+  coverageLevelTierTypeValue:
+    type: integer
+    description: 'The number of dependents included in the coverageLevelTierType Employee+[X].  Required if coverageLevelTierTypeCode == ''Employee+[X]'''
+  deductionInstruction:
+    $ref: ../../pay/RemunerationOrDeductionType.yaml
+  productCode:
+    type: string
+    enum:
+      - Medical
+      - Vision
+      - Dental
+      - Accident
+      - Hospital Indemnity
+required:
+  - id
+  - electedEligibilityGroupId
+  - coverageLevelTierTypeCode
+  - deductionInstruction
+  - productCode
+x-tags:
+  - hropen/nayya

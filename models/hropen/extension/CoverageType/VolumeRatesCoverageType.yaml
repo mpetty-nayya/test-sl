@@ -1,0 +1,85 @@
+title: VolumeRatesCoverageType
+x-stoplight:
+  id: vd2sfwwzknpbj
+type: object
+description: Benefit details for a specific individual including the premiums and volumes for which the individual is eligibile and the employer contribution to the cost
+properties:
+  id:
+    $ref: ../../base/IdentifierType.yaml
+    description: 'A unique identifier for a coverage that can be selected for a given plan eligibility group, i.e. id for employee enrollment differs from that of the id for employee + spouse enrollment.'
+  electedEligibilityGroupId:
+    $ref: ../../base/IdentifierType.yaml
+  coverageLevelTierTypeCode:
+    $ref: ../codelist/CoverageLevelTierType/CoverageLevelTierTypeIndividualCodeList.yaml
+  rateDetail:
+    type: array
+    items:
+      oneOf:
+        - $ref: ../ExactVolumesType.yaml
+        - $ref: ../VolumeParametersType.yaml
+  productCode:
+    type: string
+    enum:
+      - STD
+      - LTD
+      - Basic Life
+      - Supplemental Life
+      - Critical Illness
+  elections:
+    type: array
+    items:
+      type: object
+      properties:
+        amount:
+          $ref: ../../base/AmountType.yaml
+        contributorCode:
+          type: string
+          enum:
+            - Employer
+            - Employee
+        amountTypeCode:
+          type: string
+          enum:
+            - Percent
+            - Flat
+      required:
+        - amount
+        - contributorCode
+        - amountTypeCode
+required:
+  - id
+  - electedEligibilityGroupId
+  - coverageLevelTierTypeCode
+  - rateDetail
+  - productCode
+  - elections
+examples:
+  - id:
+      value: string
+    electedEligibilityGroupId:
+      value: string
+    coverageLevelTierTypeCode: Employee
+    rateDetail:
+      - - volumeAmount:
+            value: 5000
+            currency: USD
+          volumeRateAmount:
+            value: 1.23
+            currency: USD
+          volumeRateUnit: Dollars
+        - volumeAmount:
+            value: 10000
+            currency: USD
+          volumeRateAmount:
+            value: 2.46
+            currency: USD
+          volumeRateUnit: Dollars
+    productCode: STD
+    elections:
+      - amount:
+          value: 25
+          currency: USD
+        contributorCode: Employer
+        amountTypeCode: Percent
+x-tags:
+  - hropen/nayya
