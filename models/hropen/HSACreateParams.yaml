@@ -8,3 +8,5 @@ x-tags:
 properties:
   planSetup:
     $ref: ./extension/PlanSetupType/HSASetupType.yaml
+required:
+  - planSetup
