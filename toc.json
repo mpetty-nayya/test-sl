@@ -56,7 +56,6 @@
     {
       "type": "group",
       "title": "Common",
-      "uri": "docs/Common.md",
       "items": [
         {
           "type": "item",
@@ -88,7 +87,6 @@
     {
       "type": "group",
       "title": "Standard",
-      "uri": "docs/Standard.md",
       "items": [
         {
           "type": "item",
