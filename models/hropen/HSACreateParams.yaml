@@ -37,19 +37,8 @@ examples:
                 - networkApplicability: InNetwork
                   serviceType: EndodonticsBasic
                   coinsuranceAmount: 0
-properties:
-  planSetup:
-    oneOf:
-      - $ref: ./extension/PlanSetupType/DentalPlanSetupType.yaml
-      - $ref: ./extension/PlanSetupType/MedicalPlanSetupType.yaml
-      - $ref: ./extension/PlanSetupType/VisionPlanSetupType.yaml
-      - $ref: ./extension/PlanSetupType/AccidentPlanSetupType.yaml
-      - $ref: ./extension/PlanSetupType/CriticalIllnessPlanSetupType.yaml
-      - $ref: ./extension/PlanSetupType/HospitalIndemnityPlanSetupType.yaml
-      - $ref: ./extension/PlanSetupType/STDPlanSetupType.yaml
-      - $ref: ./extension/PlanSetupType/LTDPlanSetupType.yaml
-      - $ref: ./extension/PlanSetupType/BasicLifePlanSetupType.yaml
-      - $ref: ./extension/PlanSetupType/SupplementalLifePlanSetupType.yaml
 x-tags:
   - hropen/nayya
-description: ''
+properties:
+  planSetup:
+    $ref: ./extension/PlanSetupType/HSASetupType.yaml
