@@ -2,7 +2,15 @@ title: HSACoverageTierType
 x-stoplight:
   id: pkfb2aehdoea7
 type: object
-examples: []
+examples:
+  - coverageLevelTierTypeCode: Employee
+    id:
+      value: string
+    accountDetails:
+      - contributionTypeCode: string
+        contributionAmount:
+          value: 0
+          currency: USD
 x-tags:
   - hropen/nayya
 properties:
