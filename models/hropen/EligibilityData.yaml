@@ -4,7 +4,8 @@ x-stoplight:
 type: object
 examples:
   - enrollment:
-      documentId: OpenEnrollment
+      documentId:
+        value: OpenEnrollment
       coverages:
         - id:
             value: string

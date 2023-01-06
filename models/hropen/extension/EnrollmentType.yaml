@@ -3,7 +3,8 @@ x-stoplight:
   id: 2ujeyasyna7w6
 type: object
 examples:
-  - documentId: OpenEnrollment
+  - documentId:
+      value: OpenEnrollment
     coverages:
       - id:
           value: string
@@ -99,3 +100,4 @@ required:
   - documentId
   - coverages
   - person
+description: ''
