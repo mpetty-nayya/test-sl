@@ -72,6 +72,8 @@ properties:
       - OpenEnrollment
       - NewHire
       - QualifiedLifeEvent
+    required:
+      - value
     properties:
       value:
         type: string
