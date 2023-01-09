@@ -2,30 +2,9 @@ title: HSACoverageType
 x-stoplight:
   id: acrwgveaf6nov
 type: object
-examples:
-  - id:
-      value: string
-    electedEligibilityGroupId:
-      value: string
-    coverageLevelTierTypeCode: Employee
-    productCode: HSA
-    dependency:
-      mustEnrollInSomeOf:
-        - dependentPlanIdentifier:
-            value: string
-          dependentEligibilityGroupId:
-            value: string
-    accountDetails:
-      - contributionTypeCode: Employee
-        maximumContribution:
-          value: 3600
-          currency: USD
-        contributionFrequencyCode: Annually
-      - contributionTypeCode: EmployeeFamily
-        maximumContribution:
-          value: 7200
-          currency: USD
-        contributionFrequencyCode: Annually
+examples: []
+x-tags:
+  - hropen/nayya
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
@@ -70,31 +49,30 @@ properties:
           required:
             - dependentPlanIdentifier
             - dependentEligibilityGroupId
-  accountDetails:
+  elections:
     type: array
     items:
       type: object
       properties:
-        contributionTypeCode:
+        contributorCode:
           type: string
           enum:
             - Employee
-        maximumContribution:
+            - Employer
+        amount:
           $ref: ../../base/AmountType.yaml
-        contributionFrequencyCode:
+        frequencyCode:
           type: string
           enum:
             - Annually
       required:
-        - contributionTypeCode
-        - maximumContribution
-        - contributionFrequencyCode
+        - contributorCode
+        - amount
+        - frequencyCode
 required:
   - id
   - electedEligibilityGroupId
   - coverageLevelTierTypeCode
   - productCode
   - dependency
-  - accountDetails
-x-tags:
-  - hropen/nayya
+  - elections
