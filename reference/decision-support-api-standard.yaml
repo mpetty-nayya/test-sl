@@ -2882,8 +2882,6 @@ paths:
         required: true
     get:
       summary: List Plans Available to Employee
-      tags:
-        - Eligibility Groups
       responses:
         '200':
           description: OK
@@ -3023,8 +3021,6 @@ paths:
 
         Also note that if eligibility changes in your system, then you will need to update any and all employees, one-by-one, in the Nayya system to get things consistent.
 
-      tags:
-        - Eligibility Groups
       requestBody:
         content:
           application/json:
@@ -3631,11 +3627,7 @@ tags:
   - name: Employers
     description: 'All configuration is related to an employer, so an employer is the first thing needed to get started using Nayya.'
   - name: Employees
-    description: 'Employees can be entered in bulk, and should be added after configuration is done; set up an employer, eligibility groups, and plans before adding your employees to ease setup.'
-  - name: Eligibility Groups
-    description: Eligibility groups are how you can specify which employees are eligible for which plans.
-  - name: Open Enrollments
-    description: Open enrollments are required for employees to participate in getting recommendations for plans. Individual enrollments can also be added for qualifying events.
+    description: 'Employees can be entered in bulk, and should be added after configuration is done; set up an employer and plans before adding your employees to ease setup.'
   - name: Plans
     description: The Plan domain is used to configure plans that are available for purchase.
   - name: Plan Types
@@ -3653,8 +3645,6 @@ x-tagGroups:
     tags:
       - Employers
       - Employees
-      - Eligibility Groups
-      - Open Enrollments
   - name: Plan
     tags:
       - Plans
