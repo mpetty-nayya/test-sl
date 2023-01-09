@@ -69,10 +69,6 @@ x-tags:
 properties:
   documentId:
     type: object
-    enum:
-      - OpenEnrollment
-      - NewHire
-      - QualifiedLifeEvent
     required:
       - value
     properties:
