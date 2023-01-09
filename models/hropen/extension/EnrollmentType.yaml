@@ -4,7 +4,7 @@ x-stoplight:
 type: object
 examples:
   - documentId:
-      value: OpenEnrollment
+      value: OE
     coverages:
       - id:
           value: string
@@ -79,9 +79,9 @@ properties:
       value:
         type: string
         enum:
-          - OpenEnrollment
-          - NewHire
-          - QualifiedLifeEvent
+          - OE
+          - QLE
+          - NH
   coverages:
     type: array
     minItems: 1
@@ -100,4 +100,3 @@ required:
   - documentId
   - coverages
   - person
-description: ''

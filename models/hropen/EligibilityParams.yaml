@@ -5,7 +5,7 @@ type: object
 examples:
   - data:
       enrollment:
-        documentId: OpenEnrollment
+        documentId: OE
         coverages:
           - id:
               value: string
