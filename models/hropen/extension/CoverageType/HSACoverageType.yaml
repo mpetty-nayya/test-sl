@@ -2,7 +2,30 @@ title: HSACoverageType
 x-stoplight:
   id: acrwgveaf6nov
 type: object
-examples: []
+examples:
+  - id:
+      value: string
+    electedEligibilityGroupId:
+      value: string
+    coverageLevelTierTypeCode: Employee
+    productCode: HSA
+    dependency:
+      mustEnrollInSomeOf:
+        - dependentPlanIdentifier:
+            value: string
+          dependentEligibilityGroupId:
+            value: string
+    elections:
+      - contributorCode: Employee
+        amount:
+          value: 0
+          currency: USD
+        frequencyCode: Annually
+      - contributorCode: Employer
+        amount:
+          value: 0
+          currency: USD
+        frequencyCode: Annually
 x-tags:
   - hropen/nayya
 properties:
