@@ -28,6 +28,8 @@ examples:
                       buyupWeeklyMaximumDollarBenefit:
                         value: 2000
                         currency: USD
+x-tags:
+  - hropen/nayya
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
@@ -43,7 +45,4 @@ properties:
       $ref: ../CoverageTierType/DisabilityCoverageTierType.yaml
 required:
   - id
-  - eligibilityGroupName
   - coverageTiers
-x-tags:
-  - hropen/nayya

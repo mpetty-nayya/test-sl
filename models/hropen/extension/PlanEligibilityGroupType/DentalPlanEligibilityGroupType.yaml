@@ -28,6 +28,8 @@ examples:
           - networkApplicability: InNetwork
             serviceType: EndodonticsBasic
             coinsuranceAmount: 0
+x-tags:
+  - hropen/nayya
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
@@ -45,7 +47,4 @@ properties:
       $ref: ../ServiceBasedCostType/DentalServiceBasedCostType.yaml
 required:
   - id
-  - eligibilityGroupName
   - serviceBasedCosts
-x-tags:
-  - hropen/nayya
