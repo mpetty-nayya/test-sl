@@ -21,6 +21,8 @@ examples:
     rateDetail:
       rateType: []
 description: 'For employee coverage, guaranteed issue can be a flat amount (guaranteedIssueDollarAmount), a multiple of earnings (guaranteedIssueMultipleOfEarnings), or a multiple of earnings with an upper limit (guaranteedIssueMultipleOfEarnings capped at guaranteedIssueDollarAmount).  For spouse coverage, guarnteed issue can be a flat amount.  For children coverage, guaranteed issue is not supported.  '
+x-tags:
+  - hropen/nayya
 properties:
   coverageLevelTierTypeCode:
     type: string
@@ -43,16 +45,16 @@ properties:
               properties:
                 guaranteedIssueDollarAmount:
                   type: object
+                  description: Not available for children coverageTierTypes
                   properties:
                     value:
                       type: number
                 guaranteedIssueMultipleOfEarnings:
                   type: object
+                  description: Not available for spouse and children coverageTierTypes
                   properties:
                     value:
                       type: number
 required:
   - coverageLevelTierTypeCode
   - rateDetail
-x-tags:
-  - hropen/nayya
