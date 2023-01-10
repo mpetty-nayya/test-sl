@@ -21,6 +21,8 @@ examples:
                     value: 2000
                     currency: USD
 description: 'baseWeeklyPercentageOfEarnings and baseWeeklyMaximumDollarBenefit are required for LTD and STD and represent the "base" coverage.  For LTD, baseWeeklyMaximumDollarBenefit is interpreted as a monthly value, as displayed as "up to [value] monthly."  Buyup percentages can be inclulded in buyupOptionType.  When constructing the volumes payload, include all calculated base and buyup options in the same volumes array with associated premiums.  '
+x-tags:
+  - hropen/nayya
 properties:
   coverageLevelTierTypeCode:
     type: string
@@ -66,8 +68,9 @@ properties:
                         type: integer
                   stddurationWeeks:
                     type: integer
+                required:
+                  - baseWeeklyPercentageOfEarnings
+                  - baseWeeklyMaximumDollarBenefit
 required:
   - coverageLevelTierTypeCode
   - rateDetail
-x-tags:
-  - hropen/nayya
