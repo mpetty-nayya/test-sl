@@ -1,0 +1,28 @@
+{
+  "name": "test-sl",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "OpenAPI docs for Decision Support API",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpetty-nayya/test-sl.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mpetty-nayya/test-sl/issues"
+  },
+  "homepage": "https://github.com/mpetty-nayya/test-sl#readme",
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^10.1.0",
+    "mustache": "^4.2.0"
+  }
+}
