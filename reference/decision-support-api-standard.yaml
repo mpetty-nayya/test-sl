@@ -2882,6 +2882,8 @@ paths:
         required: true
     get:
       summary: List Plans Available to Employee
+      tags:
+        - Eligibility
       responses:
         '200':
           description: OK
@@ -3021,6 +3023,8 @@ paths:
 
         Also note that if eligibility changes in your system, then you will need to update any and all employees, one-by-one, in the Nayya system to get things consistent.
 
+      tags:
+        - Eligibility
       requestBody:
         content:
           application/json:
@@ -3649,6 +3653,8 @@ x-tagGroups:
     tags:
       - Plans
       - Plan Types
+  - name: Eligibility
+    description: Eligibility of employees for plan offerings and their rates.
   - name: Recommendation
     tags:
       - Choices
