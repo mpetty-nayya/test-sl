@@ -177,7 +177,7 @@ sample_jwt_payload = {
   "iat": 1516239022
 }
 
-token = signToken(issueInfo, payload)
+token = <sign with your secret and generate the token using the RS256 encryption algorithm via a generation method of your choosing>
 ```
 
 You'll need to append this token as a parameter to the URL you provide the iframe, so it will end up looking like this:
