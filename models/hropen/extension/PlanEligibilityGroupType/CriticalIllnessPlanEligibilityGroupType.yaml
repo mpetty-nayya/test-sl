@@ -12,6 +12,8 @@ examples:
       validTo: '2020-01-01'
     coverageTiers:
       - coverageLevelTierTypeCode: Employee
+x-tags:
+  - hropen/nayya
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
@@ -27,7 +29,4 @@ properties:
       $ref: ../CoverageTierType/CriticalIllnessCoverageTierType.yaml
 required:
   - id
-  - eligibilityGroupName
   - coverageTiers
-x-tags:
-  - hropen/nayya

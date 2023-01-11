@@ -17,6 +17,8 @@ examples:
               currency: USD
             serviceType: AccidentBenefitAmount
             networkApplicability: InNetwork
+x-tags:
+  - hropen/nayya
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
@@ -34,7 +36,4 @@ properties:
       $ref: ../ServiceBasedCostType/AccidentServiceBasedCostType.yaml
 required:
   - id
-  - eligibilityGroupName
   - serviceBasedCosts
-x-tags:
-  - hropen/nayya

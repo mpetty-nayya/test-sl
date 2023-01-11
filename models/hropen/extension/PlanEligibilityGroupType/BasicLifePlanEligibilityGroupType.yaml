@@ -22,6 +22,8 @@ examples:
                   baseDollarMaximum:
                     value: 50000
                     currency: USD
+x-tags:
+  - hropen/nayya
 properties:
   id:
     $ref: ../../base/IdentifierType.yaml
@@ -38,7 +40,4 @@ properties:
       $ref: ../CoverageTierType/BasicLifeCoverageTierType.yaml
 required:
   - id
-  - eligibilityGroupName
   - coverageTiers
-x-tags:
-  - hropen/nayya
