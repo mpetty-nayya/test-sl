@@ -28,7 +28,7 @@ Integrating in this way with Nayya is really quite simple, and we'll go through 
 
 You'll perform three main steps:
   1. Mapping your system's entities to ours
-  2. Writing requests to configure employers and employees in Nayya
+  2. Writing requests to configure employers, plans, employees, and eligibility in Nayya
   3. Embed our user experience into yours
 
 **That's it!**
