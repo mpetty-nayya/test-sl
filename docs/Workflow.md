@@ -18,11 +18,9 @@ You'll perform three main steps:
 **That's it!**
 Let's look at this in more detail.
 
-Nayya fits into your existing user flow to empower a seamless user experience. See the diagram below to see an overview.
+Nayya fits into your existing user flow to empower a seamless user experience.
 
-<img src="/docs/overview.png" />
-
-As you can see, your platform hands off to Nayya for decision support with the expected outcome being a set of plans bookmarked by the employee. Your platform can then retrieve those plans to create a great user experience and enable employees to make the best elections for themselves and their families.
+Your platform hands off to Nayya for decision support with the expected outcome being a set of plans bookmarked by the employee. Your platform can then retrieve those plans to create a great user experience and enable employees to make the best elections for themselves and their families.
 
 Integrating in this way with Nayya is really quite simple, and we'll go through each step in detail.
 
