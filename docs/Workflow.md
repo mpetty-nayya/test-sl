@@ -45,6 +45,7 @@ Here is the list of entities that you'll need to plan for:
   - **Employer** (name, address, etc.)
   - **Plan** (name, type, deductible, other metadata, etc.)
   - **Employee** (name, email, dob, last_four_ssn, premiums for plan selections, etc.)
+  - **Eligibility** (plans and rates for which a specific employee is eligible)
 
  The keys in your system that represent these entities should be prepared to be matched with keys from Nayya so that you can interact with the created entities once they are live.
 
