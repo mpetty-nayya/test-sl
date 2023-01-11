@@ -4,7 +4,7 @@ stoplight-id: i6j8x0bd8k9bg
 
 # Getting-Started
 
-Nayya fits into your existing user flow to empower a seamless user experience. See the diagram below to see an overview.
+Nayya fits into your existing user flow to empower a seamless user experience. See the diagram below for an overview.
 
 As you can see, your platform hands off to Nayya for decision support with the expected outcome being a set of plans bookmarked by the employee. Your platform can then retrieve those plans to create a great user experience and enable employees to make the best elections for themselves and their families.
 
@@ -28,7 +28,7 @@ Integrating in this way with Nayya is really quite simple, and we'll go through 
 
 You'll perform three main steps:
   1. Mapping your system's entities to ours
-  2. Writing requests to configure employers and employees in Nayya
+  2. Writing requests to configure employers, plans, employees, and eligibility in Nayya
   3. Embed our user experience into yours
 
 **That's it!**
@@ -43,12 +43,9 @@ This is typically done by storing the Nayya ID in your data store alongside your
 
 Here is the list of entities that you'll need to plan for:
   - **Employer** (name, address, etc.)
-  - **Plan** (name, type, rates, deductible, other metadata, etc.)
-  - **Eligibility Group** (name)
-  - This entity is used to map a plan to an employee.
-  - Some examples of a group might be "Part-time", "Full-time", or other ways that an employer might want to group benefits for a select group of people.
-  - **Open Enrollment** (start, end)
-  - **Employee** (name, email, dob, last_four_ssn, etc.)
+  - **Plan** (name, type, deductible, other metadata, etc.)
+  - **Employee** (name, email, dob, last_four_ssn, premiums for plan selections, etc.)
+  - **Eligibility** (plans and rates for which a specific employee is eligible)
 
  The keys in your system that represent these entities should be prepared to be matched with keys from Nayya so that you can interact with the created entities once they are live.
 
@@ -75,25 +72,8 @@ This will return a `201` with the Nayya ID for that employer, which will be in t
 
 **Make sure you store this ID!** You will need it in order to access almost all of the endpoints available to you in this API.
 
-### Eligibility Groups
-Next up are Eligibility Groups. These groups map an employee to a set of plans.
-
-A plan belongs to one or more eligibility groups and an employee belongs to a single eligibility group. An employee is eligible for any plan that belongs to the same eligibility.
-
-Simply perform the **Add Eligibility Group** action, and you are in business:
-
-```
-// Add Eligibility Group
-
-POST /api/employers/{employer_id}/eligibility-groups
-
-{"name": "Part Time"}
-```
-
-Since Plans belong to Eligibility Groups, you will need to create the Eligibility Groups first before creating Plans. This call will return a `201` and an ID for the Eligibility Group that you will need when creating a Plan for the group.
-
 ### Plans
-Now that you have Eligibility Groups configured, let's make some plans and tie them together.  This is done at the time of creating the Plan by passing in a set of one or more Eligibility Group IDs when adding a new plan.
+Let's make some plans for which one or more employees might be eligible.  
 
 ```
 // Add Plan
@@ -101,7 +81,7 @@ Now that you have Eligibility Groups configured, let's make some plans and tie t
 POST /api/employers/{employer_id}/plans
 
 {"name": "Major Medical Gold Plan", "medical_metadata": {...}, ... }
-    ```
+```
 Just like all of our `POST` endpoints, this will return a `201` with an ID that you should save to reference in your system for future requests and mapping of users to their choices.
 
 And that's that! We can now enter employees into the system and get them ready to make some great decisions.
@@ -124,22 +104,19 @@ POST /api/employer/{employer_id}/employees
 
 ID's for all added employees are returned in a `201` request so that you can map them to users in your system.
 
-### Open Enrollments
-This is the last piece of configuration we need to allow employees to access the Nayya experience.
+### Eligibility
+The last thing for configuration is eligibility. How do you tell Nayya which plans an employee has access to at what rate?
 
-Open enrollments have start and end dates that determine when users can access the decision support tool.
-
-If no open enrollment is live for an employee, they will be directed to our main menu and told that decision support is not available outside of open enrollments.
-
-Setting one up is quite easy, much like the other entities:
-
+This is done by specifying all of the plans and rates for an employee in a single payload:
 ```
-// Add an Open Enrollment
-
-POST /api/employers/{employer_id}/open-enrollments
-
-{"from": "2021-01-01", "to": "2021-02-02", "published": true}
+// Attach Eligibility
+PUT /api/employees/{employee_id}/eligibility
+[{id: <plan id>, rate: { e_only: 23.3, e_spouse: 33.3, ... }}, {...}]
 ```
+
+(Please refer to the docs below for the exact structure of this payload.)
+It is important that this eligibility payload is sent over close to the time that the employee will be going through the Nayya experience.
+Eligibility and rates change as things in your system change, so sending it close to just-in-time for them to come through the Nayya experience is best.
 
 Configuration is now done! Let's finalize the integration by embedding the Nayya experience in your web app in **Step Three.**
 
@@ -180,10 +157,18 @@ Add a signed JWT with authorization information and a exit URL as a `GET` param 
 
 There's a <a href="http://jwt.io/" target="_blank">lot of good information</a> out there on creating and managing JWT's, if you need help getting started working with them. The below example is merely psueodocode, but should give you an idea of the payload required when creating and signing.
 
+JWT Payload Dictionary
+* iss: The issuer name, i.e. your company name
+* exit_url: This URL is where the iFrame should break out to when the experience is over. It must have the same domain as the window in which the iFrame is being loaded.
+* usid: The user ID is your API user ID, which the Nayya team will provide to you.
+* empe: The current employee’s Nayya user ID. This is returned with the response from POST /employees.
+* exp: The expiration timestamp for this JWT. Usually 5 minutes is long enough, as long as you're generating a new expiration each time you create a JWT then using it immediately. The expiration date must be in the future.
+* iat: The time the token was issued, which must be in the past.
+
 ```
 // pseudocode
 
-payload = {
+sample_jwt_payload = {
   "iss": "Your Platform",
   "exit_url": "https://your.desired.redirect",
   "usid": "3aoprgpahg2-auohpga4-78ef-2oi9-fc5w",
@@ -191,7 +176,8 @@ payload = {
   "exp": 1613682529,
   "iat": 1516239022
 }
-token = signToken(issueInfo, payload)
+
+token = <sign with your secret and generate the token using the RS256 encryption algorithm via a generation method of your choosing>
 ```
 
 You'll need to append this token as a parameter to the URL you provide the iframe, so it will end up looking like this:

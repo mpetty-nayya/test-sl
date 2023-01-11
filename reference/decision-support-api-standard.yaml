@@ -318,9 +318,6 @@ paths:
                           type: string
                         email:
                           type: string
-                        eligibility_group:
-                          type: string
-                          description: 'Unique id that represents the eligibility group which the employee was associated to. Any time you want to refer to this group at a later date, use this ID. '
               examples:
                 Success - Three Employees:
                   value:
@@ -408,12 +405,6 @@ paths:
                       email:
                         type: string
                         description: Email address of the employee being created.
-                      eligibility_group_id:
-                        type: string
-                        description: |-
-                          Optional attribute to tie an employee to an eligibility group at the time of creation. This is useful when doing a batch import where you already have this data at hand and don't want to make a separate request to make the relationship.
-
-                          Note that the id is the Nayya ID for this group, not the original id from your system.
                       income_amount_cents:
                         type: integer
                         description: Income amount in cents. (Note&#58; must be provided with 'income_type'.)
@@ -477,7 +468,6 @@ paths:
                       ssn_last_four: '9876'
                       locale: en
                       email: sam.l.jackson@example.com
-                      eligibility_group_id: 51da125b-dc13-4331-9a3d-7e11896ec656
                       title: Engineer 2
                       department: Engineering
                       manager_id: '7'
@@ -554,9 +544,6 @@ paths:
                           type: string
                         email:
                           type: string
-                        eligibility_group_id:
-                          type: string
-                          description: 'Unique id that represents the eligibility group which the employee was associated to. Any time you want to refer to this group at a later date, use this ID.'
                   meta:
                     type: object
                     properties:
@@ -574,12 +561,10 @@ paths:
                         first_name: Misses
                         last_name: Friendly
                         email: misses@friendly.example
-                        eligibility_group_id: goi304t0-0g3j-paj924yj-0ig4h
                       - id: 9pahgep95-aheprg-onbpen3-p98hap9b
                         first_name: Mister
                         last_name: Goodfellow
                         email: mister@goodfellow.example
-                        eligibility_group_id: pq3g8hq3-o245-42t8ihgrw-hg40h
                     meta:
                       current_page: 1
                       total_pages: 3
@@ -704,205 +689,6 @@ paths:
         description: The unique ID of the employee from Nayya.
         in: path
         required: true
-  '/api/employers/{employer_id}/eligibility-groups':
-    parameters:
-      - schema:
-          type: string
-        name: employer_id
-        description: The unique ID from Nayya which represents an employer.
-        in: path
-        required: true
-    post:
-      summary: Add a new Eligibility Grouping
-      operationId: post-eligibility-groupss
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: 'Unique id that represents this eligibility group. Any time you want to refer to this eligibility group at a later date, use this ID.'
-                        name:
-                          type: string
-              examples:
-                Success:
-                  value:
-                    data:
-                      - id: 80214e4e-8b2e-4a98-9c01-44713d8d5a34
-                        name: Floor Sellers
-                      - id: 44713d8d5a34-8b2e-4a98-9c01-80214e4e
-                        name: Ceiling Buyers
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-        '422':
-          description: Unprocessable Entity (WebDAV)
-          content:
-            application/json:
-              schema:
-                $ref: ../models/common/ApiError422Response.yaml
-        '500':
-          description: Internal Server Error
-      description: 'Create an eligibility group. Eligibility groups are used to authorize plans for employees. In order for an employee to have access to a plan when going through the decision support system, they must be associated with an eligibility group associated with that plan.'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                data:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-              required:
-                - data
-            examples:
-              example-1:
-                value:
-                  data:
-                    - name: Wait Staff
-      tags:
-        - Eligibility Groups
-    get:
-      summary: List all Eligibility Groups
-      operationId: get-api-employers-employer_id-eligibility-groups
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: 'Unique id that represents this eligibility group. Any time you want to refer to this eligibility group at a later date, use this ID.'
-                        name:
-                          type: string
-                  meta:
-                    type: object
-                    properties:
-                      current_page:
-                        type: integer
-                      total_pages:
-                        type: integer
-                      total_count:
-                        type: integer
-              examples:
-                Success:
-                  value:
-                    data:
-                      - id: 3498gqa-ago43tt-24t2oihgo-97tohgo
-                        name: Part-time
-                      - id: ago43tt-24t2oihgo-97tohgo-3498gqa
-                        name: Full-time
-                    meta:
-                      current_page: 1
-                      total_pages: 1
-                      total_count: 1
-      description: Retrive the full list of eligibility groups for an employer.
-      tags:
-        - Eligibility Groups
-  '/api/employers/{employer_id}/eligibility-groups/{group_id}':
-    parameters:
-      - schema:
-          type: string
-        name: employer_id
-        description: The unique ID from Nayya which represents an employer.
-        in: path
-        required: true
-      - schema:
-          type: string
-        name: group_id
-        description: The unique ID from Nayya which represents an eligibility group.
-        in: path
-        required: true
-    patch:
-      summary: Modify an Eligibility Group
-      operationId: patch-eligibility-groups-id
-      responses:
-        '204':
-          description: No Content
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-        '422':
-          description: Unprocessable Entity (WebDAV)
-          content:
-            application/json:
-              schema:
-                $ref: ../models/common/ApiError422Response.yaml
-        '500':
-          description: Internal Server Error
-      description: Update data related to an eligibility grouping.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-        description: All attributes are optional. Only provided attributes will be updated.
-      tags:
-        - Eligibility Groups
-    delete:
-      summary: Remove an Eligibility Group
-      operationId: delete-eligibility-groups-id
-      responses:
-        '200':
-          description: OK
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-        '422':
-          description: Unprocessable Entity (WebDAV)
-          content:
-            application/json:
-              schema:
-                $ref: ../models/common/ApiError422Response.yaml
-        '500':
-          description: Internal Server Error
-      tags:
-        - Eligibility Groups
-      description: |-
-        Remove an eligbility grouping.
-
-        Note that the removing of a grouping will deauthorize an employee from the associated plans and may affect Nayya's ability to find the best plans available for an employee.
-  '/api/eligibility-groups/{group_id}/employees/{employee_id}':
-    parameters:
-      - schema:
-          type: string
-        name: group_id
-        description: Nayya's eligibilty group id
-        in: path
-        required: true
-      - schema:
-          type: string
-        name: employee_id
-        description: Nayya's employee id
-        in: path
-        required: true
   '/api/employers/{employer_id}/plans':
     post:
       summary: Add New Plans
@@ -971,14 +757,6 @@ paths:
                               type: number
                             e_spouse_3child:
                               type: number
-                        eligibility_groups:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              eligibility_group_id:
-                                type: string
-                                description: Unique id from Nayya that represents an eligibility_group.
                         begins_on:
                           type: string
                         ends_on:
@@ -1013,9 +791,6 @@ paths:
                           e_spouse_child1: 0
                           e_spouse_child2: 0
                           e_spouse_child3: 0
-                        eligibility_groups:
-                          - eligibility_group_id: eligid22d5661-b6a3-4f37-bf8d-666d62b0b495
-                          - eligibility_group_id: 49a0c4e3-9abd-4892-84c8-c1d48cc29f3c
         '403':
           description: Forbidden
         '404':
@@ -1030,9 +805,6 @@ paths:
           description: Internal Server Error
       description: |-
         Create a new plan.
-
-        **Note:** In order for this plan to be available as an option for employees, it must be attached to an Eligibility Group, and any employees that are authorized to purchase should be attached to that group in turn. By including one or more Eligibility Group IDs as part of this request they will be attached at Plan create.
-
         ### Handling Plan Types
         Nayya has a finite, static set of plan types that are supported, and each of them has a different set of required data in order to make the experience great for our users.
 
@@ -1463,19 +1235,10 @@ paths:
                     - $ref: '#/components/schemas/InsuredGroup-AgeRange-BenefitAmount'
                     - $ref: '#/components/schemas/InsuredGroup-BenefitAmount'
                   description: 'An array of rates for this plan, mapping each tier to the rate. (e.g. [{"Employee Only": "$175.00"},...]'
-                eligibility_groups:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      eligibility_group_id:
-                        type: string
-                        description: Unique id from Nayya that represents an eligibility_group.
               required:
                 - name
                 - carrier_id
                 - plan_type
-                - eligibility_groups
             examples:
               Medical:
                 value:
@@ -1517,8 +1280,6 @@ paths:
                     e_partner_1child: 320
                     e_partner_2child: 350
                     e_partner_3child: 350
-                  eligibility_groups:
-                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
               Dental:
                 value:
                   name: Dental Insurance Plan Name
@@ -1556,8 +1317,6 @@ paths:
                     e_partner_1child: 320
                     e_partner_2child: 350
                     e_partner_3child: 350
-                  eligibility_groups:
-                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
               Vision:
                 value:
                   name: Vision Insurance Plan Name
@@ -1598,8 +1357,6 @@ paths:
                     e_partner_1child: 320
                     e_partner_2child: 350
                     e_partner_3child: 350
-                  eligibility_groups:
-                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
               Life:
                 value:
                   name: Paid Life Insurance Plan Name
@@ -1629,8 +1386,6 @@ paths:
                     e_partner_1child: 320
                     e_partner_2child: 350
                     e_partner_3child: 350
-                  eligibility_groups:
-                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
               Pet:
                 value:
                   name: Pet Insurance Plan Name
@@ -1671,8 +1426,6 @@ paths:
                     e_partner_1child: 320
                     e_partner_2child: 350
                     e_partner_3child: 350
-                  eligibility_groups:
-                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
               Hospital Indemnity:
                 value:
                   name: Hospital Indemnity Plan Name
@@ -1705,8 +1458,6 @@ paths:
                     e_partner_1child: 320
                     e_partner_2child: 350
                     e_partner_3child: 350
-                  eligibility_groups:
-                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
               Short Term Disability:
                 value:
                   name: Short Term Disability Plan Name
@@ -1740,8 +1491,6 @@ paths:
                     e_partner_1child: 320
                     e_partner_2child: 350
                     e_partner_3child: 350
-                  eligibility_groups:
-                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
               Long Term Disability:
                 value:
                   name: Long Term Disability Plan Name
@@ -1775,8 +1524,6 @@ paths:
                     e_partner_1child: 320
                     e_partner_2child: 350
                     e_partner_3child: 350
-                  eligibility_groups:
-                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
               Critical Illness:
                 value:
                   name: Critical Illness Insurance Plan Name
@@ -1813,8 +1560,6 @@ paths:
                     e_partner_1child: 320
                     e_partner_2child: 350
                     e_partner_3child: 350
-                  eligibility_groups:
-                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
               Accident:
                 value:
                   name: Accident Insurance Plan Name
@@ -1867,8 +1612,6 @@ paths:
                     e_partner_1child: 320
                     e_partner_2child: 350
                     e_partner_3child: 350
-                  eligibility_groups:
-                    - eligibility_group_id: 6592a62b-297b-459b-954b-7e4941095134
         description: |-
           Every plan requires `name`, `carrier_id`, and `plan_type`.
 
@@ -2773,192 +2516,6 @@ paths:
         You may alternatively use the dependent `relationship` attribute to interpret the dependents selected for plan coverage.
       tags:
         - Choices
-  '/api/employers/{employer_id}/open-enrollments':
-    parameters:
-      - schema:
-          type: string
-        name: employer_id
-        description: The unique ID from Nayya which represents an employer.
-        in: path
-        required: true
-    get:
-      summary: List all Open Enrollments
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: Unique id for an open enrollment.
-                        employer_id:
-                          type: string
-                          description: Unique id for this open employer.
-                        from:
-                          type: string
-                          description: 'Start date of the open enrollment in the format: `YYYY-MM-DD`'
-                        to:
-                          type: string
-                          description: 'End date of the open enrollment in the format: `YYYY-MM-DD`'
-                        published:
-                          type: boolean
-                          description: Whether or not the open enrollment is live for employees or not
-                  meta:
-                    type: object
-                    properties:
-                      current_page:
-                        type: integer
-                      total_pages:
-                        type: integer
-                      total_count:
-                        type: integer
-              examples:
-                Success:
-                  value:
-                    data:
-                      - id: 34gh98ph-ndoauh4p-napvw4t4-poiuh45
-                        employer_id: 8fca4551-4bfd-4ca9-a799-b85580d3b856
-                        from: '2020-02-15'
-                        to: '2020-03-17'
-                        published: false
-                      - id: ndoauh4p-napvw4t4-34gh98ph-poiuh45
-                        employer_id: 8fca4551-4bfd-4ca9-a799-b85580d3b856
-                        from: '2021-01-05'
-                        to: '2021-02-04'
-                        published: true
-                    meta:
-                      current_page: 1
-                      total_pages: 1
-                      total_count: 1
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-      operationId: get-api-employers-employer_id-open-enrollments
-      description: Retrieve a list of open enrollments for the provided employer.
-      tags:
-        - Open Enrollments
-    post:
-      summary: Add new Open Enrollment
-      operationId: post-api-employers-employer_id-open-enrollments
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: 'Unique id that represents the open enrollment. Any time you want to refer to this open enrollment at a later date, use this ID.'
-                        employer_id:
-                          type: string
-                          description: Unique id for this open employer.
-                        from:
-                          type: string
-                          description: 'Start date of the open enrollment in the format: `YYYY-MM-DD`'
-                        to:
-                          type: string
-                          description: 'End date of the open enrollment in the format: `YYYY-MM-DD`'
-                        published:
-                          type: boolean
-                          description: Whether or not the open enrollment is live for employees or not
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-        '422':
-          description: Unprocessable Entity (WebDAV)
-          content:
-            application/json:
-              schema:
-                $ref: ../models/common/ApiError422Response.yaml
-        '500':
-          description: Internal Server Error
-      description: Add a new open enrollment for an employer.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                from:
-                  type: string
-                  description: 'Start date of the open enrollment in the format: `YYYY-MM-DD`'
-                to:
-                  type: string
-                  description: 'End date of the open enrollment in the format: `YYYY-MM-DD`'
-                published:
-                  type: boolean
-                  description: Whether the open enrollment should be immediately active
-      tags:
-        - Open Enrollments
-  '/api/employers/{employer_id}/open-enrollments/{enrollment_id}':
-    parameters:
-      - schema:
-          type: string
-        name: employer_id
-        description: The unique ID from Nayya which represents an employer.
-        in: path
-        required: true
-      - schema:
-          type: string
-        name: enrollment_id
-        description: The unique ID from Nayya which represents an open enrollment.
-        in: path
-        required: true
-    patch:
-      summary: Modify an Open Enrollment
-      operationId: patch-api-employers-employer_id-open-enrollments-enrollment_id
-      responses:
-        '204':
-          description: No Content
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-        '422':
-          description: Unprocessable Entity (WebDAV)
-          content:
-            application/json:
-              schema:
-                $ref: ../models/common/ApiError422Response.yaml
-        '500':
-          description: Internal Server Error
-      description: 'Update details of an open enrollment. Typically this is used to publish an unpublished open enrollment, or can be used to adjust the start and end dates of the enrollment period.'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                from:
-                  type: string
-                  description: 'Start date of the open enrollment in the format: `YYYY-MM-DD`'
-                to:
-                  type: string
-                  description: 'End date of the open enrollment in the format: `YYYY-MM-DD`'
-                published:
-                  type: boolean
-                  description: Whether the open enrollment should be immediately active
-      tags:
-        - Open Enrollments
   '/api/employees/{employee_id}/dependents':
     parameters:
       - schema:
@@ -3326,7 +2883,7 @@ paths:
     get:
       summary: List Plans Available to Employee
       tags:
-        - Eligibility Groups
+        - Eligibility
       responses:
         '200':
           description: OK
@@ -3458,19 +3015,16 @@ paths:
         '500':
           description: Internal Server Error
       description: |-
-        This endpoint exposes another option when it comes to managing eligibility for employees.
+        This endpoint exposes eligibility management for employees.
 
-        If, instead of using eligibility groups to group sets of plans available to a known set of employees, you'd prefer to specify a unique set of plans per employee, keeping the logic for how this works in your system, then this may be the endpoint for you.
-
-        Provide a list of plans that an employee should have access to, and a unique eligibility group will be generated with those plans attached.
+        Through this endpoint, you specify a unique set of plans per employee along with the rates associated with each plan for a particular employee.
 
         Subsequent requests will overwrite the existing plans, not accumulate them, so be careful to always send the full set of plans.
 
         Also note that if eligibility changes in your system, then you will need to update any and all employees, one-by-one, in the Nayya system to get things consistent.
 
-        Additionally, you may provide exact rates per employee if you'd rather house your own logic for rates and skip integrating with the Nayya rates engine.
       tags:
-        - Eligibility Groups
+        - Eligibility
       requestBody:
         content:
           application/json:
@@ -4077,11 +3631,7 @@ tags:
   - name: Employers
     description: 'All configuration is related to an employer, so an employer is the first thing needed to get started using Nayya.'
   - name: Employees
-    description: 'Employees can be entered in bulk, and should be added after configuration is done; set up an employer, eligibility groups, and plans before adding your employees to ease setup.'
-  - name: Eligibility Groups
-    description: Eligibility groups are how you can specify which employees are eligible for which plans.
-  - name: Open Enrollments
-    description: Open enrollments are required for employees to participate in getting recommendations for plans. Individual enrollments can also be added for qualifying events.
+    description: 'Employees can be entered in bulk, and should be added after configuration is done; set up an employer and plans before adding your employees to ease setup.'
   - name: Plans
     description: The Plan domain is used to configure plans that are available for purchase.
   - name: Plan Types
@@ -4099,12 +3649,12 @@ x-tagGroups:
     tags:
       - Employers
       - Employees
-      - Eligibility Groups
-      - Open Enrollments
   - name: Plan
     tags:
       - Plans
       - Plan Types
+  - name: Eligibility
+    description: Eligibility of employees for plan offerings and their rates.
   - name: Recommendation
     tags:
       - Choices
