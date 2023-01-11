@@ -156,10 +156,18 @@ Add a signed JWT with authorization information and a exit URL as a `GET` param 
 
 There's a <a href="http://jwt.io/" target="_blank">lot of good information</a> out there on creating and managing JWT's, if you need help getting started working with them. The below example is merely psueodocode, but should give you an idea of the payload required when creating and signing.
 
+JWT Payload Dictionary
+* iss: The issuer name, i.e. your company name
+* exit_url: This URL is where the iFrame should break out to when the experience is over. It must have the same domain as the window in which the iFrame is being loaded.
+* usid: The user ID is your API user ID, which the Nayya team will provide to you.
+* empe: The current employee’s Nayya user ID. This is returned with the response from POST /employees.
+* exp: The expiration timestamp for this JWT. Usually 5 minutes is long enough, as long as you're generating a new expiration each time you create a JWT then using it immediately. The expiration date must be in the future.
+* iat: The time the token was issued, which must be in the past.
+
 ```
 // pseudocode
 
-payload = {
+sample_jwt_payload = {
   "iss": "Your Platform",
   "exit_url": "https://your.desired.redirect",
   "usid": "3aoprgpahg2-auohpga4-78ef-2oi9-fc5w",
@@ -167,6 +175,7 @@ payload = {
   "exp": 1613682529,
   "iat": 1516239022
 }
+
 token = signToken(issueInfo, payload)
 ```
 
