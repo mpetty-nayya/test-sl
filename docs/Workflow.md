@@ -131,9 +131,7 @@ It will look something like this:
 
 ### 3. Choose a secret for signing
 
-Nayya accepts a JWT token signed with RS256 encoding as authentication. You will need to create a private/public key combination, providing Nayya with the public key so that we can verify you as the signer.
-
-Log into the developer console to create or update your Embedded Public Key.
+Nayya accepts a JWT token signed with RS256 encoding as authentication. You will need to create a private/public key combination, providing Nayya with the public key so that we can verify you as the signer.  Contact your account manager at Nayya to complete this process.
 
 ### 4. Encode and Add JWT to URL
 
@@ -161,7 +159,7 @@ sample_jwt_payload = {
   "iat": 1516239022
 }
 
-token = <sign with your secret and generate the token using the RS256 encryption algorithm via a generation method of your choosing>
+token = <sign with your private key and generate the token using the RS256 encryption algorithm via a generation method of your choosing>
 ```
 
 You'll need to append this token as a parameter to the URL you provide the iframe, so it will end up looking like this:
@@ -176,7 +174,7 @@ You'll need to append this token as a parameter to the URL you provide the ifram
 
 ### 5. Fetch Employee-Bookmarked Plans from Nayya
 
-Pull the user's plan choices from Nayya at: `GET /api/employees/{employee_id}/choices`
+Pull the user's plan choices from Nayya at: `GET /api/employees/{employee_id}/selections` or more detailed choices (including dependents selected for each plan and volume amounts selected for voluntary benefits) at `GET /api/employees/{employee_id}/deatiled-selections`
 
 We'd recommend that the exit_url you provide in the JWT should be a route that will synchronously request employee choices from Nayya, cache them in your system, then optionally bust the iframe and redirect the user to the appropriate page to finalize their decisions in your system.
 
