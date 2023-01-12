@@ -1223,18 +1223,6 @@ paths:
                       type: string
                     concussion:
                       type: string
-                calculation_type:
-                  $ref: '#/components/schemas/CalculationType'
-                rate_parameters:
-                  $ref: '#/components/schemas/RateParameters'
-                rates:
-                  oneOf:
-                    - $ref: '#/components/schemas/Insured-AgeRange'
-                    - $ref: '#/components/schemas/InsuredGroup'
-                    - $ref: '#/components/schemas/InsuredGroup-AgeRange'
-                    - $ref: '#/components/schemas/InsuredGroup-AgeRange-BenefitAmount'
-                    - $ref: '#/components/schemas/InsuredGroup-BenefitAmount'
-                  description: 'An array of rates for this plan, mapping each tier to the rate. (e.g. [{"Employee Only": "$175.00"},...]'
               required:
                 - name
                 - carrier_id
@@ -1264,22 +1252,6 @@ paths:
                     outpatient: 0% Coinsurance
                     emergency_room: $250 Copay
                     has_fsa: true
-                  calculation_type: grouped
-                  rate_parameters:
-                    - insured_group
-                  rates:
-                    e_only: 200
-                    e_1child: 280
-                    e_2child: 300
-                    e_3child: 300
-                    e_spouse: 210
-                    e_partner: 215
-                    e_spouse_1child: 320
-                    e_spouse_2child: 350
-                    e_spouse_3child: 350
-                    e_partner_1child: 320
-                    e_partner_2child: 350
-                    e_partner_3child: 350
               Dental:
                 value:
                   name: Dental Insurance Plan Name
@@ -1301,22 +1273,6 @@ paths:
                     orthodontics: 50% Covered
                     annual_benefit_maximum: 1500
                     out_of_network: See plan overview
-                  calculation_type: grouped
-                  rate_parameters:
-                    - insured_group
-                  rates:
-                    e_only: 200
-                    e_1child: 280
-                    e_2child: 300
-                    e_3child: 300
-                    e_spouse: 210
-                    e_partner: 215
-                    e_spouse_1child: 320
-                    e_spouse_2child: 350
-                    e_spouse_3child: 350
-                    e_partner_1child: 320
-                    e_partner_2child: 350
-                    e_partner_3child: 350
               Vision:
                 value:
                   name: Vision Insurance Plan Name
@@ -1341,22 +1297,6 @@ paths:
                     frame_allowance: $0 Copay
                     elective_contact_lenses: $0 Copay
                     laser_vision_correction: 15% off retail or 5% off promo price
-                  calculation_type: grouped
-                  rate_parameters:
-                    - insured_group
-                  rates:
-                    e_only: 200
-                    e_1child: 280
-                    e_2child: 300
-                    e_3child: 300
-                    e_spouse: 210
-                    e_partner: 215
-                    e_spouse_1child: 320
-                    e_spouse_2child: 350
-                    e_spouse_3child: 350
-                    e_partner_1child: 320
-                    e_partner_2child: 350
-                    e_partner_3child: 350
               Life:
                 value:
                   name: Paid Life Insurance Plan Name
@@ -1370,22 +1310,6 @@ paths:
                     spouse_benefit: 50000
                     child_benefit: 0
                     multi_select: false
-                  calculation_type: grouped
-                  rate_parameters:
-                    - insured_group
-                  rates:
-                    e_only: 200
-                    e_1child: 280
-                    e_2child: 300
-                    e_3child: 300
-                    e_spouse: 210
-                    e_partner: 215
-                    e_spouse_1child: 320
-                    e_spouse_2child: 350
-                    e_spouse_3child: 350
-                    e_partner_1child: 320
-                    e_partner_2child: 350
-                    e_partner_3child: 350
               Pet:
                 value:
                   name: Pet Insurance Plan Name
@@ -1410,22 +1334,6 @@ paths:
                     flea_and_ticks: true
                     heartworm: true
                     blood_tests: true
-                  calculation_type: grouped
-                  rate_parameters:
-                    - insured_group
-                  rates:
-                    e_only: 200
-                    e_1child: 280
-                    e_2child: 300
-                    e_3child: 300
-                    e_spouse: 210
-                    e_partner: 215
-                    e_spouse_1child: 320
-                    e_spouse_2child: 350
-                    e_spouse_3child: 350
-                    e_partner_1child: 320
-                    e_partner_2child: 350
-                    e_partner_3child: 350
               Hospital Indemnity:
                 value:
                   name: Hospital Indemnity Plan Name
@@ -1442,22 +1350,6 @@ paths:
                   hospital_indemnity_metadata:
                     admission: 1000
                     confinement: $100 per day
-                  calculation_type: grouped
-                  rate_parameters:
-                    - insured_group
-                  rates:
-                    e_only: 200
-                    e_1child: 280
-                    e_2child: 300
-                    e_3child: 300
-                    e_spouse: 210
-                    e_partner: 215
-                    e_spouse_1child: 320
-                    e_spouse_2child: 350
-                    e_spouse_3child: 350
-                    e_partner_1child: 320
-                    e_partner_2child: 350
-                    e_partner_3child: 350
               Short Term Disability:
                 value:
                   name: Short Term Disability Plan Name
@@ -1475,22 +1367,6 @@ paths:
                     benefit_summary: '60% of your monthly income, up to $1,200'
                     benefits_begin: 90 days
                     duration: Up to the Social Security (SS) normal retirement age
-                  calculation_type: grouped
-                  rate_parameters:
-                    - insured_group
-                  rates:
-                    e_only: 200
-                    e_1child: 280
-                    e_2child: 300
-                    e_3child: 300
-                    e_spouse: 210
-                    e_partner: 215
-                    e_spouse_1child: 320
-                    e_spouse_2child: 350
-                    e_spouse_3child: 350
-                    e_partner_1child: 320
-                    e_partner_2child: 350
-                    e_partner_3child: 350
               Long Term Disability:
                 value:
                   name: Long Term Disability Plan Name
@@ -1508,22 +1384,6 @@ paths:
                     benefit_summary: '60% of your monthly income, up to $1,200'
                     benefits_begin: 365 days
                     duration: Up to the Social Security (SS) normal retirement age
-                  calculation_type: grouped
-                  rate_parameters:
-                    - insured_group
-                  rates:
-                    e_only: 200
-                    e_1child: 280
-                    e_2child: 300
-                    e_3child: 300
-                    e_spouse: 210
-                    e_partner: 215
-                    e_spouse_1child: 320
-                    e_spouse_2child: 350
-                    e_spouse_3child: 350
-                    e_partner_1child: 320
-                    e_partner_2child: 350
-                    e_partner_3child: 350
               Critical Illness:
                 value:
                   name: Critical Illness Insurance Plan Name
@@ -1544,22 +1404,6 @@ paths:
                     cancer: 100% of benefit amount for Invasive Cancers
                     permanent_damate_due_to_stroke: 100% of Benefit Amount
                     end_stage_renal_failure: 100% of Benefit Amount
-                  calculation_type: grouped
-                  rate_parameters:
-                    - insured_group
-                  rates:
-                    e_only: 200
-                    e_1child: 280
-                    e_2child: 300
-                    e_3child: 300
-                    e_spouse: 210
-                    e_partner: 215
-                    e_spouse_1child: 320
-                    e_spouse_2child: 350
-                    e_spouse_3child: 350
-                    e_partner_1child: 320
-                    e_partner_2child: 350
-                    e_partner_3child: 350
               Accident:
                 value:
                   name: Accident Insurance Plan Name
@@ -1596,22 +1440,6 @@ paths:
                     eye_surgery_or_object_removal: '500'
                     prescribed_prosthetic: '$750 one device / $1,500 two or more devices'
                     concussion: '210'
-                  calculation_type: grouped
-                  rate_parameters:
-                    - insured_group
-                  rates:
-                    e_only: 200
-                    e_1child: 280
-                    e_2child: 300
-                    e_3child: 300
-                    e_spouse: 210
-                    e_partner: 215
-                    e_spouse_1child: 320
-                    e_spouse_2child: 350
-                    e_spouse_3child: 350
-                    e_partner_1child: 320
-                    e_partner_2child: 350
-                    e_partner_3child: 350
         description: |-
           Every plan requires `name`, `carrier_id`, and `plan_type`.
 
@@ -1670,17 +1498,6 @@ paths:
                         metadata:
                           type: object
                           description: Includes whatever metadata is provided for this plan's type. Not all possible attributes listed here. See `plans` docs for all possible attributes.
-                        calculation_type:
-                          $ref: '#/components/schemas/CalculationType'
-                        rate-parameters:
-                          $ref: '#/components/schemas/RateParameters'
-                        rates:
-                          oneOf:
-                            - $ref: '#/components/schemas/Insured-AgeRange'
-                            - $ref: '#/components/schemas/InsuredGroup'
-                            - $ref: '#/components/schemas/InsuredGroup-AgeRange'
-                            - $ref: '#/components/schemas/InsuredGroup-AgeRange-BenefitAmount'
-                            - $ref: '#/components/schemas/InsuredGroup-BenefitAmount'
                       required:
                         - id
                         - name
@@ -1703,18 +1520,6 @@ paths:
                         aco_network_id: '124855'
                         metadata:
                           emergency_room: '100% for first visit, 80% after'
-                        calculation_type: grouped
-                        rate_parameters:
-                          - insured_group
-                        rates:
-                          e_only: 23
-                          e_1child: 200
-                          e_2child: 250
-                          e_3child: 300
-                          e_spouse: 45
-                          e_spouse_child1: 0
-                          e_spouse_child2: 0
-                          e_spouse_child3: 0
       description: Lists all plans belonging to the provided employer.
       tags:
         - Plans
@@ -2113,17 +1918,7 @@ paths:
                       type: string
                     concussion:
                       type: string
-                calculation_type:
-                  $ref: '#/components/schemas/CalculationType'
-                rate_parameters:
-                  $ref: '#/components/schemas/RateParameters'
-                rates:
-                  oneOf:
-                    - $ref: '#/components/schemas/Insured-AgeRange'
-                    - $ref: '#/components/schemas/InsuredGroup'
-                    - $ref: '#/components/schemas/InsuredGroup-AgeRange'
-                    - $ref: '#/components/schemas/InsuredGroup-AgeRange-BenefitAmount'
-                    - $ref: '#/components/schemas/InsuredGroup-BenefitAmount'
+
             examples:
               Medical:
                 value:
